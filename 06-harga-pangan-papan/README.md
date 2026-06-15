@@ -32,11 +32,10 @@ Daily/weekly prices for food staples and housing across Indonesian regions. Infl
 
 ## Sources to mine
 
-- Bapanas / Panel Harga Bapanas
-- PiJPS (hargapangan.id)
-- BPS (Statistics Indonesia)
-- Bank Indonesia (IHK / inflation)
-- Tokopedia/Shopee price scrapes (regional sellers)
+- **SP2KP Kemendag** ([sp2kp.kemendag.go.id](https://sp2kp.kemendag.go.id/)) — primary source, 16 commodities, 514 kab/kota, daily
+- Bapanas / Panel Harga Bapanas (PiJPS) — currently down (Cloudflare 522 as of 2026-06-16), keep as backup
+- BI (Bank Indonesia) for inflation overlay
+- Tokopedia/Shopee price scrapes (regional sellers) for gap analysis vs official
 - Properti: Rumah123, OLX, Pinhome, Lamudi
 
 ## Cadence

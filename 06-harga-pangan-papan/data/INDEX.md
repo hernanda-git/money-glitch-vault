@@ -1,0 +1,35 @@
+# Indonesian Food Price Index
+
+Daily snapshots from SP2KP (Sistem Pemantauan Pasar Kebutuhan Pokok), the official Kemendag (Ministry of Trade) price monitoring system.
+
+Source: https://sp2kp.kemendag.go.id/
+Update frequency: Daily (cron at 08:00 WIB)
+Indicator: HNT (Harga Nasional Tertimbang) — weighted national price from 514 kab/kota using BPS SBH 2022 consumption weights.
+
+## Files
+
+- `sp2kp-YYYY-MM-DD.json` — daily snapshot, full record set
+- `latest.json` — pointer to the most recent snapshot
+- `INDEX.md` — chronological log of all captures
+
+## Coverage
+
+16 commodities × Nasional + Region A/B/C sub-prices = ~26 records per day.
+
+- Beras Medium, Beras Premium, Beras SPHP Bulog
+- Gula Pasir Curah
+- Minyak Goreng Sawit Kemasan Premium, Curah, Minyakita
+- Daging Sapi Paha Belakang, Daging Ayam Ras
+- Telur Ayam Ras
+- Tepung Terigu
+- Kedelai Impor
+- Cabai Merah Keriting, Cabai Rawit Merah, Cabai Merah Besar
+- Bawang Merah, Bawang Putih Honan
+
+## Region Codes
+
+The site groups kab/kota into 3 buckets (A/B/C) for price stability analysis. The exact mapping is not publicly documented but is consistent day-over-day.
+
+## INDEX
+
+- [2026-06-16] SP2KP — 16 commodities × 10 region rows = 26 records total. Top movers: Cabai Merah Besar -2.21%, Cabai Merah Keriting -1.81%, Bawang Merah -1.71%
