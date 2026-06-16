@@ -1,0 +1,3 @@
+# 2026-06-16 , Cross-folder gap: WhatsApp-first financial inclusion agent for underbanked Indonesia
+
+Tiga pain point yang baru di-mine (UMKM sulit modal, pinjol ilegal korban perempuan & gen-z, fresh grad susah dapat kerja) saling terkait satu sama lain dan dengan folder lain di vault. Ada peluang untuk satu produk "AI Agent WhatsApp" yang : (a) cek akses KUR legal dalam 10 menit untuk UMKM, (b) cek apakah user pernah terjerat pinjol ilegal dan otomatis hubungkan ke OJK 157 + KUR, (c) untuk fresh grad, kasih micro-learning + CV tailor + lead-gen ke job portal. Tech stack: WhatsApp Business API + Claude/LLM + SLIK check (perlu partnership OJK/Bank) + job portal API. Revenue: B2C freemium + lead-gen fee + B2B SaaS compliance untuk fintech legal.

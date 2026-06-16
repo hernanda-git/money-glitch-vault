@@ -1,5 +1,14 @@
 # Changelog — money-glitch-vault
 
+## 2026-06-16 — id-miner first run: 3 pain points committed
+- Mined 3 distinct Indonesian business pain points from real 2026 sources (Kompas, CNBC Indonesia, OJK, Kontan, Suara, Jawa Pos, IMF via Viva)
+- Pain 1 (5/5): UMKM Sulit Akses Modal — Kemen UMKM data 69.5% UMKM gagal dapat kredit bank, Celios research, IFC gender gap US$1.9T
+- Pain 2 (5/5): Pinjol Ilegal Marak — 951 entitas ditutup Q1 2026, Rp585M dana korban diselamatkan, 68% korban perempuan
+- Pain 3 (4/5): Fresh Grad Susah Kerja — TPT sarjana 5.18%, 20 bulan masa tunggu, IMF tsunami AI warning
+- Cross-folder gap note dropped to /07-gaps-and-opportunities/inbox/ about "WhatsApp-first financial inclusion agent"
+- Files: 03-id-business-trends/demand-mining/{umkm-sulit-akses-modal,pinjol-ilegal-menjebak-masyarakat-kurang-terlayani,fresh-graduate-susah-dapat-kerja-skill-mismatch}.md
+- INDEX.md created with all 3 entries
+
 ## 2026-06-16 — Initial scaffold
 - Repo created: `hernanda-git/money-glitch-vault` (private)
 - 7 topic folders + README per folder
