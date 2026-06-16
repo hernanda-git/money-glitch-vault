@@ -33,3 +33,4 @@ The site groups kab/kota into 3 buckets (A/B/C) for price stability analysis. Th
 ## INDEX
 
 - [2026-06-16] SP2KP — 16 commodities × 10 region rows = 26 records total. Top movers: Cabai Merah Besar -2.21%, Cabai Merah Keriting -1.81%, Bawang Merah -1.71%
+- [2026-06-15] SP2KP — 17 commodities × 4 regions (Nasional, A, B, C) = 26 records. Top movers: Cabai Merah Besar -2.21%, Cabai Merah Keriting -1.81%, Bawang Merah -1.71%
