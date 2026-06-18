@@ -40,3 +40,8 @@
 - First successful capture: 26 records (16 commodities + 10 region sub-rows), top movers Cabai Merah Besar -2.21%, Bawang Merah -1.71%
 - README updated to reflect SP2KP as primary source
 - Data files: `sp2kp-2026-06-16.json`, `latest.json`, `INDEX.md`
+
+## 2026-06-18 , enrich(01-crawler-scrapper): cookie-token-storage-safety
+- 2824-line technical guide on cookie/token storage safety for web scraping in Indonesian context
+- Covers Fernet encryption, SQLite vault, Playwright persistence, OAuth2/JWT refresh, UU ITE compliance
+- Real-world examples for Tokopedia, Shopee, X/Twitter, Gojek session management
