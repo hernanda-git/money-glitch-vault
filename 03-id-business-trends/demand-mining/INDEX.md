@@ -11,3 +11,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-18] Biaya Sewa Kos dan Properti di Kota Besar Makin Tidak Terjangkau untuk Pekerja Muda , strength 5/5 , employee
 - [2026-06-18] Biaya Platform Marketplace Makin Membebani UMKM Penjual Online , strength 5/5 , seller
 - [2026-06-18] Pekerja Informal dan Gig Workers Sulit Akses Jaminan Kesehatan yang Layak , strength 4/5 , other
+- [2026-06-18] Investor Ritel RI Rugi Besar Akibat Saham Gorengan, FOMO, dan Kurang Edukasi Pasar Modal , strength 5/5 , investor
+- [2026-06-18] Biaya Pendidikan Anak Makin Mahal dari TK sampai Kuliah, Orang Tua Tertekan Finansial , strength 5/5 , parent
+- [2026-06-18] Mahasiswa Terjebak Pinjol untuk Biaya Kuliah dan Hidup karena Beasiswa Terbatas , strength 5/5 , student-new-angle
