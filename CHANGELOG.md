@@ -1,5 +1,16 @@
 # Changelog , money-glitch-vault
 
+## 2026-06-18 , enrich(02): event-driven-trading-bot
+- 3389-line deeply technical guide on event-driven trading bot architecture for Indonesian markets (IDX, crypto exchanges)
+- Working Python code: EventBus (ZeroMQ PUB/SUB), MarketDataFeed (Binance + Indodax WebSocket), OrderBook, SignalGenerator (MA Crossover, RSI), RiskManager (Kelly Criterion, kill switch, max drawdown)
+- IDX-specific: trading hours 09:00-15:00 WIB, T+2 settlement, lot sizes, OJK concentration limits
+- Crypto-specific: WebSocket feeds from Binance/Indodax, rate limit management with sliding window
+- Paper trading engine with slippage simulation (Almgren-Chriss model)
+- Backtesting framework using yfinance for IDX stocks (BBCA.JK example)
+- Prometheus metrics, Telegram alerts, Docker Compose deployment
+- Full pytest suite for event bus, risk manager, order book, paper broker, IDX clock
+- Files: 02-trading-bot/architectures/event-driven-baseline.md
+
 ## 2026-06-18 , id-miner round 3: 3 new pain points committed (employee, seller, other)
 - Mined 3 new Indonesian business pain points from real 2026 sources (Warta Ekonomi, Celios, Kemen UMKM, Katadata, WebEkspor, PejuangKantoran, Cove, Kompas Money, Kompas Nasional, CNBC Indonesia, CNN Indonesia, Detik, Bisnis Finansial)
 - Pain 7 (5/5, employee): Biaya Sewa Kos dan Properti di Kota Besar Tidak Terjangkau , Jakarta lebih mahal dari Paris/Tokyo, kos Kuningan 2x lipat Tebet, 73% milenial kesulitan beli rumah
