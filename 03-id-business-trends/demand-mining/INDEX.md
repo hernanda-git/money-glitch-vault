@@ -8,3 +8,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-18] Potongan Tarif Ojol Makin Membesar, Pendapatan Driver Tergerus Drastis , strength 5/5 , ojol
 - [2026-06-18] Freelancer Indonesia Sering Tidak Dibayar Setelah Proyek Selesai , strength 4/5 , freelancer
 - [2026-06-18] Petani Tidak Mendapat Harga Wajar Akibat Rantai Tengkulak yang Panjang , strength 5/5 , farmer
+- [2026-06-18] Biaya Sewa Kos dan Properti di Kota Besar Makin Tidak Terjangkau untuk Pekerja Muda , strength 5/5 , employee
+- [2026-06-18] Biaya Platform Marketplace Makin Membebani UMKM Penjual Online , strength 5/5 , seller
+- [2026-06-18] Pekerja Informal dan Gig Workers Sulit Akses Jaminan Kesehatan yang Layak , strength 4/5 , other

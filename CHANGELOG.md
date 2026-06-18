@@ -1,5 +1,14 @@
 # Changelog , money-glitch-vault
 
+## 2026-06-18 , id-miner round 3: 3 new pain points committed (employee, seller, other)
+- Mined 3 new Indonesian business pain points from real 2026 sources (Warta Ekonomi, Celios, Kemen UMKM, Katadata, WebEkspor, PejuangKantoran, Cove, Kompas Money, Kompas Nasional, CNBC Indonesia, CNN Indonesia, Detik, Bisnis Finansial)
+- Pain 7 (5/5, employee): Biaya Sewa Kos dan Properti di Kota Besar Tidak Terjangkau , Jakarta lebih mahal dari Paris/Tokyo, kos Kuningan 2x lipat Tebet, 73% milenial kesulitan beli rumah
+- Pain 8 (5/5, seller): Biaya Platform Marketplace Makin Membebani Penjual Online , fee naik 20-25%, Menteri UMKM keluhkan biaya platform, Shopee tambah biaya pre-order 3% + SPayLater
+- Pain 9 (4/5, other): Pekerja Informal dan Gig Workers Sulit Akses Jaminan Kesehatan , BPJS defisit Rp 20-30T, iuran akan naik 2026, klaim ditolak masalah administrasi
+- Total: 9 pain points now in demand-mining across 8 categories (umkm, student, ojol, freelancer, farmer, employee, seller, other)
+- Files: 03-id-business-trends/demand-mining/{biaya-sewa-kos-properti-kota-besar-tak-terjangkau-pekerja-muda,biaya-platform-marketplace-makin-membebani-umkm-penjual-online,pekerja-informal-gig-workers-sulit-akses-jaminan-kesehatan-layak}.md
+- INDEX.md updated with all 3 new entries with categories employee, seller, other
+
 ## 2026-06-18 , id-miner round 2: 3 new pain points committed
 - Mined 3 new Indonesian business pain points from real 2026 sources (CNBC Indonesia, Bisnis Tekno, Kompas, Kompas.id, ANTARA News, Patra Indonesia, Hukumonline, Kumparan)
 - Pain 4 (5/5): Driver Ojol Potongan Tarif Gerus Pendapatan , persaingan makin ketat, Perpres 8% belum efektif
