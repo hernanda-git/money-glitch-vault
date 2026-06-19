@@ -65,3 +65,14 @@
 - 2824-line technical guide on cookie/token storage safety for web scraping in Indonesian context
 - Covers Fernet encryption, SQLite vault, Playwright persistence, OAuth2/JWT refresh, UU ITE compliance
 - Real-world examples for Tokopedia, Shopee, X/Twitter, Gojek session management
+
+## 2026-06-19 , enrich(04): fastwork-mcp-server-spec
+- 1778-line deeply technical MCP server specification for Fastwork.id, the #1 Indonesian freelance marketplace
+- Reverse-engineered API surface (auth endpoints, Algolia search, chat WebSocket, wallet, job board)
+- Complete MCP tool definitions: search_services, create_order, submit_job_proposal, send_message, and 12+ other tools
+- TypeScript implementation walkthrough: MCP server setup, SessionManager with auto-refresh, encrypted SQLite token storage, token-bucket rate limiter, retry logic, error classification
+- Prompt templates for proposal generation, market research, and order follow-up
+- n8n integration patterns for auto-bidder and order monitor workflows
+- Security considerations: AES-256-GCM encryption, OAuth2 flow, circuit breaker patterns
+- Docker Compose deployment and Claude Desktop integration config
+- Files: 04-freelancer-ai-agent/mcp-servers/fastwork-mcp-spec.md
