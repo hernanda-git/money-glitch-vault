@@ -15,3 +15,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-18] Biaya Pendidikan Anak Makin Mahal dari TK sampai Kuliah, Orang Tua Tertekan Finansial , strength 5/5 , parent
 - [2026-06-18] Mahasiswa Terjebak Pinjol untuk Biaya Kuliah dan Hidup karena Beasiswa Terbatas , strength 5/5 , student-new-angle
 - [2026-06-21] UMKM Terjebak Digitalisasi Paksa, Ketergantungan pada Ekosistem Platform Digital , strength 5/5 , umkm-platform-dependency
+- [2026-06-21] Pemadaman Listrik Bergilir di Jawa 2026: UMKM dan Rumah Tangga Terpukul , strength 5/5 , umkm
+- [2026-06-21] Harga Daging dan Bahan Pangan Pokok Melonjak, Daya Beli Masyarakat Tergerus , strength 5/5 , other
+- [2026-06-21] BI Rate Naik ke 5,75%, Cicilan KPR dan Kredit Konsumen Membengkak , strength 4/5 , employee
