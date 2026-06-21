@@ -76,3 +76,11 @@
 - Security considerations: AES-256-GCM encryption, OAuth2 flow, circuit breaker patterns
 - Docker Compose deployment and Claude Desktop integration config
 - Files: 04-freelancer-ai-agent/mcp-servers/fastwork-mcp-spec.md
+
+## 2026-06-21 , enrich(03): umkm-digitalisasi-paksa-platform-ekosistem
+- 800+ line deep technical analysis of UMKM forced digitization and platform ecosystem dependency in Indonesia
+- The anatomy of platform lock-in: investment accumulation, algorithm control, predatory pricing, latent costs
+- 10+ real data points from Kompas.id, Celios, LPEM FEB UI, Kemenkop UKM, OJK, and other sources
+- 5 solution wedges: AI anti-dependency agent, multi-platform dashboard, koperasi marketplace, WhatsApp bot, class action advocacy
+- Cross-referenced with 4 existing vault pain points (modal, biaya platform, pinjol, ojol)
+- Files: 03-id-business-trends/demand-mining/umkm-digitalisasi-paksa-platform-ekosistem.md
