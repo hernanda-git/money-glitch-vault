@@ -93,3 +93,13 @@
 - 20+ sources cited from WebEkspor, CNBC Indonesia, Bisnis.com, Katadata, Celios, LPEM FEB UI, OJK, and regulatory documents
 - Created new subfolder: 03-id-business-trends/competitors/
 - Files: 03-id-business-trends/competitors/tokopedia-shopee-gaps.md
+
+## 2026-06-22 , SP2KP pipeline migrated from browser extraction to REST API
+- Discovered public SP2KP REST API at https://api-sp2kp.kemendag.go.id/ (no auth required)
+- Key endpoints: `average-price/export-area-daily-json` for national prices, `master/api/variant` for commodity list, `master/api/wilayah` for regions
+- API returns 54 commodities (Barang Kebutuhan Pokok) vs browser's 17, at national level (no Region A/B/C breakdown)
+- API is fast (under 5s) compared to browser navigation (5-15s + JS execution)
+- Created fetch_sp2kp.py as the new fetcher script
+- Updated prompt file with API-based workflow as primary, browser as fallback
+- NOTE: Region A/B/C sub-row data is only available via browser extraction, not via the public API
+- Data files: sp2kp-2026-06-19.json (54 commodities, API-derived)
