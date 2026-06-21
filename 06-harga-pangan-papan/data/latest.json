@@ -1,56 +1,10 @@
 {
   "date": "2026-06-19",
-  "source": "SP2KP Kemendag (https://sp2kp.kemendag.go.id/)",
-  "fetched_at": "2026-06-21 13:13 WIB",
-  "note": "HNT = Harga Nasional Tertimbang (weighted by 514 kab/kota, BPS SBH 2022 bobot). Region A/B/C derived from province-level HNT disparity data (sorted by price, split into 3 equal groups).",
-  "row_count": 26,
-  "commodity_count": 17,
-  "top_movers": [
-    {
-      "commodity": "Cabai Rawit Merah",
-      "change_pct": -1.44,
-      "price": 64313
-    },
-    {
-      "commodity": "Cabai Merah Besar",
-      "change_pct": -1.18,
-      "price": 49464
-    },
-    {
-      "commodity": "Cabai Merah Keriting",
-      "change_pct": -0.61,
-      "price": 46752
-    },
-    {
-      "commodity": "Bawang Merah",
-      "change_pct": -0.48,
-      "price": 46701
-    },
-    {
-      "commodity": "Telur Ayam Ras",
-      "change_pct": -0.11,
-      "price": 27543
-    }
-  ],
-  "rows": [
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Bawang Merah",
-      "unit": "kg",
-      "region": "Nasional",
-      "previous_price": 46926,
-      "current_price": 46701,
-      "change_percent": -0.48
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Bawang Putih Honan",
-      "unit": "kg",
-      "region": "Nasional",
-      "previous_price": 38779,
-      "current_price": 38810,
-      "change_percent": 0.08
-    },
+  "fetched_at": "2026-06-21T18:06:19.642082+00:00",
+  "source": "SP2KP Kemendag - API",
+  "commodity_type": "Barang Kebutuhan Pokok",
+  "total_commodities": 54,
+  "data": [
     {
       "date": "2026-06-19",
       "commodity_name": "Beras Medium",
@@ -59,33 +13,6 @@
       "previous_price": 13809,
       "current_price": 13809,
       "change_percent": 0.0
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras Medium",
-      "unit": "kg",
-      "region": "Region A",
-      "previous_price": 13316,
-      "current_price": 13317,
-      "change_percent": 0.01
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras Medium",
-      "unit": "kg",
-      "region": "Region B",
-      "previous_price": 14315,
-      "current_price": 14315,
-      "change_percent": 0.0
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras Medium",
-      "unit": "kg",
-      "region": "Region C",
-      "previous_price": 17467,
-      "current_price": 17488,
-      "change_percent": 0.12
     },
     {
       "date": "2026-06-19",
@@ -98,30 +25,12 @@
     },
     {
       "date": "2026-06-19",
-      "commodity_name": "Beras Premium",
+      "commodity_name": "Beras Khusus",
       "unit": "kg",
-      "region": "Region A",
-      "previous_price": 14935,
-      "current_price": 14947,
-      "change_percent": 0.08
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras Premium",
-      "unit": "kg",
-      "region": "Region B",
-      "previous_price": 16169,
-      "current_price": 16170,
-      "change_percent": 0.01
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras Premium",
-      "unit": "kg",
-      "region": "Region C",
-      "previous_price": 20056,
-      "current_price": 20071,
-      "change_percent": 0.07
+      "region": "Nasional",
+      "previous_price": 17989,
+      "current_price": 17989,
+      "change_percent": 0.0
     },
     {
       "date": "2026-06-19",
@@ -134,39 +43,21 @@
     },
     {
       "date": "2026-06-19",
-      "commodity_name": "Beras SPHP Bulog",
-      "unit": "kg",
-      "region": "Region A",
-      "previous_price": 12137,
-      "current_price": 12135,
-      "change_percent": -0.02
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras SPHP Bulog",
-      "unit": "kg",
-      "region": "Region B",
-      "previous_price": 12471,
-      "current_price": 12532,
-      "change_percent": 0.49
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Beras SPHP Bulog",
-      "unit": "kg",
-      "region": "Region C",
-      "previous_price": 13165,
-      "current_price": 13165,
-      "change_percent": 0.0
-    },
-    {
-      "date": "2026-06-19",
-      "commodity_name": "Cabai Merah Besar",
+      "commodity_name": "Kedelai Lokal",
       "unit": "kg",
       "region": "Nasional",
-      "previous_price": 50054,
-      "current_price": 49464,
-      "change_percent": -1.18
+      "previous_price": 14223,
+      "current_price": 14213,
+      "change_percent": -0.07
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Kedelai Impor",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 13709,
+      "current_price": 13712,
+      "change_percent": 0.02
     },
     {
       "date": "2026-06-19",
@@ -179,6 +70,15 @@
     },
     {
       "date": "2026-06-19",
+      "commodity_name": "Cabai Merah Besar",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 50054,
+      "current_price": 49464,
+      "change_percent": -1.18
+    },
+    {
+      "date": "2026-06-19",
       "commodity_name": "Cabai Rawit Merah",
       "unit": "kg",
       "region": "Nasional",
@@ -188,21 +88,21 @@
     },
     {
       "date": "2026-06-19",
-      "commodity_name": "Daging Ayam Ras",
+      "commodity_name": "Cabai Rawit Hijau",
       "unit": "kg",
       "region": "Nasional",
-      "previous_price": 36039,
-      "current_price": 36046,
-      "change_percent": 0.02
+      "previous_price": 47117,
+      "current_price": 46719,
+      "change_percent": -0.84
     },
     {
       "date": "2026-06-19",
-      "commodity_name": "Daging Sapi Paha Belakang",
+      "commodity_name": "Bawang Merah",
       "unit": "kg",
       "region": "Nasional",
-      "previous_price": 141152,
-      "current_price": 141118,
-      "change_percent": -0.02
+      "previous_price": 46926,
+      "current_price": 46701,
+      "change_percent": -0.48
     },
     {
       "date": "2026-06-19",
@@ -215,12 +115,12 @@
     },
     {
       "date": "2026-06-19",
-      "commodity_name": "Kedelai Impor",
+      "commodity_name": "Gula Pasir Kemasan",
       "unit": "kg",
       "region": "Nasional",
-      "previous_price": 13709,
-      "current_price": 13712,
-      "change_percent": 0.02
+      "previous_price": 19178,
+      "current_price": 19179,
+      "change_percent": 0.01
     },
     {
       "date": "2026-06-19",
@@ -251,6 +151,24 @@
     },
     {
       "date": "2026-06-19",
+      "commodity_name": "Tepung Terigu",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 12539,
+      "current_price": 12535,
+      "change_percent": -0.03
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Ayam Ras",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 36039,
+      "current_price": 36046,
+      "change_percent": 0.02
+    },
+    {
+      "date": "2026-06-19",
       "commodity_name": "Telur Ayam Ras",
       "unit": "kg",
       "region": "Nasional",
@@ -260,12 +178,318 @@
     },
     {
       "date": "2026-06-19",
-      "commodity_name": "Tepung Terigu",
+      "commodity_name": "Daging Sapi Paha Belakang",
       "unit": "kg",
       "region": "Nasional",
-      "previous_price": 12539,
-      "current_price": 12535,
+      "previous_price": 141152,
+      "current_price": 141118,
+      "change_percent": -0.02
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Sapi Paha Depan",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 139441,
+      "current_price": 139241,
+      "change_percent": -0.14
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Sapi Sandung Lamur",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 101426,
+      "current_price": 101439,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Sapi Tetelan",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 81348,
+      "current_price": 81294,
+      "change_percent": -0.07
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Kerbau Impor Beku",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 110444,
+      "current_price": 110444,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Sapi Impor Beku",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 116684,
+      "current_price": 118404,
+      "change_percent": 1.47
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Ikan Bandeng",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 37542,
+      "current_price": 37573,
+      "change_percent": 0.08
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Ikan Kembung",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 44850,
+      "current_price": 44870,
+      "change_percent": 0.04
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Ikan Tongkol",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 39141,
+      "current_price": 39332,
+      "change_percent": 0.49
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Ikan Teri",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 95853,
+      "current_price": 95853,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Jagung Lokal Pipilan",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 9735,
+      "current_price": 9735,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Mie Instan",
+      "unit": "Bungkus",
+      "region": "Nasional",
+      "previous_price": 3198,
+      "current_price": 3198,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Bawang Putih Honan",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 38779,
+      "current_price": 38810,
+      "change_percent": 0.08
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Bawang Putih Kating",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 40570,
+      "current_price": 40691,
+      "change_percent": 0.3
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Bawang Bombai",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 37721,
+      "current_price": 37707,
+      "change_percent": -0.04
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Garam Halus",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 10989,
+      "current_price": 10991,
+      "change_percent": 0.02
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Susu Kental Manis",
+      "unit": "370gr",
+      "region": "Nasional",
+      "previous_price": 13770,
+      "current_price": 13770,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Susu Bubuk",
+      "unit": "400gr",
+      "region": "Nasional",
+      "previous_price": 51300,
+      "current_price": 51302,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Susu Bubuk Balita",
+      "unit": "400gr",
+      "region": "Nasional",
+      "previous_price": 44400,
+      "current_price": 44402,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Tempe Bungkus",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 14544,
+      "current_price": 14545,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Tahu Putih",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 11858,
+      "current_price": 11855,
       "change_percent": -0.03
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Udang Basah",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 77660,
+      "current_price": 77605,
+      "change_percent": -0.07
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Pisang Lokal",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 13800,
+      "current_price": 13801,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Jeruk Lokal",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 21413,
+      "current_price": 21415,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Tomat",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 16344,
+      "current_price": 16388,
+      "change_percent": 0.27
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Kentang Sedang",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 16420,
+      "current_price": 16415,
+      "change_percent": -0.03
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Sawi Hijau",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 12125,
+      "current_price": 12122,
+      "change_percent": -0.02
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Kangkung",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 9746,
+      "current_price": 9728,
+      "change_percent": -0.18
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Ketimun Sedang",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 9607,
+      "current_price": 9571,
+      "change_percent": -0.37
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Kacang Panjang",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 11094,
+      "current_price": 11070,
+      "change_percent": -0.22
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Ketela Pohon",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 9120,
+      "current_price": 9119,
+      "change_percent": -0.01
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Daging Ayam Kampung",
+      "unit": "Ekor",
+      "region": "Nasional",
+      "previous_price": 77111,
+      "current_price": 77124,
+      "change_percent": 0.02
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Telur Ayam Kampung",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 54746,
+      "current_price": 54720,
+      "change_percent": -0.05
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Kacang Tanah",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 36749,
+      "current_price": 36649,
+      "change_percent": -0.27
+    },
+    {
+      "date": "2026-06-19",
+      "commodity_name": "Kacang Hijau",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 30910,
+      "current_price": 30940,
+      "change_percent": 0.1
     }
   ]
 }
