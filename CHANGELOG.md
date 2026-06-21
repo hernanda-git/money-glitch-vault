@@ -84,3 +84,12 @@
 - 5 solution wedges: AI anti-dependency agent, multi-platform dashboard, koperasi marketplace, WhatsApp bot, class action advocacy
 - Cross-referenced with 4 existing vault pain points (modal, biaya platform, pinjol, ojol)
 - Files: 03-id-business-trends/demand-mining/umkm-digitalisasi-paksa-platform-ekosistem.md
+
+## 2026-06-22 , enrich(03): competitors-tokopedia-shopee-gaps
+- 955-line comprehensive competitor analysis covering Shopee, Tokopedia, TikTok Shop, Lazada, Bukalapak, and Blibli
+- Detailed fee structure comparison for 2026 with working Python fee calculator (code included)
+- 14 sections covering platform-specific gaps, cross-platform systemic gaps, underserved segments, regulatory weaknesses, API/technical gaps
+- 10 unserved needs identified (premium marketplace, seller OS, escrow, services marketplace, refurbished electronics, rural commerce, cross-border sourcing, tax compliance, algorithm decoder, AI content factory)
+- 20+ sources cited from WebEkspor, CNBC Indonesia, Bisnis.com, Katadata, Celios, LPEM FEB UI, OJK, and regulatory documents
+- Created new subfolder: 03-id-business-trends/competitors/
+- Files: 03-id-business-trends/competitors/tokopedia-shopee-gaps.md
