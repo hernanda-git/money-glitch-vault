@@ -18,3 +18,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-21] Pemadaman Listrik Bergilir di Jawa 2026: UMKM dan Rumah Tangga Terpukul , strength 5/5 , umkm
 - [2026-06-21] Harga Daging dan Bahan Pangan Pokok Melonjak, Daya Beli Masyarakat Tergerus , strength 5/5 , other
 - [2026-06-21] BI Rate Naik ke 5,75%, Cicilan KPR dan Kredit Konsumen Membengkak , strength 4/5 , employee
+- [2026-06-21] PHK Massal Mengancam Pekerja Indonesia , strength 5/5 , employee
+- [2026-06-21] Rupiah Melemah ke Level Terendah, Biaya Impor dan Hidup Membengkak , strength 5/5 , other
+- [2026-06-21] Petani Terjebak Biaya Produksi Melonjak saat Harga Jual Anjlok , strength 5/5 , farmer

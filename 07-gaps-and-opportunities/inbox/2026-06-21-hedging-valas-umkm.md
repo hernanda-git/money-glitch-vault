@@ -1,0 +1,3 @@
+# 2026-06-21 — Hedging Valas untuk UMKM
+
+Platform hedging valas berbasis aplikasi untuk UMKM yang terdampak pelemahan rupiah. Sebagian besar UMKM Indonesia tidak punya akses ke lindung nilai (hedging) karena rumit, mahal, dan minimum transaksi besar. Platform ini mengagregasi permintaan hedging dari ribuan UMKM untuk mendapatkan pricing kompetitif dari bank, plus edukasi dan dashboard simulasi dampak kurs real-time. Potensi pasar: 2-3 juta UMKM yang bertransaksi internasional atau bergantung bahan baku impor. Model bisnis: fee kecil per transaksi hedging + freemium dashboard monitoring kurs. Cocok untuk diinkubasi di folder 02-trading-bot (instrumen derivatif) dan 04-freelancer-ai-agent (otomatisasi).
