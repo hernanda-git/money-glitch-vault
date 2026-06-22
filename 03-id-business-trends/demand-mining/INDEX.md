@@ -21,3 +21,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-21] PHK Massal Mengancam Pekerja Indonesia , strength 5/5 , employee
 - [2026-06-21] Rupiah Melemah ke Level Terendah, Biaya Impor dan Hidup Membengkak , strength 5/5 , other
 - [2026-06-21] Petani Terjebak Biaya Produksi Melonjak saat Harga Jual Anjlok , strength 5/5 , farmer
+- [2026-06-22] Judi Online (Judol) Menjerat dan Menghancurkan Ekonomi Masyarakat Indonesia , strength 5/5 , other
+- [2026-06-22] Penipuan Lowongan Kerja Online Makin Merajalela, Pencari Kerja Dirugikan , strength 4/5 , student
+- [2026-06-22] Kenaikan PPN 12% Makin Memberatkan UMKM dan Daya Beli Masyarakat , strength 5/5 , umkm
