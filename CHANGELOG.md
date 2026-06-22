@@ -103,3 +103,10 @@
 - Updated prompt file with API-based workflow as primary, browser as fallback
 - NOTE: Region A/B/C sub-row data is only available via browser extraction, not via the public API
 - Data files: sp2kp-2026-06-19.json (54 commodities, API-derived)
+
+## 2026-06-22 , enrich(03): fastwork-sribu-freelance-gaps
+- 863-line competitor analysis of Fastwork vs Sribu vs Projects.co.id vs Upwork/Fiverr for the Indonesian freelance market
+- Mapped technical architectures (Fastwork: Next.js + Algolia + Firebase; Sribu: Next.js + UpCloud + Freshworks; Projects.co.id: legacy PHP)
+- Identified 10 specific gaps: no API/MCP, no cross-platform reputation, no WhatsApp-native workflow, no B2B procurement, no tax integration, no government program integration, no AI-native workflows, no regulated escrow, no skills verification, no offline-first mobile
+- Detailed 10 commercial opportunities ranked by viability with market size estimates
+- Coverage: payment structural weaknesses (regulated escrow gap, BI-FAST, FX problem), trust/reputation flaws, regulatory exposure (PSE, OJK, Kominfo, DJP), and AI agent integration failure points
