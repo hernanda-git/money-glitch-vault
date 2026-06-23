@@ -30,3 +30,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-23] Dosen dan Akademisi Digaji di Bawah UMR Meski Berpendidikan Tinggi , strength 5/5 , employee
 - [2026-06-23] Overwork dan Burnout Kronis Menggerogoti Produktivitas Pekerja Indonesia , strength 5/5 , employee
 - [2026-06-23] NIB Wajib bagi Kreator Konten dan Influencer: Regulasi Baru yang Membebani Ekonomi Kreator , strength 4/5 , freelancer
+- [2026-06-23] Sertifikasi Halal Wajib Oktober 2026: UMKM Terbebani Biaya dan Kerumitan Proses , strength 5/5 , umkm
+- [2026-06-23] Penipuan Digital dan Phishing Makin Marak: Kerugian Rp9,5 Triliun, UMKM dan Nasabah Target Utama , strength 5/5 , seller
+- [2026-06-23] Harga Tiket Pesawat Domestik Melonjak 2026: Pekerja dan Pelaku Bisnis Tertekan Biaya Perjalanan , strength 4/5 , employee
