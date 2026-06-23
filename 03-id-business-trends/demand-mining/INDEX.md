@@ -24,3 +24,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-22] Judi Online (Judol) Menjerat dan Menghancurkan Ekonomi Masyarakat Indonesia , strength 5/5 , other
 - [2026-06-22] Penipuan Lowongan Kerja Online Makin Merajalela, Pencari Kerja Dirugikan , strength 4/5 , student
 - [2026-06-22] Kenaikan PPN 12% Makin Memberatkan UMKM dan Daya Beli Masyarakat , strength 5/5 , umkm
+- [2026-06-23] Dana QRIS Tertahan Berhari-hari hingga Berminggu-minggu, Modal UMKM Macet Total , strength 5/5 , seller
+- [2026-06-23] Aplikasi Temu dan F2C China Mengancam Eksistensi UMKM Lokal Indonesia , strength 5/5 , umkm
+- [2026-06-23] Kenaikan Iuran BPJS Kesehatan dan Implementasi KRIS Membebani Pekerja dan Keluarga , strength 4/5 , employee
