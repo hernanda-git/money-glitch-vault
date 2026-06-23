@@ -110,3 +110,11 @@
 - Identified 10 specific gaps: no API/MCP, no cross-platform reputation, no WhatsApp-native workflow, no B2B procurement, no tax integration, no government program integration, no AI-native workflows, no regulated escrow, no skills verification, no offline-first mobile
 - Detailed 10 commercial opportunities ranked by viability with market size estimates
 - Coverage: payment structural weaknesses (regulated escrow gap, BI-FAST, FX problem), trust/reputation flaws, regulatory exposure (PSE, OJK, Kominfo, DJP), and AI agent integration failure points
+
+## 2026-06-23 , enrich(07): regional-rice-arbitrage-aggregator
+- 858-line opportunity one-pager for a B2B marketplace that exploits the 31.3% price gap for Beras Medium between SP2KP Region A and Region C
+- Concrete transaction model: 8-ton FTL truckload from Sulawesi to Papua yields Rp33.4M gross arbitrage value at Rp4,171/kg gap, minus Rp2,500-4,000/kg logistics cost = Rp8-16M net margin
+- Three-layer product architecture: (1) SP2KP API-powered price discovery, (2) FTL logistics aggregation via Kargo Technologies partnerships, (3) bank escrow trust infrastructure
+- All 16 SP2KP commodities analyzed for regional gaps (cabai 53-68%, bawang merah 55%, telur 21%, daging sapi 13%)
+- Year 3 revenue target Rp15.6B from transaction fees + subscriptions, Year 5 target Rp20-40B adding data licensing
+- 6 new gaps discovered: logistics cost benchmarks, SNI quality lab coverage, pesantren procurement behavior, SP2KP API regional endpoint, cross-province trade docs, and API reliability monitoring
