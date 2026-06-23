@@ -1,5 +1,15 @@
 # Changelog , money-glitch-vault
 
+## 2026-06-23 , enrich(01): x-search-operators-playbook
+- 1389-line deeply technical playbook on X/Twitter advanced search operators for Indonesian signal mining
+- Complete operator reference table (35 operators across text, user, engagement, media, geo, annotation categories)
+- 15 Indonesian-specific query patterns for UMKM complaints, crypto hype, stock chatter, freelancer pain, price shocks, QRIS issues, and more
+- Working Python scraper code: API v2 (Tweepy) with pagination, rate limiting, enrichment, and JSON Lines storage
+- Full Playwright web scraper for non-API access with stealth patches, cookie persistence, and login flow
+- Signal classifier, urgency scorer, and alerting pipeline (Telegram-ready)
+- Anti-detection guide, legal compliance matrix for UU ITE and PDP Law, and 30+ ready-to-use query templates
+- Files: 01-crawler-scrapper/x/search-operators-playbook.md
+
 ## 2026-06-18 , enrich(02): event-driven-trading-bot
 - 3389-line deeply technical guide on event-driven trading bot architecture for Indonesian markets (IDX, crypto exchanges)
 - Working Python code: EventBus (ZeroMQ PUB/SUB), MarketDataFeed (Binance + Indodax WebSocket), OrderBook, SignalGenerator (MA Crossover, RSI), RiskManager (Kelly Criterion, kill switch, max drawdown)
