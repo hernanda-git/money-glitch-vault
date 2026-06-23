@@ -1,0 +1,1 @@
+2026-06-23 — Regtech untuk kreator konten: kewajiban NIB per 18 Juni 2026 membuka celah besar untuk platform asistensi perizinan dan kepatuhan pajak khusus kreator konten. Potensi >2 juta pengguna yang butuh bantuan menentukan kode KBLI, mendaftar OSS, dan memahami kewajiban pajak — mereka selama ini informal dan tidak paham birokrasi.

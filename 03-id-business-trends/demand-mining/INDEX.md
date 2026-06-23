@@ -27,3 +27,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-23] Dana QRIS Tertahan Berhari-hari hingga Berminggu-minggu, Modal UMKM Macet Total , strength 5/5 , seller
 - [2026-06-23] Aplikasi Temu dan F2C China Mengancam Eksistensi UMKM Lokal Indonesia , strength 5/5 , umkm
 - [2026-06-23] Kenaikan Iuran BPJS Kesehatan dan Implementasi KRIS Membebani Pekerja dan Keluarga , strength 4/5 , employee
+- [2026-06-23] Dosen dan Akademisi Digaji di Bawah UMR Meski Berpendidikan Tinggi , strength 5/5 , employee
+- [2026-06-23] Overwork dan Burnout Kronis Menggerogoti Produktivitas Pekerja Indonesia , strength 5/5 , employee
+- [2026-06-23] NIB Wajib bagi Kreator Konten dan Influencer: Regulasi Baru yang Membebani Ekonomi Kreator , strength 4/5 , freelancer
