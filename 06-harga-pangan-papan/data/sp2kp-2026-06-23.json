@@ -1,8 +1,8 @@
 {
   "date": "2026-06-23",
-  "source": "SP2KP Kemendag - Perbandingan Harga",
-  "url": "https://sp2kp.kemendag.go.id/",
-  "fetched_at": "2026-06-23 23:33:12 WIB",
+  "source": "SP2KP Kemendag - Perbandingan Harga API",
+  "url": "https://api-sp2kp.kemendag.go.id/report/api/average-price/generate-perbandingan-harga",
+  "fetched_at": "2026-06-24 01:27:32 UTC",
   "commodities": 17,
   "rows": 26,
   "data": [
