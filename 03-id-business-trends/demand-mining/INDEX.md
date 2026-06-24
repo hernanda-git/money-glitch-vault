@@ -33,3 +33,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-23] Sertifikasi Halal Wajib Oktober 2026: UMKM Terbebani Biaya dan Kerumitan Proses , strength 5/5 , umkm
 - [2026-06-23] Penipuan Digital dan Phishing Makin Marak: Kerugian Rp9,5 Triliun, UMKM dan Nasabah Target Utama , strength 5/5 , seller
 - [2026-06-23] Harga Tiket Pesawat Domestik Melonjak 2026: Pekerja dan Pelaku Bisnis Tertekan Biaya Perjalanan , strength 4/5 , employee
+- [2026-06-24] Kelas Menengah Terjepit: Tabungan Habis, Hidup Bergantung pada Utang , strength 5/5 , employee
+- [2026-06-24] Peternak Ayam Broiler dan Petelur Tersungkur: Harga Anjlok, Biaya Produksi Melonjak , strength 5/5 , farmer
+- [2026-06-24] Dana Desa Dipangkas 70%, UMKM Desa dan Pembangunan Ekonomi Lokal Terhenti , strength 5/5 , umkm
