@@ -36,3 +36,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-24] Kelas Menengah Terjepit: Tabungan Habis, Hidup Bergantung pada Utang , strength 5/5 , employee
 - [2026-06-24] Peternak Ayam Broiler dan Petelur Tersungkur: Harga Anjlok, Biaya Produksi Melonjak , strength 5/5 , farmer
 - [2026-06-24] Dana Desa Dipangkas 70%, UMKM Desa dan Pembangunan Ekonomi Lokal Terhenti , strength 5/5 , umkm
+- [2026-06-24] Pajak E-Commerce 0,5% dari Omzet untuk Penjual Online: Beban Baru UMKM Digital Mulai Juli 2026 , strength 5/5 , seller
+- [2026-06-24] Pemda Tekor Bayar Gaji PPPK dan Tenaga Honorer, Ratusan Ribu Pekerja Kontrak Pemerintah Terancam , strength 5/5 , employee
+- [2026-06-24] Malware Android Rokarolla Incar 217 Aplikasi Bank dan Kripto, Ancaman Baru bagi Nasabah Indonesia , strength 4/5 , other
