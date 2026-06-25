@@ -1,0 +1,3 @@
+# 2026-06-25: Diaspora Bridge Platform
+
+**Opportunity:** Platform marketplace yang menghubungkan diaspora Indonesia di luar negeri dengan perusahaan lokal untuk kerja remote/konsultan. Menyelesaikan dua masalah sekaligus: (1) perusahaan Indonesia kesulitan mendapat talenta berkualitas dengan rate kompetitif, (2) diaspora ingin berkontribusi ke Indonesia tapi enggan pulang karena gap gaji. Potensi model bisnis fee-based seperti Upwork. Cross antara 03-id-business-trends (brain drain pain point) dan 04-freelancer-ai-agent (remote work platform). Scraper need: scraping LinkedIn diaspora Indonesia dan scraping platform freelance untuk benchmark rate.
