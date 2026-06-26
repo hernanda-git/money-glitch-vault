@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-26 18:00 WIB",
-  "generated_iso": "2026-06-26T11:00:47.000862+00:00",
+  "generated_at": "2026-06-25 18:00 WIB",
+  "generated_iso": "2026-06-25T11:00:18.816177+00:00",
   "sources": {
     "crypto": {
       "_error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
@@ -23,5 +23,5 @@
       "_source": "coingecko_trending"
     }
   },
-  "elapsed_seconds": 19.17
+  "elapsed_seconds": 91.33
 }

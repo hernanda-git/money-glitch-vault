@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-26 18:00 WIB",
-  "generated_iso": "2026-06-26T11:00:47.000862+00:00",
+  "generated_at": "2026-06-26 12:00 WIB",
+  "generated_iso": "2026-06-26T05:00:09.578981+00:00",
   "sources": {
     "crypto": {
       "_error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
