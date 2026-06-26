@@ -38,7 +38,10 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-24] Dana Desa Dipangkas 70%, UMKM Desa dan Pembangunan Ekonomi Lokal Terhenti , strength 5/5 , umkm
 - [2026-06-24] Pajak E-Commerce 0,5% dari Omzet untuk Penjual Online: Beban Baru UMKM Digital Mulai Juli 2026 , strength 5/5 , seller
 - [2026-06-24] Pemda Tekor Bayar Gaji PPPK dan Tenaga Honorer, Ratusan Ribu Pekerja Kontrak Pemerintah Terancam , strength 5/5 , employee
-|- [2026-06-24] Malware Android Rokarolla Incar 217 Aplikasi Bank dan Kripto, Ancaman Baru bagi Nasabah Indonesia , strength 4/5 , other
-|- [2026-06-25] El Nino Super 2026: Ancaman Krisis Pangan dan Gelombang Kemiskinan Baru , strength 4/5 , farmer
-|- [2026-06-25] Brain Drain Indonesia: #KaburAjaDulu, Exodus Talenta Muda Makin Masif , strength 4/5 , employee
-|- [2026-06-25] Pekerja Angkutan dan Driver Taksi Online Tertinggal: Potongan Komisi 8% Hanya untuk Ojol , strength 3/5 , ojol
+- [2026-06-24] Malware Android Rokarolla Incar 217 Aplikasi Bank dan Kripto, Ancaman Baru bagi Nasabah Indonesia , strength 4/5 , other
+- [2026-06-25] El Nino Super 2026: Ancaman Krisis Pangan dan Gelombang Kemiskinan Baru , strength 4/5 , farmer
+- [2026-06-25] Brain Drain Indonesia: #KaburAjaDulu, Exodus Talenta Muda Makin Masif , strength 4/5 , employee
+- [2026-06-25] Pekerja Angkutan dan Driver Taksi Online Tertinggal: Potongan Komisi 8% Hanya untuk Ojol , strength 3/5 , ojol
+- [2026-06-26] Guru Honorer: Gaji Rp300-500 Ribu, Status Tidak Jelas, dan Terancam PHK Massal , strength 5/5 , employee
+- [2026-06-26] Harga Plastik Melonjak 3 Kali Lipat, UMKM dan Pedagang Kecil Terimpit , strength 5/5 , umkm
+- [2026-06-26] Konflik TKA China vs Pekerja Lokal di Industri Smelter Nikel, Bom Waktu Ketenagakerjaan , strength 4/5 , employee
