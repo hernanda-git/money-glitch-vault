@@ -13,3 +13,7 @@
 - **06-harga-pangan-papan**: Discovered and switched to direct SP2KP API access at `https://api-sp2kp.kemendag.go.id/report/api/`. The public endpoint `/average-price/generate-perbandingan-harga` returns JSON price comparison data without authentication. This replaces the previous browser-based scraping approach which was unreliable due to the SPA/Tableau rendering requirements.
 
 - **Script evolution**: Updated money-glitch-harga-pangan-prompt.md to use curl-based API calls against the report API instead of browser navigation + DOM extraction.
+
+## 2026-06-28
+
+- **03-id-business-trends/bottlenecks**: Created driver-financial-inclusion.md -- bottleneck analysis of 3M ojol drivers trapped in triple financial exclusion (vehicle financing at 24-36% APR vs bank 8-12%, insurance penetration <15%, zero savings). 600+ lines covering market size (2.8-3.2M active drivers), cicilan-delusion trap, insurance coverage desert, income volatility patterns, existing solution failures (GoPay Later, GrabFinance, Pegadaian, koperasi), regulatory gaps, embedded insurance revenue model (Rp 450M/month TAM), and 3-phase wedge strategy (financial dashboard -> micro-insurance -> cooperative lending).
