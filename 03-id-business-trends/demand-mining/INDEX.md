@@ -48,3 +48,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-28] Nelayan Sulit Dapat Es Batu, Kualitas Ikan Anjlok sebelum Sampai Pasar , strength 5/5 , farmer
 - [2026-06-28] Perubahan Iklim Gerus Pendapatan Petani dan Nelayan, Terjebak Jeratan Utang , strength 5/5 , farmer
 - [2026-06-28] Impor Limbah Plastik dari Negara Maju Perburuk Kualitas Udara Indonesia , strength 5/5 , other
+- [2026-06-29] Cukai Rokok Putih Naik, Ratusan Ribu Buruh dan Petani Tembakau Terancam PHK , strength 4/5 , employee
+- [2026-06-29] Investor Jepang Ancam Relokasi Produksi ke Vietnam, Buruh Otomotif Indonesia Terancam , strength 4/5 , employee
+- [2026-06-29] Transisi LPG 3kg ke CNG 3kg, UMKM dan Rumah Tangga Miskin Harus Beradaptasi , strength 4/5 , umkm
