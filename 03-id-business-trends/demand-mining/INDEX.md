@@ -45,3 +45,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-26] Guru Honorer: Gaji Rp300-500 Ribu, Status Tidak Jelas, dan Terancam PHK Massal , strength 5/5 , employee
 - [2026-06-26] Harga Plastik Melonjak 3 Kali Lipat, UMKM dan Pedagang Kecil Terimpit , strength 5/5 , umkm
 - [2026-06-26] Konflik TKA China vs Pekerja Lokal di Industri Smelter Nikel, Bom Waktu Ketenagakerjaan , strength 4/5 , employee
+- [2026-06-28] Nelayan Sulit Dapat Es Batu, Kualitas Ikan Anjlok sebelum Sampai Pasar , strength 5/5 , farmer
+- [2026-06-28] Perubahan Iklim Gerus Pendapatan Petani dan Nelayan, Terjebak Jeratan Utang , strength 5/5 , farmer
+- [2026-06-28] Impor Limbah Plastik dari Negara Maju Perburuk Kualitas Udara Indonesia , strength 5/5 , other
