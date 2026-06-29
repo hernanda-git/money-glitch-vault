@@ -51,3 +51,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-29] Cukai Rokok Putih Naik, Ratusan Ribu Buruh dan Petani Tembakau Terancam PHK , strength 4/5 , employee
 - [2026-06-29] Investor Jepang Ancam Relokasi Produksi ke Vietnam, Buruh Otomotif Indonesia Terancam , strength 4/5 , employee
 - [2026-06-29] Transisi LPG 3kg ke CNG 3kg, UMKM dan Rumah Tangga Miskin Harus Beradaptasi , strength 4/5 , umkm
+- [2026-06-29] 80% UMKM Indonesia Masih Catat Keuangan Secara Manual , strength 5/5 , umkm
+- [2026-06-29] Petani Sawit Rakyat Terjepit: Harga TBS Tergerus Kebijakan B50, Biaya Produksi Melonjak , strength 4/5 , farmer
+- [2026-06-29] UMKM Unbankable: Rp2.500 Triliun Kredit Mengendap, Pedagang Mikro Tak Bisa Akses Modal , strength 5/5 , umkm
