@@ -66,3 +66,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-30] Minyakita Berbau Solar: Minyak Goreng Subsidi Terkontaminasi, Masyarakat Panik , strength 4/5 , other
 - [2026-06-30] Pajak JHT dan THR: Pekerja Indonesia Protes Dikenakan Pajak Tabungan Hari Tua , strength 4/5 , employee
 - [2026-06-30] GoCar Biaya Pembatalan Rp3.000: Pengemudi dan Penumpang Terjebak Biaya Baru , strength 3/5 , ojol
+- [2026-06-30] UMKM Tanpa Asuransi, Satu Risiko Bisa Runtuhkan Usaha , strength 4/5 , umkm
+- [2026-06-30] Driver Ojol Terjebak Biaya Sewa Kendaraan, Pendapatan Tergerus Sebelum Narik , strength 4/5 , ojol
+- [2026-06-30] Marketplace Naikkan Ongkir Sepihak, UMKM Penjual Online Tercekik , strength 5/5 , seller
