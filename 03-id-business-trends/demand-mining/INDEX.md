@@ -63,3 +63,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-29] Harga Gas Industri Melambung, Sektor Manufaktur Terancam PHK Massal , strength 5/5 , umkm
 - [2026-06-29] IHSG Anjlok 31%, Rp71 Triliun Dana Asing Kabur, Investor Ritel Indonesia Panik , strength 5/5 , investor
 - [2026-06-29] Konektivitas Internet UMKM Masih Memble, Digitalisasi Terhambat di Pelosok Nusantara , strength 4/5 , umkm
+- [2026-06-30] Minyakita Berbau Solar: Minyak Goreng Subsidi Terkontaminasi, Masyarakat Panik , strength 4/5 , other
+- [2026-06-30] Pajak JHT dan THR: Pekerja Indonesia Protes Dikenakan Pajak Tabungan Hari Tua , strength 4/5 , employee
+- [2026-06-30] GoCar Biaya Pembatalan Rp3.000: Pengemudi dan Penumpang Terjebak Biaya Baru , strength 3/5 , ojol
