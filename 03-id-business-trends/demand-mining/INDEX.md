@@ -54,3 +54,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-29] 80% UMKM Indonesia Masih Catat Keuangan Secara Manual , strength 5/5 , umkm
 - [2026-06-29] Petani Sawit Rakyat Terjepit: Harga TBS Tergerus Kebijakan B50, Biaya Produksi Melonjak , strength 4/5 , farmer
 - [2026-06-29] UMKM Unbankable: Rp2.500 Triliun Kredit Mengendap, Pedagang Mikro Tak Bisa Akses Modal , strength 5/5 , umkm
+- [2026-06-29] Kurir Logistik: Uang COD Ditahan Berhari-hari, Pendapatan Tersedot Biaya Operasional , strength 4/5 , other
+- [2026-06-29] Warung Tradisional Makin Tersingkirkan oleh Alfamart dan Indomaret yang Makin Merajalela , strength 5/5 , seller
+- [2026-06-29] Guru Les Privat dan Bimbel Online: Pasca-New Normal, Omzet Merosot Tajam , strength 4/5 , other
