@@ -1,0 +1,3 @@
+# 2026-06-29 , Cross-folder gap: Digital credit scoring for UMKM unbankable using QRIS transaction data
+
+Tiga pain point hari ini menunjukkan pola: UMKM 80% catat keuangan manual, Rp2.500 triliun kredit mengendap di bank sementara pedagang mikro tak bisa akses modal, dan petani sawit terjepit biaya produksi. Solusi yang bisa menjembatani semuanya: platform digital credit scoring yang mengubah data transaksi QRIS harian menjadi skor kelayakan kredit tanpa agunan fisik. Tech stack: QRIS API integration + simple mobile app + credit scoring ML + bank partner API. Revenue: 1-2% komisi dari kredit yang disalurkan. Target: 64 juta UMKM yang mayoritas unbankable.
