@@ -60,3 +60,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-29] Kurir Logistik: Uang COD Ditahan Berhari-hari, Pendapatan Tersedot Biaya Operasional , strength 4/5 , other
 - [2026-06-29] Warung Tradisional Makin Tersingkirkan oleh Alfamart dan Indomaret yang Makin Merajalela , strength 5/5 , seller
 - [2026-06-29] Guru Les Privat dan Bimbel Online: Pasca-New Normal, Omzet Merosot Tajam , strength 4/5 , other
+- [2026-06-29] Harga Gas Industri Melambung, Sektor Manufaktur Terancam PHK Massal , strength 5/5 , umkm
+- [2026-06-29] IHSG Anjlok 31%, Rp71 Triliun Dana Asing Kabur, Investor Ritel Indonesia Panik , strength 5/5 , investor
+- [2026-06-29] Konektivitas Internet UMKM Masih Memble, Digitalisasi Terhambat di Pelosok Nusantara , strength 4/5 , umkm
