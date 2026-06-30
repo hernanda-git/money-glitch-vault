@@ -72,3 +72,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-30] Kualitas Kredit UMKM Kian Memburuk, NPL Mendekati 5% di Akhir 2026 , strength 5/5 , umkm
 - [2026-06-30] UMKM Terpinggir dari Program Makan Bergizi Gratis (MBG) , strength 4/5 , umkm
 - [2026-06-30] AI dan Otomasi Mengancam Pekerja Indonesia, Kantor Belum Siap , strength 4/5 , employee
+- [2026-06-30] Biaya Izin Apotek Mencekik UMKM Farmasi , strength 4/5 , umkm
+- [2026-06-30] Moratorium Dapur MBG Hantam UMKM Supplier Bahan Baku , strength 4/5 , umkm
+- [2026-06-30] Militerisasi Koperasi Desa Merah Putih: 5 Calon Manajer Meninggal , strength 5/5 , umkm
