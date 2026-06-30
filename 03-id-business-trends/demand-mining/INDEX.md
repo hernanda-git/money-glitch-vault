@@ -69,3 +69,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-30] UMKM Tanpa Asuransi, Satu Risiko Bisa Runtuhkan Usaha , strength 4/5 , umkm
 - [2026-06-30] Driver Ojol Terjebak Biaya Sewa Kendaraan, Pendapatan Tergerus Sebelum Narik , strength 4/5 , ojol
 - [2026-06-30] Marketplace Naikkan Ongkir Sepihak, UMKM Penjual Online Tercekik , strength 5/5 , seller
+- [2026-06-30] Kualitas Kredit UMKM Kian Memburuk, NPL Mendekati 5% di Akhir 2026 , strength 5/5 , umkm
+- [2026-06-30] UMKM Terpinggir dari Program Makan Bergizi Gratis (MBG) , strength 4/5 , umkm
+- [2026-06-30] AI dan Otomasi Mengancam Pekerja Indonesia, Kantor Belum Siap , strength 4/5 , employee
