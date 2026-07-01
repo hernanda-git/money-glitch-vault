@@ -42,3 +42,4 @@ The site groups kab/kota into 3 buckets (A/B/C) for price stability analysis. Th
 - [2026-06-24] SP2KP - 54 commodities x 1 region (Nasional)
 - [2026-06-25] SP2KP - 54 commodities x 1 region (Nasional)
 - [2026-06-29] SP2KP - 42 commodities x 1 region (Nasional). Top movers: Cabai Rawit Merah -3.79%, Bawang Merah -2.08%, Tomat -1.95%, Telur Ayam Ras -1.92%
+- [2026-06-30] SP2KP - 54 commodities x 1 region (Nasional)
