@@ -75,3 +75,6 @@ Daftar pain point yang sudah di-mine. Format: `- [YYYY-MM-DD] <title> , strength
 - [2026-06-30] Biaya Izin Apotek Mencekik UMKM Farmasi , strength 4/5 , umkm
 - [2026-06-30] Moratorium Dapur MBG Hantam UMKM Supplier Bahan Baku , strength 4/5 , umkm
 - [2026-06-30] Militerisasi Koperasi Desa Merah Putih: 5 Calon Manajer Meninggal , strength 5/5 , umkm
+- [2026-07-01] UMKM Indonesia Gagal Naik Kelas Ekspor: Trial Order Berhenti, Volume Tak Stabil , strength 4/5 , umkm
+- [2026-07-01] Nelayan Untung di Atas Kertas, Tertekan di Lapangan: Biaya Produksi Makan Pendapatan , strength 4/5 , farmer
+- [2026-07-01] Ojol Biaya Tersembunyi di Balik Potongan 8%: Driver Senang di Atas Kertas, Tertekan di Lapangan , strength 4/5 , ojol
