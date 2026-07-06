@@ -12,3 +12,6 @@
 - [2026-07-06] Pinjol Legal dengan Bunga Tinggi Masih Mencekik Masyarakat — strength 4/5 — other
 - [2026-07-06] UMKM Indonesia Kesulitan Digitalisasi Meski Platform Tersedia — strength 4/5 — umkm
 - [2026-07-06] Freelancer Indonesia Bergaji Rendah dan Kesulitan Pembayaran — strength 4/5 — freelancer
+- [2026-07-06] Harga Tiket Pesawat Kembali Melambung Usai Insentif PPN Berakhir — strength 4/5 — other
+- [2026-07-06] UMKM Terancam Sanksi Halal per Oktober 2026, Proses Sertifikasi Masih Terhambat — strength 5/5 — umkm
+- [2026-07-06] Rasio Pajak Indonesia Peringkat 3 Terbawah di Asia-Pasifik, UMKM Terjebak Ekonomi Informal — strength 4/5 — umkm
