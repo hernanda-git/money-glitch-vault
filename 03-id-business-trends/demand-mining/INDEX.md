@@ -9,3 +9,6 @@
 - [2026-07-06] Kelangkaan Pupuk Bersubsidi dan Harga Pupuk Non-Subsidi Meroket — strength 5/5 — farmer
 - [2026-07-06] Gen Z Kesulitan Cari Kerja, Orangtua Ikut Mendampingi — strength 5/5 — student
 - [2026-07-06] Gaji Dosen Non-ASN Sangat Rendah Meski Bergelar Doktor — strength 4/5 — employee
+- [2026-07-06] Pinjol Legal dengan Bunga Tinggi Masih Mencekik Masyarakat — strength 4/5 — other
+- [2026-07-06] UMKM Indonesia Kesulitan Digitalisasi Meski Platform Tersedia — strength 4/5 — umkm
+- [2026-07-06] Freelancer Indonesia Bergaji Rendah dan Kesulitan Pembayaran — strength 4/5 — freelancer
