@@ -9,3 +9,6 @@
 - [2026-07-06] Kelangkaan Pupuk Bersubsidi dan Harga Pupuk Non-Subsidi Meroket — strength 5/5 — farmer
 - [2026-07-06] Gen Z Kesulitan Cari Kerja, Orangtua Ikut Mendampingi — strength 5/5 — student
 - [2026-07-06] Gaji Dosen Non-ASN Sangat Rendah Meski Bergelar Doktor — strength 4/5 — employee
+- [2026-07-07] Digital Nomad Gentrifikasi Harga di Bali, Masyarakat Lokal Tersingkir — strength 4/5 — other
+- [2026-07-07] 58 Persen Pekerja Indonesia Masih di Sektor Informal, Kesenjangan Keterampilan Semakin Dalam — strength 5/5 — employee
+- [2026-07-07] UMKM Kehabisan Modal Meski Triliunan Rupiah Mengendap di Bank — strength 5/5 — umkm
