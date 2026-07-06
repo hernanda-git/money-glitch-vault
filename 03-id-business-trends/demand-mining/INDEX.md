@@ -18,3 +18,6 @@
 - [2026-07-06] UMKM Terancam Banjir Produk Impor Murah dari E-Commerce Cross-Border — strength 5/5 — umkm
 - [2026-07-06] UMKM Kontribusi Ekspor Rendah, Terjebak Pasar Domestik — strength 4/5 — umkm
 - [2026-07-06] Pedagang Pasar Tradisional Kehilangan Pelanggan ke E-Commerce — strength 4/5 — seller
+- [2026-07-06] Tenaga Kesehatan Indonesia Gaji Rendah dan Resign Massal ke Luar Negeri — strength 5/5 — employee
+- [2026-07-06] Guru Honorer Nasib Tak Jelas Meski PPPK Sudah Ada — strength 4/5 — employee
+- [2026-07-06] UMKM Kesulitan Pelaporan Pajak Digital dan e-Filing — strength 4/5 — umkm
