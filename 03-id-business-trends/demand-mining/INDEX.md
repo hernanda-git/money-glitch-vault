@@ -21,3 +21,6 @@
 - [2026-07-06] Tenaga Kesehatan Indonesia Gaji Rendah dan Resign Massal ke Luar Negeri — strength 5/5 — employee
 - [2026-07-06] Guru Honorer Nasib Tak Jelas Meski PPPK Sudah Ada — strength 4/5 — employee
 - [2026-07-06] UMKM Kesulitan Pelaporan Pajak Digital dan e-Filing — strength 4/5 — umkm
+- [2026-07-07] UMKM Kedelai dan Tempe Kelimpungan Hadapi Kenaikan Harga Bahan Baku Serentak — strength 5/5 — umkm
+- [2026-07-07] Fresh Graduate Ghosting Industri Hospitality Solo — strength 4/5 — employee
+- [2026-07-07] Pedagang Pasar Tradisional Sepi Meski Harga Sembako Turun — strength 4/5 — seller
