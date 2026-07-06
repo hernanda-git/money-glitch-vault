@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-07-06 12:00 WIB",
+  "generated_iso": "2026-07-06T05:00:19.306614+00:00",
+  "sources": {
+    "crypto": {
+      "_error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
+      "_source": "coingecko_price"
+    },
+    "fx": {
+      "_error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
+      "_source": "exchangerate"
+    },
+    "ihsg": {
+      "_error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "_source": "yahoo_jkse"
+    },
+    "idx_movers": {
+      "_error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "_source": "yahoo_movers"
+    },
+    "trending_coins": {
+      "_error": "URLError: <urlopen error _ssl.c:999: The handshake operation timed out>",
+      "_source": "coingecko_trending"
+    }
+  },
+  "elapsed_seconds": 41.74
+}
