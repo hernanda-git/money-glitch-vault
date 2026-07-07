@@ -661,6 +661,63 @@ This contract is intentionally small. The temptation in any platform play is to 
 
 The warung-node idea is not unique to Indonesia, which is reassuring. Convenience-store networks as parcel points (7-Eleven, FamilyMart in Japan, Thailand, and the Philippines) and "click and collect" at neighborhood shops (InPost lockers in Europe, Amazon Hub in the US) prove the pattern works where density and trust exist. The Indonesian twist is that the node is an informal micro-merchant, not a corporate chain, so the trust and settlement rails must be rebuilt for a low-formalization counterparty. That rebuild is the actual innovation, and it is where the prior Indonesian attempts under-invested. The global precedent de-risks the consumer behavior (people will walk to a shop to collect a parcel); the local work is the counterparty formalization.
 
+## Financing the node enablement: who pays for the enablement capex
+
+Even the asset-light model has capex somewhere: a smartphone mount or second phone, a parcel locker or shelf, maybe a chest freezer for cold. The question of who funds it is a distinct bottleneck.
+
+Self-funded by owner. Works only for the "already-digital" persona with spare cash. Excludes the long tail.
+
+Revenue-share lease. The operator provides the locker/freezer and recovers cost from node fees over N months. Aligns incentives (operator only earns if node earns) but ties up operator capital at 16 million scale, which is why it must be phased (cold only after non-cold proves volume).
+
+Cooperative pool. A warung koperasi (relevant given the koperasi gaps in `03-id-business-trends/bottlenecks/koperasi-simpan-pinjam-ojol.md`) fronts the capex and owns the asset, renting it to members. This is culturally familiar in Indonesia and de-risks the owner, but needs a functioning cooperative, which is itself a gap in many areas.
+
+Vendor financing from a B2B supplier. The seleraku-style procurement player already wants the warung stocked; it can bundle node enablement as a loyalty investment. This is the most natural fit because the supplier already has the relationship and the restock cadence to amortize the capex against procurement volume.
+
+The financing mechanism is recorded as a separate gap (warung-cold-chain-capex) because it is the gating constraint for Phase 3 cold nodes, and none of the prior players solved it cleanly (Warung Pintar tried to own it and it became a cost center).
+
+## Mock operating dashboard: what healthy looks like
+
+A kelurahan operations view, mid-rollout, might read:
+
+```
+Kelurahan Sukamaju - Node Network (2026-Q3)
+-------------------------------------------
+Warungs onboarded:        34 / ~210 estimated
+Active today (heartbeat): 31 (91%)
+Avg parcels/node/day:     9.4
+Hold accuracy (30d):      99.3%
+24h pickup rate:          94.1%
+Owner churn (30d):        4.2%
+Dispute rate:             0.3%
+Cold nodes:               3 (pilot)
+Parcel driver-hours saved/day: ~11 (vs door-to-door)
+Est. owner incremental income/mo: IDR 338,000 avg
+```
+
+The dashboard is the early-warning system. If "Active today" drops below 85 percent, onboarding or app friction is the problem. If "24h pickup rate" falls below 90 percent, node placement or customer communication is wrong. If "dispute rate" rises above 1 percent, the insurance pool is under-funded or custody UX is broken. These thresholds are the kill/continue criteria made operational.
+
+## Deep failure-mode analysis
+
+Beyond the Warung Pintar capex trap, several failure modes deserve explicit callouts because they are silent.
+
+The "ghost node" failure. A warung signs up, gets the onboarding incentive, then goes silent. Without the 24h heartbeat TTL auto-zeroing capacity (as coded), the network keeps routing parcels to a dead node and customers never get them. The TTL and active-rate metric are the specific defense.
+
+The "over-subscribed node" failure. A popular corner warung gets assigned 40 parcels when its declared capacity was 10. The owner cannot physically hold them, parcels pile up, pickup rate collapses. The decrementing counter and a hard reject when `free_slots <= 0` prevent this; the dispatcher must never over-assign.
+
+The "last-200-meters-unwalked" failure. Customers used to doorstep delivery will not walk to a warung unless the incentive (faster, cheaper, or COD convenience) is clear. This is a communications problem, solved by a crisp WhatsApp notification with the warung name, a landmark, and a pickup code. Underestimating customer behavior change is how many Click-and-Collect experiments died in Western markets too.
+
+The "platform-lock revenge" failure. If the node layer becomes extractive (low fees, punitive penalties, exclusive clauses), owners churn to a competitor or revert to pure cash. The `umkm-digitalisasi-paksa-platform-ekosistem.md` pain is the warning. A neutral, multi-tenant standard is the structural antidote.
+
+The "data-honeypot" failure. The warung graph becomes so valuable that the operator monetizes it against the owners (selling location and throughput to their suppliers at the owners' expense). This is the governance gap. An open or cooperative-held graph prevents it.
+
+## Why this is a bottleneck and not just an opportunity
+
+The vault separates "bottlenecks" (structural frictions) from "opportunities" (one-pagers for ventures). This note belongs in bottlenecks because the core finding is a missing layer, a friction, not a company. The friction is: a 16-million-node physical network that is invisible and unusable to logistics because no one has built the record-plus-signal-plus-dispatch-plus-settlement integration. That is a classic infrastructure bottleneck. It may spawn opportunities (a node-layer startup, an open warung graph, a compliance SaaS), and those would be logged in `07-gaps-and-opportunities/` once the bottleneck is understood. The bottleneck analysis comes first because it explains why the opportunity, if attempted, fails at the integration step rather than the idea step.
+
+## Synthesis: the node layer as connective tissue for the vault
+
+Read across the vault, the warung-node idea is the connective tissue between several threads. It is the demand-side fix for `ojol-logistics-inefficiency.md` (the walkable anchor that absorbs the last 200 meters). It consumes the location primitives from `ojol-address-normalization.md`. It routes around the formalization cliff in `umkm-npwp-registration-gap.md` via QRIS settlement. It reuses the QRIS credit signal from `digital-credit-scoring-umkm-qris.md`. It is threatened by the platform-lock pattern in `umkm-digitalisasi-paksa-platform-ekosistem.md`. And it could be financed by the cooperative model in `koperasi-simpan-pinjam-ojol.md`. No single opportunity file captures this web; the bottleneck note is where the threads meet, which is why it earns its place in `03-id-business-trends/bottlenecks/`.
+
 ## Sources
 
 1. Wikipedia, "Warung" (Indonesian). `https://id.wikipedia.org/wiki/Warung`. Accessed 2026-07-07. Defines warung as essential family-owned retail; lists warung nasi, sembako, kopi, kelontong, internet, telekomunikasi.
