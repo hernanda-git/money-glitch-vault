@@ -10,3 +10,5 @@
 
 
 ## 2026-07-07 -- enrich: HalalReady UMKM halal certification automation platform -- 927-line opportunity one-pager for WhatsApp-first SaaS automating the NPWP-to-NIB-to-SEHATI halal certification pipeline for 64M UMKM, timed to October 2026 sanctions deadline. Includes full technical architecture, P3H marketplace, revenue model, go-to-market strategy, and competitive analysis.
+
+## 2026-07-07 -- enrich: COD settlement infrastructure bottleneck -- 1465-line bottleneck analysis of why COD payment settlement takes 7-14 days for tier 2/3 UMKM; covers full settlement chain (courier to LO to hub to platform), unit economics (COD vs QRIS margin comparison), QRIS adoption barriers, BNPL landscape, platform-specific mechanics (Shopee, Tokopedia, Lazada, Bukalapak), technical architecture with pseudocode and SQL schema, regulatory framework (BI, OJK), and proposed COD advance/factoring solution. 3 new gaps discovered.
