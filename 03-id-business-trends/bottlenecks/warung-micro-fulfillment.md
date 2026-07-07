@@ -256,6 +256,237 @@ The whole loop is buildable on off-the-shelf parts: a mobile app or WhatsApp bot
 
 The persistence of warungs against modern retail, documented by OttoPay, is the demand-side insurance for this thesis: warungs are not a dying format that needs saving, they are a stable, adapting institution. Source: `https://ottopay.id/blog/artikel/jenis-warung-tradisional-di-indonesia/`. The Gojek/GoTo scale (170 million users, decacorn) shows the demand app and driver fleet already exist; what is missing is the neighborhood node that those drivers drop into. Source: `https://en.wikipedia.org/wiki/Gojek`. The 61.7 percent of the economy from MSMEs shows the prize is large. Source: `https://en.wikipedia.org/wiki/Economy_of_Indonesia`.
 
+## Prior-attempt comparison, in one table
+
+The fragmentation of prior attempts is easier to see side by side. None combined node record, capacity signal, dispatch, and settlement into one shared layer.
+
+| Player | Model | Warung role | Held inventory? | Network effect | Outcome |
+|--------|-------|-------------|----------------|----------------|---------|
+| Mitra Bukalapak | Agent network, PPOB + parcel point | Service/pickup point | No | Per-agent onboarding, no mesh | Retrenched to virtual products |
+| GrabKios / Kudo | O2O agent top-up | Top-up + paypoint | No | Agent list, not fulfillment | Folded into Grab ecosystem |
+| Warung Pintar (Yummy/Grab) | Branded capex smart stall | Owned node | Partial (retail stock) | Vertically owned, not open | Wound down post-2021 acquisition |
+| Shopee Mitra | Agent app, PPOB | Cash-in/out + parcel | No | Per-agent, no mesh | Adjacency to e-commerce |
+| GoFood / GoShop | Merchant delivery | Source of goods | N/A (sells own) | Strong demand app | Warung is pickup origin, not node |
+| seleraku (B2B) | Procurement digitization | Buyer of restock | "In" only | Supplier side | No delivery network use |
+
+The empty cells in the "Held inventory?" and "Network effect" columns are the gap. Every player solved a slice and stopped. The integrating layer sits in the intersection and has no occupant.
+
+## A fuller dispatcher implementation
+
+The matching sketch above is toy-grade. A production dispatcher is a small service that maintains a live capacity index, accepts parcel assignments, and emits driver routes. Below is a reference implementation in Python using Redis for the live index and a simple HTTP surface. It is illustrative, not production-hardened.
+
+```python
+# dispatcher.py - reference architecture for warung-node parcel routing
+import json, math, time, redis, geojson
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+r = redis.Redis(host="redis", port=6379, db=0)
+
+CAP_KEY = "warung:cap:{warung_id}"          # hash: free_slots, cold, lat, lon, owner_wa
+IDX_KEY = "warung:geo"                       # geohash bucket -> set of warung_ids
+
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371.0
+    dlat, dlon = math.radians(lat2-lat1), math.radians(lon2-lon1)
+    a = (math.sin(dlat/2)**2 +
+         math.cos(math.radians(lat1))*math.cos(math.radians(lat2))*math.sin(dlon/2)**2)
+    return 2*R*math.asin(math.sqrt(a))
+
+def geohash_bucket(lat, lon, precision=6):
+    # 6-char geohash ~ 1.2km x 0.6km, good for neighborhood matching
+    import geohash2
+    return geohash2.encode(lat, lon, precision)
+
+@app.route("/node/heartbeat", methods=["POST"])
+def node_heartbeat():
+    # Called by the warung app when it opens, sets capacity, refreshes TTL
+    d = request.json
+    wid = d["warung_id"]
+    pipe = r.pipeline()
+    pipe.hset(CAP_KEY.format(warung_id=wid), mapping={
+        "free_slots": d["free_slots"],
+        "cold": int(d.get("cold", False)),
+        "lat": d["lat"], "lon": d["lon"],
+        "owner_wa": d["owner_wa"],
+        "ts": int(time.time()),
+    })
+    pipe.expire(CAP_KEY.format(warung_id=wid), 86400)  # stale if no heartbeat 24h
+    bucket = geohash_bucket(d["lat"], d["lon"])
+    pipe.sadd(IDX_KEY, wid)
+    pipe.sadd(f"warung:bucket:{bucket}", wid)
+    pipe.execute()
+    return jsonify({"ok": True})
+
+@app.route("/assign", methods=["POST"])
+def assign():
+    d = request.json
+    plat, plon = d["lat"], d["lon"]
+    need_cold = d.get("need_cold", False)
+    radius = d.get("radius_km", 1.5)
+    # Expand bucket search outward until candidates or max radius
+    candidates = []
+    checked = set()
+    for bucket in expanding_buckets(geohash_bucket(plat, plon), max_steps=3):
+        for wid in r.smembers(f"warung:bucket:{bucket}"):
+            if wid in checked:
+                continue
+            checked.add(wid)
+            cap = r.hgetall(CAP_KEY.format(warung_id=wid))
+            if not cap or int(cap.get(b"free_slots", 0)) <= 0:
+                continue
+            if need_cold and not int(cap.get(b"cold", 0)):
+                continue
+            wlat, wlon = float(cap[b"lat"]), float(cap[b"lon"])
+            dist = haversine(plat, plon, wlat, wlon)
+            if dist <= radius:
+                candidates.append((dist, wid, cap))
+    if not candidates:
+        return jsonify({"assigned": False, "reason": "no_node_in_radius"})
+    candidates.sort(key=lambda x: x[0])
+    dist, wid, cap = candidates[0]
+    r.hincrby(CAP_KEY.format(warung_id=wid), "free_slots", -1)
+    # Notify owner via WhatsApp (see owner bot section)
+    notify_owner(cap[b"owner_wa"], f"Parcel inbound, {dist:.2f}km away")
+    return jsonify({"assigned": True, "warung_id": wid, "dist_km": round(dist, 3)})
+
+def expanding_buckets(gh, max_steps=3):
+    # yield neighbor buckets at increasing precision steps
+    yield gh
+    import geohash2
+    for step in range(1, max_steps+1):
+        for nb in geohash2.neighbors(gh[:max(1, len(gh)-step)]):
+            yield nb
+
+def notify_owner(wa, msg):
+    # In production call an official WA Business API provider (WATI, 360dialog)
+    # or a self-hosted baileys client. Pseudocode:
+    # whatsapp_client.send(to=wa, text=msg)
+    pass
+
+if __name__ == "__main__":
+    app.run(port=5000)
+```
+
+The design choices worth noting: capacity is a decrementing counter with a daily TTL so a warung that goes silent cannot hold phantom capacity forever. Bucketing by geohash avoids scanning all 16 million nodes for every parcel. The assignment is greedy nearest with capacity, which is fine because the hard routing (driver multi-stop tours) happens after node assignment, in the layer described in `ojol-logistics-inefficiency.md`.
+
+## Owner-side interaction: the WhatsApp-first bot
+
+Warung owners are not going to install and learn a complex app. The onboarding and daily loop should run on WhatsApp, which they already use. A minimal bot flow:
+
+```text
+Owner: (types) "BUKA 10"
+Bot:    "Terima kasih Ibu Siti. Warung WNG-32719 buka hari ini, kuota 10 paket.
+         Saya kabari kalau ada paket masuk. Jam tutup pukul 21:00 ya."
+
+[later, driver drops batch]
+
+Bot:    "Ada 3 paket masuk dari kurir. Scan barcode masing-masing ya.
+         Paket A: AMAN, Paket B: AMAN, Paket C: AMAN."
+Owner:  (scans) "A B C"
+Bot:    "Terkonfirmasi 3 paket tersimpan. Estimasi pendapatan +Rp4.500."
+
+[customer arrives]
+
+Bot:    "Paket A diambil oleh pembeli. +Rp1.500 lunas ke rekening besok pagi."
+```
+
+The bot is the trust surface. Every state transition is confirmed by the owner so there is no ambiguity about custody. The message templates above are the contract. Underneath, each confirmation writes a ledger entry and a custody event. The bot can be built on the official WhatsApp Business API or a self-hosted client; for cost at warung scale, a shared multi-tenant client per region is the realistic pattern.
+
+## Settlement and the dispute/insurance pool
+
+Per-action settlement needs a backstop for loss or damage. A simple pooled model:
+
+```python
+# ledger.py - node fee ledger + insurance pool
+from dataclasses import dataclass
+from enum import Enum
+
+class CustodyEvent(Enum):
+    DROPPED = "dropped"          # driver -> node
+    CONFIRMED = "confirmed"      # node acknowledged
+    PICKED_UP = "picked_up"      # customer -> left node
+    LOST = "lost"                # dispute opened
+
+@dataclass
+class LedgerEntry:
+    warung_id: str
+    parcel_id: str
+    event: CustodyEvent
+    fee_idr: int
+    ts: float
+
+INSURANCE_RATE = 0.02  # 2% of node fee goes to a shared loss pool
+
+def on_confirmed(warung_id, parcel_id, base_fee=1500):
+    fee = base_fee
+    pool_contrib = int(fee * INSURANCE_RATE)
+    # At batch settlement: pay (fee - pool_contrib) to owner, add pool_contrib to pool
+    return LedgerEntry(warung_id, parcel_id, CustodyEvent.CONFIRMED, fee, time.time())
+
+def resolve_dispute(parcel_id, at_fault: str):
+    # at_fault in {"node", "driver", "customer", "force_majeure"}
+    if at_fault == "node":
+        # owner liable up to pool coverage; deduct from future payouts
+        compensate_customer_from_pool(parcel_id)
+    elif at_fault == "driver":
+        charge_courier_partner(parcel_id)
+    # force_majeure: split between pool and customer, per T&C
+```
+
+The 2 percent insurance skim is the cost of trust at scale. Without it, a single lost-parcel dispute can poison the relationship between owner and network. With it, the pool absorbs shocks and the owner's payout is predictable. This is the kind of operational detail that the branded-capex players under-built.
+
+## Regional variation: one model does not fit all 17,000 islands
+
+The warung node thesis behaves very differently by region, and the address-normalization gap compounds it.
+
+Java and Bali: dense, high e-commerce volume, decent maps. Warung nodes here are the easiest win. A kelurahan with 30 warungs and 2,000 parcels a month can absorb Click-and-Collect immediately. The constraint is operational quality, not geography.
+
+Sumatra, Sulawesi, Kalimantan: medium density, weaker maps, longer driver distances. Nodes here save more per parcel because the last mile is longer, so the economic wedge is actually larger. But map confidence is lower, so the geohash-plus-voice-pin pattern from `ojol-address-normalization.md` is mandatory, not optional.
+
+Eastern Indonesia (Maluku, Papua, NTT): sparse, expensive logistics, few modern retail competitors. A warung node here can double as the only reliable parcel access point for a village. The social value is highest and the commercial margin thinnest, which points to a subsidy or CSR/public-private model rather than pure commercial rollout.
+
+The rollout order is therefore not "biggest city first" by vanity, but "densest parcel-to-warung ratio first," which is Java and Bali, then the long-last-mile secondary cities where the savings per parcel are largest.
+
+## The warung graph as the real asset
+
+Whoever runs the node layer accumulates, as a side effect, a live graph of every participating warung: location (with confidence), capabilities, hours, capacity utilization, and throughput. No such dataset exists today. BPS can tell you there are tens of millions of UMKM; it cannot tell you which warung on Jl. Mawar is open at 8pm and can hold a frozen parcel. That gap in the public data is itself a moat.
+
+The graph has uses beyond fulfillment:
+- Micro-targeted procurement: a B2B supplier can see real demand density per kelurahan.
+- Credit scoring: node throughput is a cash-flow signal usable by the QRIS credit-scoring model in `07-gaps-and-opportunities/opportunities/digital-credit-scoring-umkm-qris.md`.
+- Disaster logistics: in a flood or eruption, the warung graph is a ready distribution mesh.
+- Public policy: governments trying to reach warungs with subsidies (like the rice or cooking-oil programs) currently have no addressable list.
+
+The governance question (new gap, recorded below) is whether this graph should be open, platform-locked, or regulated as a public utility. The pattern from `umkm-digitalisasi-paksa-platform-ekosistem.md` warns that platform lock-in is the likely default unless an open standard is deliberately built.
+
+## Worked example: one kelurahan, 20 warungs, 200 parcels a day
+
+Assume a kelurahan with 20 warungs onboarded, each holding up to 10 parcels/day, and 200 parcels/day destined for the area.
+
+- Without nodes: 200 residential drops, average 1.2km between stops in dense lanes, driver does ~25 stops/hour effective (parking, walk-up). Needs ~8 driver-hours.
+- With nodes: parcels routed to the 20 warungs by nearest-capacity. A driver drops batches of ~10 at each of 20 nodes = 20 stops instead of 200. At 20 stops/hour, ~1 driver-hour for the drop phase, plus customers self-collect on foot (zero driver cost).
+- Saving: ~7 driver-hours/day for this one kelurahan, roughly an 85 percent reduction in last-mile driver time for the parcels routed through nodes.
+- Owner income: 200 parcels x IDR 1,200 = IDR 240,000/day split across 20 owners = IDR 12,000/owner/day, IDR 360,000/month.
+
+The example is deliberately conservative (only 10 parcels/node, IDR 1,200 fee). At 15 parcels and IDR 1,500 the owner income reaches the IDR 675,000/month figure from the unit-economics sketch. The driver-time saving is the network's reason to pay; the owner income is the owner's reason to participate. Both are positive simultaneously, which is why the gap is wedge-shaped rather than a subsidy sink.
+
+## Phased rollout and the KPIs that prove it works
+
+Phase 0, single city, Click-and-Collect only, no cold: prove that owners reliably hold parcels and customers walk to them. KPI: hold accuracy > 99 percent, pickup rate > 90 percent within 24h, owner churn < 10 percent/month.
+
+Phase 1, add COD and returns: warungs become cash-handling and return nodes. KPI: cash reconciliation error < 0.5 percent, return processing time < 10 min.
+
+Phase 2, multi-tenant: the same node serves more than one logistics or e-commerce partner, proving the open-standard thesis and reducing platform-lock risk. KPI: node revenue per day rises with each added partner.
+
+Phase 3, cold-capable nodes in dense areas: grocery and pharmacy fulfillment. KPI: cold-chain incident rate < 1 percent, cold-node utilization > 50 percent.
+
+Each phase has a kill criterion. If Phase 0 hold accuracy or pickup rate misses, the model is broken at the foundation and no amount of later features fixes it. The Warung Pintar failure was effectively skipping Phase 0 economics by going capex-heavy; this sequencing is the explicit correction.
+
+## Why the super-apps have not just done this
+
+A fair objection: GoTo and Grab already have drivers, customers, and merchant relationships. Why have they not turned warungs into nodes? Three reasons. One, their incentive is to keep volume inside their own app and driver fleet, not to create a shared neutral layer that competitors could also use. Two, node quality control is operational pain they have historically pushed onto merchants (GoFood ratings) rather than solved as infrastructure. Three, the marg-incremental per-parcel node fee is small relative to their core take rates, so it ranks low against other roadmap bets. That is exactly the opening: a neutral, multi-tenant node layer is something the super-apps are structurally unlikely to build because it commoditizes their last-mile advantage.
+
 ## Sources
 
 1. Wikipedia, "Warung" (Indonesian). `https://id.wikipedia.org/wiki/Warung`. Accessed 2026-07-07. Defines warung as essential family-owned retail; lists warung nasi, sembako, kopi, kelontong, internet, telekomunikasi.
