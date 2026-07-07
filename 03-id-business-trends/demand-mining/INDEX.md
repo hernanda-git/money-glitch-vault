@@ -36,3 +36,7 @@
 - [2026-07-07] Nelayan Tradisional Kesulitan Dapat Solar Subsidi, Biaya Melaut Membengkak — strength 5/5 — farmer
 - [2026-07-07] Pesangon Karyawan yang Kena PHK Tak Dibayar Bertahun-tahun — strength 5/5 — employee
 - [2026-07-07] UMKM Makanan Minuman Sulit Urus Izin Edar BPOM dan PIRT — strength 4/5 — umkm
+
+- [2026-07-07] Harga Gas Industri Mahal Memukul Manufaktur UMKM — strength 5/5 — umkm
+- [2026-07-07] Desa Terpencil Terisolasi dari Pasar Akibat Jalan Desa Rusak — strength 5/5 — farmer
+- [2026-07-07] Regenerasi Petani Terhambat, Pemuda Enggan ke Sawah — strength 4/5 — farmer
