@@ -33,3 +33,6 @@
 - [2026-07-07] Pajak JHT Berganda: Buruh Dikenakan Pajak Berkali-Kali — strength 5/5 — employee
 - [2026-07-07] Scam Digital Semakin Canggih dengan AI: Kerugian Masyarakat Tembus Rp 9,3 Triliun — strength 5/5 — other
 - [2026-07-07] Rupiah Melemah ke 18.000/USD: UMKM Pengimpor Bahan Baku Terpukul — strength 4/5 — umkm
+- [2026-07-07] Nelayan Tradisional Kesulitan Dapat Solar Subsidi, Biaya Melaut Membengkak — strength 5/5 — farmer
+- [2026-07-07] Pesangon Karyawan yang Kena PHK Tak Dibayar Bertahun-tahun — strength 5/5 — employee
+- [2026-07-07] UMKM Makanan Minuman Sulit Urus Izin Edar BPOM dan PIRT — strength 4/5 — umkm
