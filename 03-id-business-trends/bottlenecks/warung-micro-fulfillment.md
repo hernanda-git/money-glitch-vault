@@ -718,6 +718,49 @@ The vault separates "bottlenecks" (structural frictions) from "opportunities" (o
 
 Read across the vault, the warung-node idea is the connective tissue between several threads. It is the demand-side fix for `ojol-logistics-inefficiency.md` (the walkable anchor that absorbs the last 200 meters). It consumes the location primitives from `ojol-address-normalization.md`. It routes around the formalization cliff in `umkm-npwp-registration-gap.md` via QRIS settlement. It reuses the QRIS credit signal from `digital-credit-scoring-umkm-qris.md`. It is threatened by the platform-lock pattern in `umkm-digitalisasi-paksa-platform-ekosistem.md`. And it could be financed by the cooperative model in `koperasi-simpan-pinjam-ojol.md`. No single opportunity file captures this web; the bottleneck note is where the threads meet, which is why it earns its place in `03-id-business-trends/bottlenecks/`.
 
+## Node onboarding runbook (operational, not theoretical)
+
+The integration cost lives mostly in onboarding. A concrete runbook for bringing one warung online, low-friction:
+
+1. Discovery. Walk or ride the kelurahan, photograph each warung, note operating hours from the physical sign. This bootstraps the warung graph where maps are weak, directly addressing `ojol-address-normalization.md`.
+2. First contact. Explain in Bahasa, with a neighbor as translator if needed: "Terima kasih, Bu. Kami bantu warung dapat penghasilan tambahan dari menerima paket tetangga. Tidak keluar modal." The no-capex promise is the hook.
+3. Identity. Capture owner name, WhatsApp number, and a photo of KTP (hashed, not stored in clear). NPWP if present; if absent, note it and route settlement via QRIS to avoid the formalization cliff.
+4. Location. Owner sends a WhatsApp live location pin, plus a voice note describing the landmark ("sebelah musholla, pojok jalan"). Transcribe to `normalized_address` with a `map_confidence` score. Low confidence triggers the voice-pin fallback at dispatch time.
+5. Capacity. Owner declares `daily_capacity_parcels` (start conservative, e.g., 5). This is tuned up as throughput proves out.
+6. Payments. Link a QRIS string or bank account. For unbanked owners, a nearby BPR or e-wallet agent cash-out is arranged.
+7. Go live. Owner texts "BUKA N" daily; the heartbeat sets capacity. First parcels routed next day.
+8. First-week handholding. A human checks in twice the first week to fix UX frictions before they cause churn.
+
+The runbook is deliberately human-heavy at the start and automates only after the pattern is proven. Over-automating onboarding is how platforms scale churn instead of nodes.
+
+## Data model for the warung graph (the asset, formalized)
+
+If the node layer is the product, the warung graph is the moat. A normalized schema for the graph:
+
+```json
+{
+  "graph_meta": {"version": "0.1", "generated": "2026-07-07", "coverage_kelurahan": "Sukamaju"},
+  "nodes": [
+    {
+      "warung_id": "WNG-32719",
+      "type": "warung_sembako",
+      "centroid": {"lat": -6.2001, "lon": 106.8163, "geohash": "qqzpv", "confidence": 0.42},
+      "footprint_m2": 12,
+      "operating_hours": {"open": "07:00", "close": "21:00"},
+      "capabilities": {"parcel_hold": true, "cold": false, "ppob": true, "qris": true},
+      "throughput_30d": {"parcels_held": 280, "parcels_picked_24h_pct": 94.1},
+      "owner": {"digital_tier": "already_digital", "npwp": false}
+    }
+  ]
+}
+```
+
+This graph lets a B2B supplier see real demand density, a credit model see cash flow (feeding `digital-credit-scoring-umkm-qris.md`), and a disaster agency see distribution nodes. No equivalent open dataset exists. The governance decision (open vs locked) is the recorded gap; the technical ability to build it is the moat.
+
+## Moat timing: why now and not five years ago
+
+Three shifts make the node layer viable now where it was not before. QRIS reached near-ubiquitous acceptance, so settlement to an informal merchant is finally clean. Smartphone penetration among warung owners is high enough that a WhatsApp bot is a real interface, not a dream. And e-commerce parcel volume in Indonesia crossed the threshold where door-to-door last-mile is genuinely unprofitable in dense areas, creating pull from logistics players rather than requiring the node layer to manufacture demand. The Warung Pintar era (2017 to 2021) had none of these tailwinds fully in place; it was early. The 2026 window is materially different, which is why the bottleneck is ripe to be solved now rather than re-attempted and abandoned.
+
 ## Sources
 
 1. Wikipedia, "Warung" (Indonesian). `https://id.wikipedia.org/wiki/Warung`. Accessed 2026-07-07. Defines warung as essential family-owned retail; lists warung nasi, sembako, kopi, kelontong, internet, telekomunikasi.
