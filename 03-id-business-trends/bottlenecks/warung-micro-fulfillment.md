@@ -487,6 +487,180 @@ Each phase has a kill criterion. If Phase 0 hold accuracy or pickup rate misses,
 
 A fair objection: GoTo and Grab already have drivers, customers, and merchant relationships. Why have they not turned warungs into nodes? Three reasons. One, their incentive is to keep volume inside their own app and driver fleet, not to create a shared neutral layer that competitors could also use. Two, node quality control is operational pain they have historically pushed onto merchants (GoFood ratings) rather than solved as infrastructure. Three, the marg-incremental per-parcel node fee is small relative to their core take rates, so it ranks low against other roadmap bets. That is exactly the opening: a neutral, multi-tenant node layer is something the super-apps are structurally unlikely to build because it commoditizes their last-mile advantage.
 
+## The Warung Pintar post-mortem, in detail
+
+Warung Pintar (under Yummy Group / Yummy Corp) is the closest historical precedent to a capex warung node, and its trajectory is the single most important cautionary data point for this thesis. Understanding precisely what broke matters more than the headline "it shut down."
+
+What Warung Pintar got right: it recognized that warungs are the densest retail footprint in the country and that digitizing them creates leverage. It built a branded, tech-enabled stall with a point-of-sale, digital payments, inventory suggestion, and a franchise operating model. It attracted real capital and credible backers and expanded across Jabodetek and other cities.
+
+What broke: the unit economics of an owned-and-operated physical retail node are brutal. Each location carried rent or build cost, staffing, inventory, and technology. To make a single node profitable you need either high throughput (many transactions) or high margin (value-added services), and a newly built smart warung in a random corner does not start with either. The model also competed with the very warungs it could have partnered with, doubling its own capex instead of leveraging existing infrastructure. When macro capital tightened in 2022 to 2023 and Grab (which acquired Yummy Corp in 2021) prioritized profitability over footprint, the smart-warung network was a natural place to cut. Multiple trade reports described layoffs and a strategic wind-down, with capabilities folded into Grab's broader merchant and delivery ecosystem rather than maintained as standalone branded stalls.
+
+The lesson for the node-layer thesis is precise and counterintuitive: do not own the warung, use it. Asset-light, pay-per-action, incremental-capability is the only version with a shot at the 16 million scale. The node layer should be software and operations on top of existing warungs, not real estate. This is the central design constraint that separates a viable wedge from a closed experiment.
+
+## Regulatory and compliance surface
+
+Turning a warung into a node is not purely a software problem. It creates a compliance surface that nobody has mapped cleanly.
+
+Storage and logistics liability. A warung holding a third party's parcel is, functionally, a temporary warehouse. Indonesian logistics and consumer-protection rules around lost, damaged, or late goods may attach. The node operator needs a standard custody agreement with each owner and a clear allocation of fault (node, driver, customer, force majeure), which is exactly what the insurance-pool code above models.
+
+Personal data. When a customer's parcel is routed to "Warung Ibu Siti," the customer's name, address fragment, and phone may transit through the node owner's phone or app. That is personal data under the PDP Law (Undang-Undang Pelindungan Data Pribadi, effective 2022, with implementing regulations rolling out through 2024 to 2026). The node layer must minimize what the owner sees (e.g., a pickup code, not a full address) and document a lawful basis for any personal data the owner handles. This is a regtech gap in its own right, captured in the new gaps below.
+
+Tax and formalization. As noted in `umkm-npwp-registration-gap.md`, many warung owners lack NPWP. Node income paid to them needs a reporting path. QRIS-based settlement lowers the identity bar and creates a clean transaction trail, which paradoxically helps formalization, but the operator still needs to handle 23 percent final-income-tax withholding (PPh 23) mechanics for non-NPWP vs NPWP owners or route through a PJP that handles it. The compliance plumbing is non-trivial at 16 million nodes.
+
+Local trading and zoning. Some kelurahans restrict non-residential activity in residential zones. A warung is already a business, but a high-traffic parcel hub may draw complaints. Early engagement with local government (kelurahan, camat) is part of the rollout, not an afterthought.
+
+## Cold chain and IoT: extending the node schema
+
+For grocery and pharmacy fulfillment, the node needs to prove temperature integrity. The node schema from the architecture section extends with an IoT device record:
+
+```json
+{
+  "cold_unit": {
+    "present": true,
+    "type": "chest_freezer_100L",
+    "iot_sensor": "ESP32-Therm-0001",
+    "temp_c_current": -4.2,
+    "temp_c_min_24h": -1.0,
+    "temp_c_max_24h": 6.5,
+    "last_telemetry_ts": "2026-07-07T13:55:00+07:00",
+    "breach_count_30d": 0
+  }
+}
+```
+
+The telemetry is the trust signal for cold SKUs. A pharmacy or grocery partner will only route temperature-sensitive goods to a node whose `breach_count_30d` stays near zero. The sensor can be a sub-IDR 200,000 ESP32 with a DS18B20 probe reporting over the owner's phone hotspot or a cheap SIM. The capex is small; the financing of it is the separate gap recorded below (warung-cold-chain-capex).
+
+## Inventory sync protocol (the "inventory out" half)
+
+Procurement players (seleraku and peers) solve "inventory in" (restocking the warung). Fulfillment needs "inventory out" and "hold for network." A minimal sync protocol, polled or pushed, looks like:
+
+```json
+{
+  "warung_id": "WNG-32719",
+  "ts": "2026-07-07T14:00:00+07:00",
+  "network_stock": [
+    {"sku": "PARCEL-AX12", "state": "held", "since": "2026-07-07T13:10:00+07:00"},
+    {"sku": "PARCEL-BZ09", "state": "held", "since": "2026-07-07T13:12:00+07:00"}
+  ],
+  "network_capacity": {"free_slots": 8, "cold_free": 2},
+  "own_stock_flag": false
+}
+```
+
+The `own_stock_flag` is important: the node layer should not, in Phase 0, try to manage the warung's own retail inventory. That is the procurement players' domain and a much harder problem (per-SKU, per-expiry, per-supplier). The node layer only tracks network-owned items (parcels, held goods) and capacity. Keeping the scope narrow is what makes Phase 0 achievable. Later phases can optionally ingest the owner's own stock for grocery top-up fulfillment, but that is an explicit later bet, not the foundation.
+
+## Driver app: batch drop and route building
+
+On the driver side, the node assignment changes the route shape from many small residential stops to few large node drops. A batch-drop route builder:
+
+```python
+# driver_route.py - build a node-batch route from assigned parcels
+def build_node_drops(assignments):
+    # assignments: list of (parcel_id, warung_id, lat, lon)
+    from collections import defaultdict
+    by_node = defaultdict(list)
+    for p in assignments:
+        by_node[p.warung_id].append(p)
+    # Order nodes by a traveling-salesman-ish greedy over node centroids
+    nodes = [(wid, sum(p.lat for p in ps)/len(ps), sum(p.lon for p in ps)/len(ps), ps)
+             for wid, ps in by_node.items()]
+    route = greedy_tsp(nodes)   # returns ordered list of (wid, parcels)
+    return [{"warung_id": wid, "parcels": [p.parcel_id for p in ps],
+             "scan_all": True} for wid, _, _, ps in route]
+
+def greedy_tsp(nodes, start=(DRIVER_LAT, DRIVER_LON)):
+    remaining = list(nodes)
+    cur = start
+    route = []
+    while remaining:
+        remaining.sort(key=lambda n: haversine(cur[0], cur[1], n[1], n[2]))
+        nxt = remaining.pop(0)
+        route.append(nxt)
+        cur = (nxt[1], nxt[2])
+    return route
+```
+
+This is the mirror image of the residential route. Instead of 200 stops, the driver does ~20 node stops and scans a batch at each. The parcel-to-customer last 200 meters is handled by the customer walking in. The driver's effective throughput jumps because parking and walk-up time per parcel collapses.
+
+## Adoption barriers by owner persona
+
+Not every warung owner will say yes. Segmenting the long tail by persona clarifies the go-to-market.
+
+The "already-digital" owner (Mitra Bukalapak / Shopee Mitra agent, uses QRIS, has a smartphone): easiest. They already earn from adjacencies and understand the model. Target these first; they are reference cases.
+
+The "cash-only" owner (no smartphone literacy beyond WhatsApp, cash-first): reachable via WhatsApp bot and a family member who helps set up. The bot must be voice-friendly and Bahasa, not app-heavy.
+
+The "skeptic" owner (burned by a prior scheme, distrusts platforms): needs trust proof, perhaps a cooperative or local-government endorsement, and a no-capex promise. The `umkm-digitalisasi-paksa-platform-ekosistem.md` pain is concentrated here.
+
+The "too-busy" owner (warteg, high foot traffic, no spare attention): only works if the node interaction is seconds, not minutes. Scan-and-go, no paperwork. This persona caps node throughput by attention, not space, which the capacity signal must respect (lower `daily_capacity_parcels`).
+
+The segmentation matters because the onboarding cost per persona differs by an order of magnitude, and the rollout should sequence by lowest-friction first to build proof before chasing the hard segments.
+
+## Instrumentation and the metrics that detect failure early
+
+A node layer lives or dies on instrumentation. The minimum event stream:
+
+- `node_heartbeat`: owner opens, sets capacity. Detects silent nodes (no heartbeat 24h = capacity auto-zeroed).
+- `parcel_dropped`: driver scans at node. Detects drop-side failures.
+- `parcel_confirmed`: owner acknowledges. Detects custody gaps.
+- `parcel_picked_up`: customer collects. Detects pickup-rate decay.
+- `parcel_expired`: not picked up in SLA. Detects bad node placement or poor customer comms.
+- `dispute_opened` / `dispute_resolved`: trust health.
+
+Dashboards should surface, per kelurahan: hold accuracy, 24h pickup rate, owner churn, dispute rate, and average parcels per node per day. The kill criteria from the phased-rollout section are computed from exactly these. Without this instrumentation, a node network fails silently, which is the failure mode that killed several informal logistics experiments that never published their numbers.
+
+## OpenAPI-style node service contract
+
+For teams building the integrating layer, a minimal service contract helps. In OpenAPI-ish form:
+
+```yaml
+openapi: 3.0.0
+info:
+  title: Warung Node Fulfillment API
+  version: 0.1.0
+paths:
+  /node/heartbeat:
+    post:
+      summary: Owner opens node, declares capacity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                warung_id: {type: string}
+                free_slots: {type: integer}
+                cold: {type: boolean}
+                lat: {type: number}
+                lon: {type: number}
+                owner_wa: {type: string}
+  /assign:
+    post:
+      summary: Route a parcel to nearest capable node
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lat: {type: number}
+                lon: {type: number}
+                need_cold: {type: boolean}
+                radius_km: {type: number}
+      responses:
+        '200':
+          description: Assignment result
+  /node/{warung_id}/parcels:
+    get:
+      summary: List network-held parcels at a node
+```
+
+This contract is intentionally small. The temptation in any platform play is to over-specify. The node layer should expose just enough for a dispatcher and a driver app to function, and resist feature creep until Phase 0 proves out.
+
+## Comparison to models outside Indonesia
+
+The warung-node idea is not unique to Indonesia, which is reassuring. Convenience-store networks as parcel points (7-Eleven, FamilyMart in Japan, Thailand, and the Philippines) and "click and collect" at neighborhood shops (InPost lockers in Europe, Amazon Hub in the US) prove the pattern works where density and trust exist. The Indonesian twist is that the node is an informal micro-merchant, not a corporate chain, so the trust and settlement rails must be rebuilt for a low-formalization counterparty. That rebuild is the actual innovation, and it is where the prior Indonesian attempts under-invested. The global precedent de-risks the consumer behavior (people will walk to a shop to collect a parcel); the local work is the counterparty formalization.
+
 ## Sources
 
 1. Wikipedia, "Warung" (Indonesian). `https://id.wikipedia.org/wiki/Warung`. Accessed 2026-07-07. Defines warung as essential family-owned retail; lists warung nasi, sembako, kopi, kelontong, internet, telekomunikasi.
