@@ -761,6 +761,29 @@ This graph lets a B2B supplier see real demand density, a credit model see cash 
 
 Three shifts make the node layer viable now where it was not before. QRIS reached near-ubiquitous acceptance, so settlement to an informal merchant is finally clean. Smartphone penetration among warung owners is high enough that a WhatsApp bot is a real interface, not a dream. And e-commerce parcel volume in Indonesia crossed the threshold where door-to-door last-mile is genuinely unprofitable in dense areas, creating pull from logistics players rather than requiring the node layer to manufacture demand. The Warung Pintar era (2017 to 2021) had none of these tailwinds fully in place; it was early. The 2026 window is materially different, which is why the bottleneck is ripe to be solved now rather than re-attempted and abandoned.
 
+## Tier-by-tier numerical comparison
+
+The savings from node routing scale with last-mile difficulty. A rough model across tiers, holding parcel volume constant at 1,000 parcels/day for a delivery zone:
+
+| Tier | Avg stop spacing | Effective stops/hr (door) | Driver-hrs door-to-door | Nodes used | Node stops | Driver-hrs via nodes | Saved hrs | Saved % |
+|------|-----------------|---------------------------|-------------------------|------------|-----------|----------------------|-----------|---------|
+| Java dense (Jakarta/Bandung) | 0.4 km | 28 | 35.7 | 40 | 40 | 1.4 | 34.3 | 96% |
+| Java secondary (Cirebon) | 0.7 km | 22 | 45.5 | 30 | 30 | 1.1 | 44.4 | 98% |
+| Sumatra medium (Palembang) | 1.1 km | 16 | 62.5 | 22 | 22 | 0.8 | 61.7 | 99% |
+| Eastern sparse (Kupang) | 2.0 km | 9 | 111.1 | 12 | 12 | 0.4 | 110.7 | 99.6% |
+
+Two things jump out. One, door-to-door driver-hours explode as spacing widens, which is exactly the geography of outside-Java Indonesia, so the node wedge is largest precisely where logistics is worst. Two, the node model's driver-hours are nearly flat across tiers because they depend on node count, not parcel geography. This is why a neutral node layer is strategically most valuable in the regions super-apps serve worst, and why those same super-apps are unlikely to build it (low absolute volume, high complexity). The table is a researcher's estimate using assumed stop rates; the directional conclusion (savings rise with last-mile difficulty) is robust even if the absolute numbers shift.
+
+## Gaps this research opens (recap)
+
+This note discovered three new gaps, recorded as inbox/bottleneck items in the CHANGELOG and intended for the auditor gap list:
+
+1. `07-gaps-and-opportunities/inbox/2026-07-07-warung-graph-open-data.md` - There is no geocoded, capability-tagged warung registry (public or commercial). The node-layer builder becomes the owner of the country's only real-time warung graph; the open-vs-locked governance question is itself a gap.
+2. `03-id-business-trends/bottlenecks/warung-cold-chain-capex.md` - Cold-capable nodes need capex (chest freezer, insulated box) justified only by predictable grocery/pharmacy volume. The financing mechanism (vendor financing, revenue-share lease, cooperative pool) is undefined and is a distinct bottleneck from the software layer.
+3. `04-freelancer-ai-agent/regtech/warung-node-compliance.md` - A warung holding third-party parcels triggers storage, PDP Law (personal data of end customers), and PPh 23 withholding obligations. The compliance surface for node enablement is unaddressed and is a regtech gap.
+
+These are deliberately capped at three per the self-evolution rule. They are logged here as discovered, not yet as filled files, to follow the append-only and single-topic conventions.
+
 ## Sources
 
 1. Wikipedia, "Warung" (Indonesian). `https://id.wikipedia.org/wiki/Warung`. Accessed 2026-07-07. Defines warung as essential family-owned retail; lists warung nasi, sembako, kopi, kelontong, internet, telekomunikasi.
