@@ -27,3 +27,6 @@
 - [2026-07-07] Digital Nomad Gentrifikasi Harga di Bali, Masyarakat Lokal Tersingkir — strength 4/5 — other
 - [2026-07-07] 58 Persen Pekerja Indonesia Masih di Sektor Informal, Kesenjangan Keterampilan Semakin Dalam — strength 5/5 — employee
 - [2026-07-07] UMKM Kehabisan Modal Meski Triliunan Rupiah Mengendap di Bank — strength 5/5 — umkm
+- [2026-07-07] Saldo Penjual Shopee Dibekukan, Uang Hasil Jualan Tak Bisa Cair — strength 5/5 — seller
+- [2026-07-07] Biaya Remitansi Tinggi Menggerus Upah Pekerja Migran Indonesia — strength 4/5 — employee
+- [2026-07-07] Ibu Pekerja Kesulitan Cari Daycare Aman dan Terjangkau — strength 5/5 — parent
