@@ -30,3 +30,6 @@
 - [2026-07-07] Saldo Penjual Shopee Dibekukan, Uang Hasil Jualan Tak Bisa Cair — strength 5/5 — seller
 - [2026-07-07] Biaya Remitansi Tinggi Menggerus Upah Pekerja Migran Indonesia — strength 4/5 — employee
 - [2026-07-07] Ibu Pekerja Kesulitan Cari Daycare Aman dan Terjangkau — strength 5/5 — parent
+- [2026-07-07] Pajak JHT Berganda: Buruh Dikenakan Pajak Berkali-Kali — strength 5/5 — employee
+- [2026-07-07] Scam Digital Semakin Canggih dengan AI: Kerugian Masyarakat Tembus Rp 9,3 Triliun — strength 5/5 — other
+- [2026-07-07] Rupiah Melemah ke 18.000/USD: UMKM Pengimpor Bahan Baku Terpukul — strength 4/5 — umkm
