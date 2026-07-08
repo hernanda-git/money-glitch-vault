@@ -43,3 +43,6 @@
 - [2026-07-08] Kreator Konten dan Influencer Bingung Bayar Pajak Usai Dicoret dari Skema UMKM 0,5 Persen — strength 5/5 — freelancer
 - [2026-07-08] Biaya Marketplace Meroket, Margin UMKM Seller Makin Tipis — strength 5/5 — seller
 - [2026-07-08] Pekerja Gig Economy Indonesia Fleksibel tapi Tanpa Jaminan Sosial — strength 5/5 — employee
+- [2026-07-09] Biaya Produksi UMKM Manufaktur Meroket Akibat Rupiah dan Bahan Baku — strength 4/5 — umkm
+- [2026-07-09] Ritel Elektronik dan Toko HP Sepi Pembeli, Omzet Anjlok — strength 4/5 — seller
+- [2026-07-09] Pencari Kerja Berpengalaman Gagal Tembus Seleksi CV, Kena Bias Usia — strength 5/5 — employee
