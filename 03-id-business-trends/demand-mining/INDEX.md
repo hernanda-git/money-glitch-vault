@@ -40,3 +40,6 @@
 - [2026-07-07] Harga Gas Industri Mahal Memukul Manufaktur UMKM — strength 5/5 — umkm
 - [2026-07-07] Desa Terpencil Terisolasi dari Pasar Akibat Jalan Desa Rusak — strength 5/5 — farmer
 - [2026-07-07] Regenerasi Petani Terhambat, Pemuda Enggan ke Sawah — strength 4/5 — farmer
+- [2026-07-08] Kreator Konten dan Influencer Bingung Bayar Pajak Usai Dicoret dari Skema UMKM 0,5 Persen — strength 5/5 — freelancer
+- [2026-07-08] Biaya Marketplace Meroket, Margin UMKM Seller Makin Tipis — strength 5/5 — seller
+- [2026-07-08] Pekerja Gig Economy Indonesia Fleksibel tapi Tanpa Jaminan Sosial — strength 5/5 — employee
