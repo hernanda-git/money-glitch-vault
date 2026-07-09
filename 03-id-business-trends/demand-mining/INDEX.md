@@ -55,3 +55,7 @@
 - [2026-07-09] Uang Pangkal PTN Melambung, Calon Mahasiswa Mundur Massal — strength 5/5 — student
 - [2026-07-09] LPG 3 Kg Langka di Daerah, Harga Melonjak hingga 2x Lipat — strength 4/5 — other
 - [2026-07-09] Tagihan PBB Melonjak Tiba-tiba, Warga Kaget dan Protes — strength 4/5 — other
+
+- [2026-07-09] Rakyat Kecil Gagal KPR Subsidi Gara-gara Skor SLIK OJK — strength 5/5 — employee
+- [2026-07-09] Korban Gagal Bayar Koperasi Simpan Pinjam Kehilangan Tabungan — strength 5/5 — investor
+- [2026-07-09] PKL Dipalak Preman Berkedok Ormas Tiap Hari — strength 4/5 — seller
