@@ -46,3 +46,6 @@
 - [2026-07-09] Biaya Produksi UMKM Manufaktur Meroket Akibat Rupiah dan Bahan Baku — strength 4/5 — umkm
 - [2026-07-09] Ritel Elektronik dan Toko HP Sepi Pembeli, Omzet Anjlok — strength 4/5 — seller
 - [2026-07-09] Pencari Kerja Berpengalaman Gagal Tembus Seleksi CV, Kena Bias Usia — strength 5/5 — employee
+- [2026-07-09] PPDB Zonasi 2026 Bikin Orang Tua Protes, Anak Tak Diterima Meski Rumah Dekat — strength 5/5 — parent
+- [2026-07-09] Seller TikTok Shop dan Shopee Menjerit: Kewajiban NIB dan Komisi Dinamis Melonjak 15x — strength 5/5 — seller
+- [2026-07-09] Iuran BPJS Kesehatan Dipastikan Naik 2026, Peserta Mandiri Merogoh Kocek Lebih Dalam — strength 4/5 — other
