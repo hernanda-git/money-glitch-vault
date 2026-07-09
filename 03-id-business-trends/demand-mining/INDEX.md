@@ -59,3 +59,7 @@
 - [2026-07-09] Rakyat Kecil Gagal KPR Subsidi Gara-gara Skor SLIK OJK — strength 5/5 — employee
 - [2026-07-09] Korban Gagal Bayar Koperasi Simpan Pinjam Kehilangan Tabungan — strength 5/5 — investor
 - [2026-07-09] PKL Dipalak Preman Berkedok Ormas Tiap Hari — strength 4/5 — seller
+
+- [2026-07-10] Warung Kelontong Kalah Saing dari Alfamart dan Indomaret — strength 5/5 — seller
+- [2026-07-10] Buruh Pabrik Outsourcing Jadi Prekariat Tanpa Pesangon dan Jaminan Pasti — strength 5/5 — employee
+- [2026-07-10] Harga Gabah Anjlok di Tangan Tengkulak, Petani Padi Merugi Tiap Panen — strength 4/5 — farmer
