@@ -63,3 +63,6 @@
 - [2026-07-10] Warung Kelontong Kalah Saing dari Alfamart dan Indomaret — strength 5/5 — seller
 - [2026-07-10] Buruh Pabrik Outsourcing Jadi Prekariat Tanpa Pesangon dan Jaminan Pasti — strength 5/5 — employee
 - [2026-07-10] Harga Gabah Anjlok di Tangan Tengkulak, Petani Padi Merugi Tiap Panen — strength 4/5 — farmer
+- [2026-07-10] Petani Padi Kehilangan Asuransi Gagal Panen karena Kuota AUTP Dipangkas — strength 4/5 — farmer
+- [2026-07-10] Magang Kampus Merdeka Wajib tapi Gratis, Mahasiswa Malah Rugi Biaya dan SKS — strength 4/5 — student
+- [2026-07-10] Gen Z dan Mahasiswa Terjerat PayLater, Penalti Telat Bayar Makan Gaji Pertama — strength 5/5 — student
