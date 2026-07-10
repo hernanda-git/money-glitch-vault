@@ -1,28 +1,28 @@
 {
-  "source": "sp2kp.kemendag.go.id (Tabulasi Harga, live browser scrape)",
-  "fetched_at_utc": "2026-07-10T01:13:31.298405Z",
+  "source": "api-sp2kp.kemendag.go.id (REST: report/api/average-price/generate-perbandingan-harga)",
+  "fetched_at_utc": "2026-07-10T01:25:43.340709Z",
   "data_date": "2026-07-09",
   "previous_date": "2026-07-08",
   "commodity_count": 17,
   "row_count": 26,
   "commodity_names": [
-    "Bawang Merah",
-    "Bawang Putih Honan",
     "Beras Medium",
     "Beras Premium",
     "Beras SPHP Bulog",
-    "Cabai Merah Besar",
+    "Gula Pasir Curah",
+    "Minyak Goreng Sawit Kemasan Premium",
+    "Minyak Goreng Sawit Curah",
+    "Minyakita",
+    "Daging Sapi Paha Belakang",
+    "Daging Ayam Ras",
+    "Telur Ayam Ras",
+    "Tepung Terigu",
+    "Kedelai Impor",
     "Cabai Merah Keriting",
     "Cabai Rawit Merah",
-    "Daging Ayam Ras",
-    "Daging Sapi Paha Belakang",
-    "Gula Pasir Curah",
-    "Kedelai Impor",
-    "Minyak Goreng Sawit Curah",
-    "Minyak Goreng Sawit Kemasan Premium",
-    "Minyakita",
-    "Telur Ayam Ras",
-    "Tepung Terigu"
+    "Cabai Merah Besar",
+    "Bawang Merah",
+    "Bawang Putih Honan"
   ],
   "rows": [
     {
@@ -102,8 +102,8 @@
       "commodity_name": "Beras SPHP Bulog",
       "unit": "kg",
       "region": "Nasional",
-      "previous_price": null,
-      "current_price": null,
+      "previous_price": 12366,
+      "current_price": 12366,
       "change_percent": 0.0
     },
     {
