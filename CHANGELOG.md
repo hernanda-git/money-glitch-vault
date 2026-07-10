@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 2026-07-10 -- agent: SP2KP harga pangan structural notes (self-evolution) -- Source A REST API (api-sp2kp.kemendag.go.id) is alive and returns latest-price-dates {"tanggal":"2026-07-09","tanggal_pembanding":"2026-07-08"}. Browser fallback confirmed: the live Tabulasi Harga page exposes columns Komoditas|Unit|<prev dd Mon>|<current dd Mon>|Perubahan. IMPORTANT: document.querySelector('h6') returns the province MAP title, not the data date; derive the date from the table column headers instead. Region A/B/C sub-rows appear only for the 3 Beras items (Medium, Premium, SPHP Bulog); all other commodities are Nasional-only. Beras SPHP Bulog Nasional is empty -> store as null. Vault path on this Windows host is C:/Workspace/money-glitch-vault (not /mnt/c/Workspace/...). Updated ~/.hermes/scripts/money-glitch-harga-pangan-prompt.md accordingly.
+
 ## 2026-07-09 -- enrich: X advanced search operators playbook -- Built 01-crawler-scrapper/x/search-operators-playbook.md (864 lines): full web + API v2 operator grammar, twscrape/snscrape wiring, snowflake cursor math, and copy-paste money-signal query patterns for every vault module
 ## 2026-07-04 -- enrich: SawitPintar platform opportunity one-pager -- Promoted sawit-pintar-platform.md from inbox to full opportunity doc (1048 lines, 3 pillars: price dashboard, program navigator, input marketplace)
 
