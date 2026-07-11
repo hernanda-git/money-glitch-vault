@@ -427,6 +427,194 @@ def safe_order(symbol, side, qty):
 
 ---
 
+## 14. Full reconnecting WebSocket client (asyncio)
+
+Polling burns weight and lags. Here is a production-shaped WS client that
+auto-reconnects, keeps the `listenKey` alive, and never silently drops data.
+
+```python
+import asyncio, json, time, requests, websockets  # pip install websockets
+
+HOST_WS = "wss://stream.binance.com:9443"
+REST = "https://api.binance.com"
+
+class BinanceWS:
+    def __init__(self, api_key, api_secret):
+        self.api_key, self.api_secret = api_key, api_secret
+        self.listen_key = None
+        self.stop = False
+
+    def _new_listen_key(self):
+        r = requests.post(f"{REST}/api/v3/userDataStream",
+                          headers={"X-MBX-APIKEY": self.api_key}, timeout=5)
+        self.listen_key = r.json()["listenKey"]
+
+    def _keepalive(self):
+        requests.put(f"{REST}/api/v3/userDataStream",
+                     params={"listenKey": self.listen_key},
+                     headers={"X-MBX-APIKEY": self.api_key}, timeout=5)
+
+    async def _user_stream(self):
+        while not self.stop:
+            try:
+                async with websockets.connect(f"{HOST_WS}/ws/{self.listen_key}") as ws:
+                    async for msg in ws:
+                        ev = json.loads(msg)
+                        self.on_event(ev)   # your handler: orders, balances
+            except Exception as e:
+                print(f"WS dropped: {e}; reconnect in 3s")
+                await asyncio.sleep(3)
+
+    async def _keepalive_loop(self):
+        while not self.stop:
+            await asyncio.sleep(30 * 60)
+            try: self._keepalive()
+            except Exception as e: print(f"keepalive failed: {e}")
+
+    def on_event(self, ev):
+        # Dispatch by event type: executionReport, outboundAccountPosition, ...
+        print("EVENT", ev.get("e"), ev)
+
+    async def run(self, market_streams):
+        self._new_listen_key()
+        # market data stream (multiplexed)
+        url = f"{HOST_WS}/stream?streams={'/'.join(market_streams)}"
+        await asyncio.gather(self._user_stream(), self._keepalive_loop(),
+                             self._market_stream(url))
+
+    async def _market_stream(self, url):
+        while not self.stop:
+            try:
+                async with websockets.connect(url) as ws:
+                    async for msg in ws:
+                        self.on_market(json.loads(msg))
+            except Exception as e:
+                print(f"market WS dropped: {e}; retry 3s")
+                await asyncio.sleep(3)
+
+    def on_market(self, msg):
+        print("MARKET", msg.get("stream"), msg.get("data", {}).get("s"))
+
+# Usage:
+# bws = BinanceWS(API_KEY, API_SECRET)
+# asyncio.run(bws.run(["btcusdt@bookTicker", "ethusdt@trade"]))
+```
+
+**Reconnect rules:** exponential backoff on drop (3s→up to 60s cap), re-issue
+`listenKey` if `listenKey` is rejected (`-1125` invalid), and never block the
+event loop on slow handlers — offload to a queue/thread.
+
+---
+
+## 15. Cross-exchange routing with `ccxt`
+
+If the same strategy should also run on Bybit/OKX/Kraken, `ccxt` gives one
+interface. Reuse the `05-market-cron` ccxt setup.
+
+```python
+import ccxt
+def best_venue(symbol, side, qty):
+    ex = {"binance": ccxt.binance({"apiKey": K, "secret": S}),
+          "okx": ccxt.okx({"apiKey": K2, "secret": S2}),
+          "bybit": ccxt.bybit({"apiKey": K3, "secret": S3})}
+    best, best_price = None, None
+    for name, e in ex.items():
+        try:
+            ob = e.fetch_order_book(symbol)
+            px = ob["bids"][0][0] if side == "BUY" else ob["asks"][0][0]
+            # include taker fee comparison here
+            if best_price is None or (side == "BUY" and px < best_price) \
+               or (side == "SELL" and px > best_price):
+                best, best_price = name, px
+        except Exception as ex_err:
+            print(f"{name} unavailable: {ex_err}")
+    return best, best_price
+```
+Route the order to `best` venue. Note: ccxt normalizes *most* of the signing
+and error model, but futures leverage/position-mode still differ per exchange —
+isolate those behind adapter functions.
+
+---
+
+## 16. Backtest / replay harness (no capital at risk)
+
+Before going live, replay against historical `klines`:
+
+```python
+import ccxt, pandas as pd
+def load_klines(symbol, timeframe, limit=1000):
+    b = ccxt.binance()
+    raw = b.fetch_ohlcv(symbol, timeframe, limit=limit)
+    return pd.DataFrame(raw, columns=["ts","open","high","low","close","vol"])
+
+def replay(symbol, signal_fn, timeframe="1h"):
+    df = load_klines(symbol, timeframe)
+    cash, pos = 1000.0, 0.0
+    for i in range(1, len(df)):
+        sig = signal_fn(df.iloc[:i])           # your strategy
+        px = df["close"].iloc[i]
+        if sig > 0 and pos == 0:
+            pos = cash / px; cash = 0
+        elif sig < 0 and pos > 0:
+            cash = pos * px; pos = 0
+    final = cash + pos * df["close"].iloc[-1]
+    return final  # compare vs buy-and-hold
+```
+Run this on every strategy in `02-trading-bot/strategies/` before wiring it to
+the live API layer in §11. A strategy that loses to buy-and-hold in replay has
+no business touching the broker.
+
+---
+
+## 17. Troubleshooting FAQ
+
+**Q: `-1022` Bad signature even though I HMAC correctly.**
+A: Most common causes: (1) params not sorted alphabetically before encoding;
+(2) `timestamp` computed twice with different values (compute once, reuse);
+(3) signature sent in body instead of query string; (4) trailing/extra `&`
+when concatenating `q & signature`.
+
+**Q: Orders rejected with `-1111` / precision.**
+A: You didn't round `price` to `tickSize` and `qty` to `stepSize`. Parse
+`exchangeInfo` and quantize before sending.
+
+**Q: Getting `418` IP banned constantly.**
+A: You're exceeding weight and not backing off. Implement `WeightBudget` (§3.4),
+read `X-MBX-USED-WEIGHT` headers, and halt on `418`. Spread load across
+whitelisted IPs if you have them.
+
+**Q: Futures position liquidated instantly.**
+A: Default leverage may be high and you didn't set it. Always set leverage +
+margin mode explicitly; place `reduceOnly` stops; monitor `marginRatio`.
+
+**Q: `listenKey` stops delivering account events.**
+A: It expired (60 min). The `PUT` keepalive (§7.3, §14) must run every ~30 min.
+If you see `-1125`, reissue a new key.
+
+**Q: `recvWindow` errors under good latency.**
+A: Machine clock drift. Sync NTP and apply the `serverTime` offset (§4).
+
+**Q: Double-filled on retry after a timeout.**
+A: You retried without checking state. On timeout, `GET` the order by `orderId`
+before resending (§8).
+
+---
+
+## 18. Glossary
+
+- **Weight:** cost unit Binance meters requests by; not raw request count.
+- **recvWindow:** max allowed clock skew between your `timestamp` and server.
+- **listenKey:** ephemeral token granting access to a user-data WS stream.
+- **MARKET_LOT_SIZE:** lot filter applied to market orders specifically.
+- **reduceOnly:** order flag preventing an increase in position size.
+- **marginRatio:** used-margin / account-equity; liquidation risk indicator.
+- **dualSidePosition:** hedge-mode toggle allowing simultaneous long+short.
+- **MIN_NOTIONAL:** minimum order value (`price × qty`) filter.
+- **tickSize / stepSize:** price / quantity granularity enforced by filters.
+- **ccxt:** unified multi-exchange trading library (one API, many venues).
+
+---
+
 *Generated by the Money Glitch Vault Filler cron tick. Web verification was
 unavailable at generation time (web tools returned `PARALLEL_API_KEY not set`);
 the HMAC-SHA256 signing model, endpoint hosts, and rate-limit structure are from
