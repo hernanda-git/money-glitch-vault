@@ -39,3 +39,6 @@
 - [2026-07-11] Coretax Sering Error dan Sulit Diakses, Wajib Pajak Gagal Lapor SPT — strength 4/5 — umkm
 - [2026-07-11] Investor dan Pengelola Dapur MBG Merugi, Dana Operasional Tak Cair Berbulan-bulan — strength 5/5 — umkm
 - [2026-07-11] Pertalite dan BBM Subsidi Langka, Warga Terpaksa Beli Eceran Lebih Mahal — strength 4/5 — other
+- [2026-07-11] Warga Miskin Terblokir Layanan Kesehatan Gratis karena Status Desil Salah — strength 4/5 — other
+- [2026-07-11] Rekening Dormant Dibekukan PPATK Tanpa Pemberitahuan, Nasabah Bingung — strength 4/5 — other
+- [2026-07-11] Karyawan Ter-PHK karena Efisiensi AI, Butuh Jalur Reskilling Cepat dan Murah — strength 4/5 — employee
