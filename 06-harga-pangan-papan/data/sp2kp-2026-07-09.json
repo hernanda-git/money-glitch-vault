@@ -1,0 +1,263 @@
+{
+  "source": "api-sp2kp.kemendag.go.id (REST: report/api/average-price/generate-perbandingan-harga)",
+  "fetched_at_utc": "2026-07-10T01:25:43.340709Z",
+  "data_date": "2026-07-09",
+  "previous_date": "2026-07-08",
+  "commodity_count": 17,
+  "row_count": 26,
+  "commodity_names": [
+    "Beras Medium",
+    "Beras Premium",
+    "Beras SPHP Bulog",
+    "Gula Pasir Curah",
+    "Minyak Goreng Sawit Kemasan Premium",
+    "Minyak Goreng Sawit Curah",
+    "Minyakita",
+    "Daging Sapi Paha Belakang",
+    "Daging Ayam Ras",
+    "Telur Ayam Ras",
+    "Tepung Terigu",
+    "Kedelai Impor",
+    "Cabai Merah Keriting",
+    "Cabai Rawit Merah",
+    "Cabai Merah Besar",
+    "Bawang Merah",
+    "Bawang Putih Honan"
+  ],
+  "rows": [
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Medium",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 13831,
+      "current_price": 13832,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Medium",
+      "unit": "kg",
+      "region": "Region A",
+      "previous_price": 13913,
+      "current_price": 13911,
+      "change_percent": -0.02
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Medium",
+      "unit": "kg",
+      "region": "Region B",
+      "previous_price": 14668,
+      "current_price": 14668,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Medium",
+      "unit": "kg",
+      "region": "Region C",
+      "previous_price": 17031,
+      "current_price": 17031,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Premium",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 15514,
+      "current_price": 15512,
+      "change_percent": -0.01
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Premium",
+      "unit": "kg",
+      "region": "Region A",
+      "previous_price": 15293,
+      "current_price": 15291,
+      "change_percent": -0.01
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Premium",
+      "unit": "kg",
+      "region": "Region B",
+      "previous_price": 16592,
+      "current_price": 16593,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras Premium",
+      "unit": "kg",
+      "region": "Region C",
+      "previous_price": 19254,
+      "current_price": 19254,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras SPHP Bulog",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 12366,
+      "current_price": 12366,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras SPHP Bulog",
+      "unit": "kg",
+      "region": "Region A",
+      "previous_price": 12158,
+      "current_price": 12158,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras SPHP Bulog",
+      "unit": "kg",
+      "region": "Region B",
+      "previous_price": 12671,
+      "current_price": 12671,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Beras SPHP Bulog",
+      "unit": "kg",
+      "region": "Region C",
+      "previous_price": 13321,
+      "current_price": 13321,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Gula Pasir Curah",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 18280,
+      "current_price": 18281,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Minyak Goreng Sawit Kemasan Premium",
+      "unit": "lt",
+      "region": "Nasional",
+      "previous_price": 22436,
+      "current_price": 22436,
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Minyak Goreng Sawit Curah",
+      "unit": "lt",
+      "region": "Nasional",
+      "previous_price": 19450,
+      "current_price": 19437,
+      "change_percent": -0.07
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Minyakita",
+      "unit": "lt",
+      "region": "Nasional",
+      "previous_price": 15864,
+      "current_price": 15861,
+      "change_percent": -0.02
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Daging Sapi Paha Belakang",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 141126,
+      "current_price": 141208,
+      "change_percent": 0.06
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Daging Ayam Ras",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 35016,
+      "current_price": 35145,
+      "change_percent": 0.37
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Telur Ayam Ras",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 26027,
+      "current_price": 26008,
+      "change_percent": -0.07
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Tepung Terigu",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 12537,
+      "current_price": 12538,
+      "change_percent": 0.01
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Kedelai Impor",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 13701,
+      "current_price": 13689,
+      "change_percent": -0.09
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Cabai Merah Keriting",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 41838,
+      "current_price": 41211,
+      "change_percent": -1.5
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Cabai Rawit Merah",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 52761,
+      "current_price": 52233,
+      "change_percent": -1.0
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Cabai Merah Besar",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 42663,
+      "current_price": 42109,
+      "change_percent": -1.3
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Bawang Merah",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 41228,
+      "current_price": 40826,
+      "change_percent": -0.98
+    },
+    {
+      "date": "2026-07-09",
+      "commodity_name": "Bawang Putih Honan",
+      "unit": "kg",
+      "region": "Nasional",
+      "previous_price": 39474,
+      "current_price": 39379,
+      "change_percent": -0.24
+    }
+  ]
+}
