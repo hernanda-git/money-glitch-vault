@@ -1,8 +1,38 @@
 # Demand Mining Index
 
+- [2026-07-03] UMKM Masih Kesulitan Akses Modal Usaha — strength 4/5 — umkm
+- [2026-07-03] Potongan Komisi Ojol 8% Belum Selesai Masalah Pendapatan Driver — strength 5/5 — ojol
+- [2026-07-03] Pinjol Ilegal Masih Marak Meski 951 Entitas Ditutup Satgas PASTI — strength 5/5 — other
+- [2026-07-04] Pengangguran Muda Indonesia Menjadi Ancaman Utama Ekonomi 2026-2028 — strength 5/5 — student
+- [2026-07-04] Inflasi Harga Pangan Indonesia Naik Jadi 3,34% di Juni 2026 — strength 4/5 — other
+- [2026-07-04] Petani Sawit Khawatir Harga TBS Tertekan Akibat Kebijakan B50 — strength 4/5 — farmer
+- [2026-07-06] Kelangkaan Pupuk Bersubsidi dan Harga Pupuk Non-Subsidi Meroket — strength 5/5 — farmer
+- [2026-07-06] Gen Z Kesulitan Cari Kerja, Orangtua Ikut Mendampingi — strength 5/5 — student
+- [2026-07-06] Gaji Dosen Non-ASN Sangat Rendah Meski Bergelar Doktor — strength 4/5 — employee
+- [2026-07-06] Pinjol Legal dengan Bunga Tinggi Masih Mencekik Masyarakat — strength 4/5 — other
+- [2026-07-06] UMKM Indonesia Kesulitan Digitalisasi Meski Platform Tersedia — strength 4/5 — umkm
+- [2026-07-06] Freelancer Indonesia Bergaji Rendah dan Kesulitan Pembayaran — strength 4/5 — freelancer
+- [2026-07-06] Harga Tiket Pesawat Kembali Melambung Usai Insentif PPN Berakhir — strength 4/5 — other
+- [2026-07-06] UMKM Terancam Sanksi Halal per Oktober 2026, Proses Sertifikasi Masih Terhambat — strength 5/5 — umkm
+- [2026-07-06] Rasio Pajak Indonesia Peringkat 3 Terbawah di Asia-Pasifik, UMKM Terjebak Ekonomi Informal — strength 4/5 — umkm
+- [2026-07-06] UMKM Terancam Banjir Produk Impor Murah dari E-Commerce Cross-Border — strength 5/5 — umkm
+- [2026-07-06] UMKM Kontribusi Ekspor Rendah, Terjebak Pasar Domestik — strength 4/5 — umkm
+- [2026-07-06] Pedagang Pasar Tradisional Kehilangan Pelanggan ke E-Commerce — strength 4/5 — seller
+- [2026-07-06] Tenaga Kesehatan Indonesia Gaji Rendah dan Resign Massal ke Luar Negeri — strength 5/5 — employee
+- [2026-07-06] Guru Honorer Nasib Tak Jelas Meski PPPK Sudah Ada — strength 4/5 — employee
+- [2026-07-06] UMKM Kesulitan Pelaporan Pajak Digital dan e-Filing — strength 4/5 — umkm
+- [2026-07-07] UMKM Kedelai dan Tempe Kelimpungan Hadapi Kenaikan Harga Bahan Baku Serentak — strength 5/5 — umkm
+- [2026-07-07] Fresh Graduate Ghosting Industri Hospitality Solo — strength 4/5 — employee
+- [2026-07-07] Pedagang Pasar Tradisional Sepi Meski Harga Sembako Turun — strength 4/5 — seller
+- [2026-07-07] Digital Nomad Gentrifikasi Harga di Bali, Masyarakat Lokal Tersingkir — strength 4/5 — other
+- [2026-07-07] 58 Persen Pekerja Indonesia Masih di Sektor Informal, Kesenjangan Keterampilan Semakin Dalam — strength 5/5 — employee
+- [2026-07-07] UMKM Kehabisan Modal Meski Triliunan Rupiah Mengendap di Bank — strength 5/5 — umkm
 - [2026-07-10] Karyawan Tak Dibayar THR, Perusahaan Pakai Modus Rumahkan atau Putus Kontrak Mendadak — strength 5/5 — employee
 - [2026-07-10] PKL Berkali-kali Ditertibkan Satpol PP, Kehilangan Tempat Jualan untuk Makan — strength 4/5 — seller
 - [2026-07-10] Freelancer Indonesia Kebingungan Urus Pajak dan Pembayaran dari Klien Luar Negeri — strength 3/5 — freelancer
 - [2026-07-10] Peternak Ayam dan Telur Merugi, Harga di Kandang Anjlok tapi Pakan Terus Naik — strength 5/5 — farmer
 - [2026-07-10] Pedagang Thrifting Baju Bekas Kebingungan setelah Larangan Impor, Usaha Terancam Mati — strength 4/5 — seller
 - [2026-07-10] Tukang Bangunan dan Pekerja Proyek Tak Dibayar, Upah Mangkrak Berbulan-bulan — strength 4/5 — other
+- [2026-07-11] Iuran BPJS Kesehatan PBPU Menekan Keluarga Pekerja Informal dan Freelancer — strength 4/5 — other
+- [2026-07-11] Seller Marketplace Menjerit: Komisi TikTok Shop dan Ongkir Ditanggung Penjual Meroket — strength 5/5 — seller
+- [2026-07-11] Biaya Sekolah Melangit, Dompet Orang Tua Menjerit Tiap Tahun Ajaran Baru — strength 4/5 — parent
