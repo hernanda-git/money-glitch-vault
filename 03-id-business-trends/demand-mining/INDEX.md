@@ -36,3 +36,6 @@
 - [2026-07-11] Iuran BPJS Kesehatan PBPU Menekan Keluarga Pekerja Informal dan Freelancer — strength 4/5 — other
 - [2026-07-11] Seller Marketplace Menjerit: Komisi TikTok Shop dan Ongkir Ditanggung Penjual Meroket — strength 5/5 — seller
 - [2026-07-11] Biaya Sekolah Melangit, Dompet Orang Tua Menjerit Tiap Tahun Ajaran Baru — strength 4/5 — parent
+- [2026-07-11] Coretax Sering Error dan Sulit Diakses, Wajib Pajak Gagal Lapor SPT — strength 4/5 — umkm
+- [2026-07-11] Investor dan Pengelola Dapur MBG Merugi, Dana Operasional Tak Cair Berbulan-bulan — strength 5/5 — umkm
+- [2026-07-11] Pertalite dan BBM Subsidi Langka, Warga Terpaksa Beli Eceran Lebih Mahal — strength 4/5 — other
