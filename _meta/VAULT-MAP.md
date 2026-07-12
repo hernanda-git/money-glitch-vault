@@ -9,6 +9,8 @@
 ## 02-trading-bot
 
 - `02-trading-bot/brokers-apis/binance-spot-futures.md` (622 lines)
+- `02-trading-bot/risk-management/position-sizing-kelly.md` (105 lines)
+- `02-trading-bot/signals/news-sentiment-scoring.md` (73 lines)
 - `02-trading-bot/strategies/idx-opening-range-breakout.md` (809 lines)
 
 ## 03-id-business-trends
@@ -17,11 +19,14 @@
 - `03-id-business-trends/bottlenecks/konstruksi-escrow-upah-tukang.md` (280 lines)
 - `03-id-business-trends/bottlenecks/ojol-logistics-inefficiency.md` (1116 lines)
 - `03-id-business-trends/bottlenecks/qris-settlement-speed-arbitrage.md` (797 lines)
-- `03-id-business-trends/bottlenecks/same-day-economy-delivery.md` (381 lines)
+- `03-id-business-trends/bottlenecks/same-day-economy-delivery.md` (810 lines)
+- `03-id-business-trends/bottlenecks/settlement-float-convergence.md` (88 lines)
 - `03-id-business-trends/bottlenecks/umkm-npwp-registration-gap.md` (967 lines)
 - `03-id-business-trends/bottlenecks/warung-micro-fulfillment.md` (805 lines)
+- `03-id-business-trends/bottlenecks/warung-region-aware-stock.md` (82 lines)
 - `03-id-business-trends/competitors/fastwork-sribu-freelance-gaps.md` (1177 lines)
 - `03-id-business-trends/competitors/lalamove-ankeraja-logistics-gaps.md` (847 lines)
+- `03-id-business-trends/demand-mining/INDEX.md` (47 lines)
 - `03-id-business-trends/demand-mining/biaya-marketplace-meroket-press-umkm.md` (50 lines)
 - `03-id-business-trends/demand-mining/biaya-remitansi-pekerja-migran-tinggi.md` (45 lines)
 - `03-id-business-trends/demand-mining/biaya-sekolah-mahal-orangtua-menjerit.md` (57 lines)
@@ -44,7 +49,6 @@
 - `03-id-business-trends/demand-mining/harga-gas-industri-mahal-memukul-manufaktur.md` (44 lines)
 - `03-id-business-trends/demand-mining/harga-tiket-pesawat-naik-ppn-berakhir.md` (48 lines)
 - `03-id-business-trends/demand-mining/ibu-pekerja-susah-cari-daycare.md` (48 lines)
-- `03-id-business-trends/demand-mining/INDEX.md` (47 lines)
 - `03-id-business-trends/demand-mining/inflasi-harga-pangan-2026.md` (53 lines)
 - `03-id-business-trends/demand-mining/investor-dapur-mbg-merugi-dana-tak-cair.md` (52 lines)
 - `03-id-business-trends/demand-mining/investor-pemula-rugi-investasi-bodong-kripto.md` (46 lines)
@@ -107,12 +111,15 @@
 
 ## 04-freelancer-ai-agent
 
+- `04-freelancer-ai-agent/mcp-servers/agri-input-mcp.md` (90 lines)
 - `04-freelancer-ai-agent/mcp-servers/fastwork-mcp-spec.md` (902 lines)
+- `04-freelancer-ai-agent/mcp-servers/logistics-orchestrator-mcp.md` (102 lines)
+- `04-freelancer-ai-agent/mcp-servers/qris-settlement-mcp.md` (175 lines)
 
 ## 05-market-cron
 
 - `05-market-cron/cron-configs/ihsg-daily-fetch.md` (815 lines)
-- _data files (json/csv): 17
+- _data files (json/csv): 18
 
 ## 06-harga-pangan-papan
 
@@ -121,7 +128,7 @@
 
 ## 07-gaps-and-opportunities
 
-- `07-gaps-and-opportunities/2026-07-12-weekly-gap-synthesis.md` (183 lines)
+- `07-gaps-and-opportunities/2026-07-12-weekly-gap-synthesis.md` (185 lines)
 - `07-gaps-and-opportunities/inbox/2026-07-03-umkm-financial-inclusion.md` (9 lines)
 - `07-gaps-and-opportunities/inbox/2026-07-04-sawit-pintar-platform.md` (9 lines)
 - `07-gaps-and-opportunities/inbox/2026-07-06-pupuk-digital-platform.md` (6 lines)
@@ -135,14 +142,22 @@
 - `07-gaps-and-opportunities/inbox/2026-07-11-marketplace-net-margin-calc.md` (8 lines)
 - `07-gaps-and-opportunities/inbox/2026-07-11-sppg-mbg-compliance-saas.md` (6 lines)
 - `07-gaps-and-opportunities/inbox/2026-07-11-unified-household-bills-tracker.md` (6 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-12-deadline-driven-saas-bundle.md` (23 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-12-micro-legaltech-engine.md` (27 lines)
 - `07-gaps-and-opportunities/inbox/scam-detection-tool-2026-07-07.md` (3 lines)
 - `07-gaps-and-opportunities/opportunities/bpr-digital-transformation-saas.md` (776 lines)
+- `07-gaps-and-opportunities/opportunities/desil-dormant-checker-saas.md` (80 lines)
 - `07-gaps-and-opportunities/opportunities/halalready-certification-platform.md` (927 lines)
 - `07-gaps-and-opportunities/opportunities/judol-pinjol-cross-detection.md` (805 lines)
+- `07-gaps-and-opportunities/opportunities/marketplace-net-margin-calc.md` (68 lines)
+- `07-gaps-and-opportunities/opportunities/mbg-compliance-saas.md` (80 lines)
 - `07-gaps-and-opportunities/opportunities/sawitpintar-platform.md` (1048 lines)
+- `07-gaps-and-opportunities/opportunities/unified-household-bills-tracker.md` (65 lines)
 - `07-gaps-and-opportunities/opportunities/warung-collective-buying-loyalty-toolkit.md` (809 lines)
-- `07-gaps-and-opportunities/weekly-gap-report-2026-07-12.md` (109 lines)
+- `07-gaps-and-opportunities/weekly-gap-report-2026-07-12.md` (111 lines)
 
 ## 08-research-archive
 
+- `08-research-archive/recap-april-juli-2026.md` (203 lines)
+- `08-research-archive/recap-regulasi-indonesia-2026.md` (493 lines)
 

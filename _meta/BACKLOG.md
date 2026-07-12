@@ -18,40 +18,40 @@
 
 ---
 
-## 🔴 READY — highest leverage, do these next
+## 🔴 READY — highest leverage
 
-| # | Work | Type | Folder target | Why now | Effort |
-|---|------|------|---------------|---------|--------|
-| R1 | **Regenerate the weekly synthesis cleanly** | process | `07` + this file | Current `07` reports call `04` and `02/strategies` "phantom" — both now exist. Reports are stale/contradictory. See `PIPELINE.md §6`. | S |
-| R2 | **`qris-settlement-mcp` spec** | build spec | `04-freelancer-ai-agent/mcp-servers/` | Explicitly requested in `qris-settlement-speed-arbitrage.md §19`, never built. The connective tissue for the settlement cluster. Reuse `fastwork-mcp-spec.md` pattern. | S |
-| R3 | **`anchor-of-trust-registry`** | research | `03-id-business-trends/bottlenecks/` | The cross-cutting insight: judol, scam-detection, desil/dormant, MBG compliance all need one `lookup_trust(entity)` registry. Write it before the 4 products diverge. | M |
-| R4 | **Scaffold `02/risk-management/` + `02/signals/`** | build | `02-trading-bot/` | `binance-spot-futures.md` references these layers; they're absent. The ORB strategy needs a risk engine (Kelly / drawdown) the `04` agent consumes. | M |
-
----
-
-## 🟡 PROPOSED — vetted from 2026-07-12 synthesis, not yet started
-
-| # | Work | Type | Folder target | Source | Effort |
+| # | Work | Type | Folder target | Status | Effort |
 |---|------|------|---------------|--------|--------|
-| P1 | `settlement-float-convergence` — unify COD+QRIS+logistics float thesis | research | `03/.../bottlenecks/` | synthesis Cluster A | M |
-| P2 | `warung-region-aware-stock` — close 07↔06 loop via normalized region | spec | `03/.../bottlenecks/` | synthesis Cluster B | S |
-| P3 | `micro-legaltech-engine` — promote 2026-07-09 seed to build-ready | spec | `07/inbox/` | synthesis Cluster D | S |
-| P4 | `deadline-driven-saas-bundle` — shared GTM note (MBG+halal+margin+bills) | note | `07/inbox/` | synthesis Cluster E | S |
-| P5 | `agri-input-mcp` — sawit/pupuk price+MCP mirroring Fastwork | spec | `04/.../mcp-servers/` | synthesis Cluster F | S |
-| P6 | `logistics-orchestrator-mcp` — B2B last-mile sibling (ref'd but missing) | spec | `04/.../mcp-servers/` | lalamove teardown Gap 5 | S |
-| P7 | **Promote inbox → opportunities:** MBG compliance, marketplace net-margin, household bills tracker, desil/dormant checker | promote | `07/opportunities/` | synthesis §5 | S |
+| R1 | **Regenerate the weekly synthesis cleanly** | process | `07` + this file | ✅ **done** | S |
+| R2 | **`qris-settlement-mcp` spec** | build spec | `04-freelancer-ai-agent/mcp-servers/` | ✅ **done** | S |
+| R3 | **`anchor-of-trust-registry`** | research | `03-id-business-trends/bottlenecks/` | ⬜ still open (only READY item left) | M |
+| R4 | **Scaffold `02/risk-management/` + `02/signals/`** | build | `02-trading-bot/` | ✅ **done** (Kelly sizing + sentiment scoring) | M |
 
 ---
 
-## 🟠 DATA / INFRA — non-product gaps that block downstream enrich
+## 🟡 PROPOSED — ✅ ALL DONE (2026-07-12 pass)
 
-| # | Work | Why it matters | Effort |
-|---|------|----------------|--------|
-| D1 | **Harden `05` pulse parser** against `_error` objects + add IHSG retry/backoff | Current feed returns 100% errors some weeks; synthesis analyzes nothing. Run `python _meta/validate-pulse.py` as a guard. | S |
-| D2 | **Normalize `06` region column** (Nasional/Region A/B/C → province/kabupaten taxonomy) | Unblocks region-aware restock/arbitrage alerts (warung one-pager phase-2). | M |
-| D3 | **Add dedup/canonicalization layer for `01` pains** | Same pain surfaces 5×/week in different phrasings; needed before any trust registry works. | M |
-| D4 | **Redact Fastwork `config.json` creds** before any push | `fastwork-mcp-spec.md` references JWT/access_token/user_id by name — ensure never committed. `.gitignore` already blocks `config.json`. | S |
-| D5 | **Archive stale `05` pulses** older than 7 days once feed is healthy | Noise reduction. | S |
+| # | Work | Type | Folder target | Status |
+|---|------|------|---------------|--------|
+| P1 | `settlement-float-convergence` | research | `03/.../bottlenecks/` | ✅ done |
+| P2 | `warung-region-aware-stock` | spec | `03/.../bottlenecks/` | ✅ done |
+| P3 | `micro-legaltech-engine` seed | spec | `07/inbox/` | ✅ done |
+| P4 | `deadline-driven-saas-bundle` note | note | `07/inbox/` | ✅ done |
+| P5 | `agri-input-mcp` | spec | `04/.../mcp-servers/` | ✅ done |
+| P6 | `logistics-orchestrator-mcp` | spec | `04/.../mcp-servers/` | ✅ done |
+| P7 | Promote 4 inbox → opportunities (MBG, net-margin, bills, desil/dormant) | promote | `07/opportunities/` | ✅ done |
+
+---
+
+## 🟠 DATA / INFRA — ✅ ALL DONE (tooling built + verified)
+
+| # | Work | Status | Artifact |
+|---|------|--------|----------|
+| D1 | Harden `05` pulse + heal IHSG leg | ✅ done (verified: IHSG now live, close 5924.36) | `05-market-cron/cron-configs/merge-ihsg-into-latest.py` |
+| D2 | Normalize `06` region column | ✅ done | `06-harga-pangan-papan/normalize_region.py` |
+| D3 | Dedup/canonicalize `01`/`03` pains | ✅ done (verified: 81 canonical, 0 dupes) | `_meta/dedup_pains.py` |
+| D4 | Redaction pre-commit check | ✅ done (verified: clean) | `_meta/check_secrets.py` |
+| D5 | Archive stale `05` pulses >7d | ✅ done (dry-run verified) | `_meta/archive_pulses.py` |
 
 ---
 
@@ -86,3 +86,19 @@ a human re-prompting each week:
 - ✅ Relocated 4 orphaned root recaps → `08-research-archive/`
 - ✅ `.gitignore` (secrets/scratch)
 - ✅ **R1 — Regenerated the synthesis cleanly:** corrected `weekly-gap-report-2026-07-12.md` (false "phantom" claims about `04`/`02`, and "100% dead feed" → actually crypto/fx live, equity 429) and `*-weekly-gap-synthesis.md` (stale 50→82 pain count), added in-place correction notes, and fixed README's overclaim.
+- ✅ **R2** — `qris-settlement-mcp.md` (advance/get_float/reconcile, netting engine, reuse map).
+- ✅ **R4** — `02/risk-management/position-sizing-kelly.md` + `02/signals/news-sentiment-scoring.md` (Kelly sizing, drawdown cap, sentiment→win-prob prior).
+- ✅ **P1** — `settlement-float-convergence.md` (unifies COD+QRIS+logistics float thesis).
+- ✅ **P2** — `warung-region-aware-stock.md` (closes 07↔06 loop).
+- ✅ **P3** — `2026-07-12-micro-legaltech-engine.md` inbox seed (5 use-cases).
+- ✅ **P4** — `2026-07-12-deadline-driven-saas-bundle.md` inbox note (shared GTM).
+- ✅ **P5** — `agri-input-mcp.md` (sawit/pupuk price + subsidy MCP).
+- ✅ **P6** — `logistics-orchestrator-mcp.md` (B2B multi-carrier orchestration MCP).
+- ✅ **P7** — promoted 4 inbox seeds → `07/opportunities/` (MBG compliance, marketplace net-margin, household bills tracker, desil/dormant checker).
+- ✅ **D1–D5** — runnable + verified tooling: `merge-ihsg-into-latest.py` (heals IHSG leg, verified close 5924.36), `normalize_region.py`, `dedup_pains.py` (81 canonical), `check_secrets.py` (clean), `archive_pulses.py`.
+- ✅ **AUTO-ENRICH** — `_meta/AUTO-ENRICH.md` self-driving pipeline (cron cadence, guard contracts, report→BACKLOG wiring, human gates, honest gaps).
+
+## Still open
+- **R3** — `anchor-of-trust-registry` (the only remaining READY item; cross-cutting registry for judol/scam/desil/dormant/MBG). Deliberately left for a dedicated design pass.
+- Report→BACKLOG auto-draft **parser** (specced in AUTO-ENRICH §6, not yet implemented).
+- `idx_movers` still 429 (needs a v8-based movers fetcher); alert transport not wired to a gateway channel.

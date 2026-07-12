@@ -41,3 +41,13 @@
 ## 2026-07-12 — enrich: same-day-economy-delivery — IDR 10-15K urban same-day delivery gap, unit economics, density-led wedge, code
 
 ## 2026-07-12 — synthesis(R1): corrected stale 07 reports — `weekly-gap-report` falsely called 04/02 "phantom" and feed "100% dead" (both folders now exist; crypto/fx live, equity 429). Fixed counts 50→82 pains in synthesis. Added in-place correction notes + hardened feed guard (_meta/validate-pulse.py).
+
+## 2026-07-12 — backlog(all): executed R2, R4, P1-P7, D1-D5, AUTO-ENRICH
+- R2 qris-settlement-mcp spec; R4 02/risk-management (Kelly) + 02/signals (sentiment).
+- P1 settlement-float-convergence; P2 warung-region-aware-stock; P3 micro-legaltech seed;
+  P4 deadline-driven-saas-bundle note; P5 agri-input-mcp; P6 logistics-orchestrator-mcp;
+  P7 promoted 4 inbox seeds -> 07/opportunities (MBG, net-margin, bills, desil/dormant).
+- D1 merge-ihsg-into-latest.py (heals dead IHSG leg, verified close 5924.36); D2 normalize_region.py;
+  D3 dedup_pains.py (81 canonical, 0 dupes); D4 check_secrets.py (clean); D5 archive_pulses.py.
+- AUTO-ENRICH.md self-driving pipeline (cron cadence, guards, report->BACKLOG wiring).
+- Only R3 (anchor-of-trust-registry) remains open by design.
