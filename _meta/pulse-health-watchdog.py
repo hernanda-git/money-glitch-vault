@@ -101,10 +101,14 @@ def deliver(alert: str) -> None:
 
 
 def main(argv) -> int:
-    pulse = argv[1] if len(argv) > 1 else DEFAULT_PULSE
+    # crude flag parse so a wrapper can pass `--quiet-ok` (silent on healthy)
+    quiet_ok = "--quiet-ok" in argv
+    args = [a for a in argv if a != "--quiet-ok"]
+    pulse = args[1] if len(args) > 1 else DEFAULT_PULSE
     code, out = run_validator(pulse)
     if code == 0:
-        print("pulse healthy — no alert")
+        if not quiet_ok:
+            print("pulse healthy — no alert")
         return 0
     status = "DEAD" if code >= 2 else "DEGRADED"
     alert = build_alert(out, status)

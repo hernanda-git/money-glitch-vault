@@ -67,3 +67,10 @@
   (Telegram/Discord/webhook). Creds env-only, never committed. Verified healthy->silent,
   degraded->alert.
 - BACKLOG marked fully executed; AUTO-ENRICH cron table + honest-gaps updated.
+
+## 2026-07-12 — cron wired on Windows + WSL Hermes (auto-enrich now unattended)
+- 5 jobs on WSL Hermes (python3 + hermes CLI) + 5 -win twins on Windows Hermes (delegate to
+  WSL via wsl.exe, since Windows git-bash python is a Store stub). All verified running.
+- _meta/CRON-SETUP.md documents topology + reproduce commands; AUTO-ENRICH cron table updated
+  to real job names (mgv-pulse-heal/watch/archive/backlog/secret-scan, each -win).
+- pulse-health-watchdog.py gained --quiet-ok (silent when healthy) for clean watchdog delivery.

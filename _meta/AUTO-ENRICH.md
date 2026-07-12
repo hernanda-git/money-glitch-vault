@@ -27,10 +27,15 @@ the vault call its own live feed "dead").
 
 ## 2. Cron jobs (proposed cadence)
 
+> **ACTUALLY WIRED** — see `_meta/CRON-SETUP.md` for the live schedule (WSL Hermes runs the
+> Python; Windows Hermes wraps delegate to WSL). Job names: `mgv-pulse-heal`, `mgv-pulse-watch`
+> (→ Telegram), `mgv-archive`, `mgv-backlog`, `mgv-secret-scan` (→ Telegram), each with a
+> `-win` twin on the Windows Hermes.
+
 | Job | Schedule | Command | Guard / exit contract |
 |-----|----------|---------|----------------------|
-| **market-pulse** | every 6h | existing 05 fetcher **+** `05-market-cron/cron-configs/merge-equity-into-latest.py` | merge heals IHSG + IDX movers legs; `validate-pulse.py` exit ≠0 → alert, don't publish |
-| **pulse-health-watchdog** | daily 07:00 WIB | `python _meta/pulse-health-watchdog.py` | exit 1 (DEGRADED) / 2 (DEAD) → deliver alert via `PULSE_ALERT_*` env (Telegram/Discord/webhook) or cron `deliver=` target |
+| **market-pulse** (`mgv-pulse-heal`) | every 6h | `05-market-cron/cron-configs/merge-equity-into-latest.py` | merge heals IHSG + IDX movers legs; `validate-pulse.py` exit ≠0 → alert, don't publish |
+| **pulse-health-watchdog** (`mgv-pulse-watch`) | daily 00:00 | `_meta/pulse-health-watchdog.py --quiet-ok` | exit 1 (DEGRADED) / 2 (DEAD) → deliver alert via Telegram (`--deliver telegram`); healthy = silent |
 | **pulse-archive** | weekly Sun | `python _meta/archive_pulses.py --days 7 --apply --git` | moves stale pulses to `08-research-archive/market-pulses/` |
 | **price-arbitrage-radar** | daily | `python 06-harga-pangan-papan/normalize_region.py 06.../latest.json` | prints commodity/region >+15% → feed to warung pilot |
 | **compliance-deadline-watch** | daily | `01` query `("PP" OR "Permen" OR "SE") (UMKM OR kreator) lang:in` | new regulatory shock → inbox seed (P4 bundle) |
