@@ -48,6 +48,6 @@
 - [2026-07-12] Warung dan Merchant Kecil Bingung Soal Biaya Admin QRIS, Berujung Ricuh dengan Konsumen — strength 4/5 — seller
 - [2026-07-12] Jukir Liar Palak Pengendara di Minimarket dan Jalanan, Warga Resah — strength 4/5 — other
 - [2026-07-12] Keluarga Korban Judi Online Terlilit Utang, Butuh Pemulihan Finansial dan Psikologis — strength 5/5 — other
-- [2026-07-12] Iuran Tapera Potong Gaji Pekerja 3 Persen Tiap Bulan — strength 5/5 — employee
 - [2026-07-12] Bantuan Subsidi Upah (BSU) Rp600.000 Tidak Cair di 2026, Pekerja Bingung — strength 4/5 — employee
 - [2026-07-12] PPN 12 Persen Bikin Harga Barang dan Jasa Melonjak, Konsumen dan Seller Menjerit — strength 4/5 — other
+- [2026-07-12] Buruh Demo Tuntut UMK 2026 Naik, Tapi Kenaikan Dipotong Aturan Pemerintah — strength 4/5 — employee
