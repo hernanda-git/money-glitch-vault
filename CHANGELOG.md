@@ -35,3 +35,5 @@
 ## 2026-07-11 — enrich: konstruksi-escrow-upah-tukang — Labor-payment protection & escrow for informal construction workers (MBG/Sekolah Rakyat/Koperasi Merah Putih gagal-bayar cases, 3 wedges, unit economics)
 
 ## 2026-07-11 — enrich(04): fastwork-mcp-spec — Fastwork MCP server spec bootstrapping 04-freelancer-ai-agent from the live fastwork-automation scripts (endpoints, dual-auth, tool surface, reference server/client code, threat model). Found auditor gap list stale: it claimed this DONE while the folder did not exist. Also: sribu-mcp-spec and cookies-tokens/storage-safety still missing.
+
+## 2026-07-12 — enrich(05): ihsg-daily-fetch — Working, stdlib-only IHSG (^JKSE) daily fetcher for the market cron, verified live against Yahoo chart API v8 (IDX official API 403, Stooq JS-gated, Yahoo v7 quote 401 all documented as dead). Includes dual-host retry, null-bar handling, staleness guard, pulse-schema output, cron/systemd deploy, indicator math, SQLite persistence, and basket-fetch extension.
