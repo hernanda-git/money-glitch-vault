@@ -39,3 +39,5 @@
 ## 2026-07-12 — enrich(05): ihsg-daily-fetch — Working, stdlib-only IHSG (^JKSE) daily fetcher for the market cron, verified live against Yahoo chart API v8 (IDX official API 403, Stooq JS-gated, Yahoo v7 quote 401 all documented as dead). Includes dual-host retry, null-bar handling, staleness guard, pulse-schema output, cron/systemd deploy, indicator math, SQLite persistence, and basket-fetch extension.
 
 ## 2026-07-12 — enrich: same-day-economy-delivery — IDR 10-15K urban same-day delivery gap, unit economics, density-led wedge, code
+
+## 2026-07-12 — synthesis(R1): corrected stale 07 reports — `weekly-gap-report` falsely called 04/02 "phantom" and feed "100% dead" (both folders now exist; crypto/fx live, equity 429). Fixed counts 50→82 pains in synthesis. Added in-place correction notes + hardened feed guard (_meta/validate-pulse.py).

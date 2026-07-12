@@ -3,10 +3,12 @@
 **Synthesizer:** Money Glitch Weekly Gap Synthesizer (cron)
 **Folders read:** 01-crawler-scrapper, 02-trading-bot, 03-id-business-trends (demand-mining), 05-market-cron, 06-harga-pangan-papan, 07-gaps-and-opportunities (inbox + opportunities)
 **Structural flags found this run (read before the ranking):**
-- `04-freelancer-ai-agent/` **does not exist** as a folder. It is referenced by 6+ opportunity one-pagers (judol-pinjol, bpr, halal, etc.) as the delivery/RegTech layer, but it was never scaffolded. Q3 is answered as "what 04 *should* be."
-- `02-trading-bot/` contains only `brokers-apis/binance-spot-futures.md`. The strategy / risk-management / signals layers it references are absent.
-- `03-id-business-trends/` has only `demand-mining/`. The `competitors/` and `bottlenecks/` folders named in the workflow exist elsewhere (e.g. `03/.../bottlenecks/qris-settlement-speed-arbitrage.md`, `03/.../competitors/lalamove-ankeraja-logistics-gaps.md`) but not the canonical paths — those links in the one-pagers are partially broken.
-- `05-market-cron/data/latest.json` and the last 5 pulses are **100% errors** (CoinGecko `Connection reset`, Yahoo `429 Too Many Requests`, IHSG unreachable). The market feed is effectively dead this week. See "Things to kill."
+- `04-freelancer-ai-agent/` **now EXISTS** (scaffolded: `mcp-servers/fastwork-mcp-spec.md`). It is no longer "phantom" — but it is *thin*: only 1 MCP spec. The `logistics-orchestrator-mcp` and `qris-settlement-mcp` siblings it should contain are still missing (tracked as **R2 / P6** in `_meta/BACKLOG.md`). Q3 below is answered as "what 04 *should grow into*," not "what 04 should be."
+- `02-trading-bot/` contains `brokers-apis/binance-spot-futures.md` **AND** `strategies/idx-opening-range-breakout.md` (809-line IDX ORB strategy). What is still ABSENT: `risk-management/` (position-sizing / Kelly) and `signals/` (news-sentiment) — the layers the strategy doc references. Tracked as **R4** in `_meta/BACKLOG.md`.
+- `03-id-business-trends/` has all three canonical subfolders: `demand-mining/` (82 pains), `bottlenecks/` (7 analyses), `competitors/` (2 teardowns). The links in one-pagers pointing at `03/.../bottlenecks/...` and `03/.../competitors/...` are **VALID**. No broken links.
+- `05-market-cron/data/latest.json` is **PARTIALLY DEGRADED, not 100% dead**: crypto, fx, and trending_coins legs are live; the **equity leg (`ihsg`, `idx_movers`) returns HTTP 429** (Yahoo rate-limit). Verified with `_meta/validate-pulse.py`. Consumers must special-case `_error`. See "Things to kill."
+
+> ⚠️ **Corrected 2026-07-12 (R1):** this report was originally generated when `04` and `02/strategies` did not exist and the feed looked dead. Those claims are now false. The four bullets above reflect the actual repo state. See `PIPELINE.md §6` for the clean-run procedure.
 
 ---
 
@@ -57,15 +59,15 @@
 ## Q3 — What the freelancer agent (04) can deliver that the trading-bot market (02) currently demands
 
 **The signal:**
-- 02 `binance-spot-futures.md` is a *broker/execution* reference only. It explicitly maps to layers that **do not exist in the repo**: `02-trading-bot/strategies/`, `02-trading-bot/risk-management/position-sizing-kelly.md`, `02-trading-bot/signals/news-sentiment-scoring.md`. The strategy + risk + signal layers are referenced but absent.
-- 05-market-cron is the intended signal source for 02 — but this week it is **100% error** (no crypto/fx/ihsg data at all).
+- 02 `binance-spot-futures.md` is a *broker/execution* reference. It maps to layers that are **partially present**: `02-trading-bot/strategies/idx-opening-range-breakout.md` EXISTS, but `02-trading-bot/risk-management/position-sizing-kelly.md` and `02-trading-bot/signals/news-sentiment-scoring.md` are **still absent** (tracked as **R4**).
+- 05-market-cron is the intended signal source for 02 — this week the **equity leg is 429-degraded** (`ihsg`/`idx_movers`), but **crypto + fx legs are live**. The signal agent can run on the live crypto/fx snapshot today; only the equity overlay is missing.
 - The vault's dominant thesis (3 prior weekly syntheses) is **WhatsApp as the de-facto OS** for Indonesia's informal economy.
 
-**The bridge:** Folder `04-freelancer-ai-agent` was planned as the *delivery/agent* layer but was **never built**. The trading-bot market (02) has execution plumbing (Binance sign/rate-limit/WS) but no brain and no mouth. The missing 04 is precisely the "agent" that would: (1) consume 05's market feed + 01's social sentiment, (2) run 02's risk engine (Kelly sizing, drawdown cap), and (3) push trade alerts + position sizing to the trader **inside WhatsApp/Telegram** — where retail Indonesian traders already live (the 01 playbook confirms cashtag monitoring `$BBRI $TLKM $BTC` is the highest-signal local query).
+**The bridge:** Folder `04-freelancer-ai-agent` was planned as the *delivery/agent* layer and is **now scaffolded** (`mcp-servers/fastwork-mcp-spec.md`), but it is *thin* — only 1 MCP spec, no `signal-agent/` yet. The trading-bot market (02) has execution plumbing (Binance sign/rate-limit/WS) but no brain and no mouth. The missing piece is the **signal-agent that would**: (1) consume 05's market feed + 01's social sentiment, (2) run 02's risk engine (Kelly sizing, drawdown cap — still to be built per R4), and (3) push trade alerts + position sizing to the trader **inside WhatsApp/Telegram** — where retail Indonesian traders already live (the 01 playbook confirms cashtag monitoring `$BBRI $TLKM $BTC` is the highest-signal local query).
 
 **The opportunity:** **Build 04 as the "Signal-to-Action WhatsApp Agent"** that 02 is missing. It wraps the (future) 05 feed + 01 sentiment into: "BTC broke Rp 1.14M, volatility high → size at 0.5× Kelly, set stop at −4%." Delivered as a WA bot. Who pays: Rp 49–99k/mo per trader (Fiverr/Fastwork comparable), or a 0.5% copy-fee on a signals group. 30-day target: scaffold `04-freelancer-ai-agent/` with one module — a WA bot that polls a *cached* 05 snapshot + a hardcoded risk rule and sends a daily "position-size + stop" message. (Fix 05 feed in parallel — see kill list.)
 
-**Next action this week:** Create `04-freelancer-ai-agent/signal-agent/README.md` + a minimal WA echo-bot stub that accepts a ticker and returns a Kelly-suggested size using the formula referenced in 02's risk docs. Do NOT let the phantom 04 reference rot further — scaffold it now.
+**Next action this week:** Create `04-freelancer-ai-agent/signal-agent/README.md` + a minimal WA echo-bot stub that accepts a ticker and returns a Kelly-suggested size using the formula referenced in 02's risk docs. (Folder already scaffolded — grow it, don't re-scaffold.)
 
 ---
 
@@ -87,8 +89,8 @@
 
 ## Things to Kill
 
-1. **`05-market-cron` silent dead feed.** `latest.json` + last 5 pulses are 100% errors (CoinGecko `Connection reset`, Yahoo `429`). The cron is burning compute and reporting success while returning nothing. **Kill the false-green status:** add a health check that marks the feed DEGRADED and alerts, or fix the fetcher (rotate endpoint / add retry-backoff / use `ccxt` which 02 already references). Until fixed, Q3's signal agent must run on a cached snapshot.
-2. **Phantom `04-freelancer-ai-agent` dependency.** 6+ one-pagers cite `04/...` files that don't exist. Either scaffold the folder this week or strip the dead cross-links. Don't let a non-existent folder keep being cited as a dependency.
+1. **`05-market-cron` partially-degraded equity feed (CORRECTED).** The current `latest.json` has **live crypto + fx** but `ihsg`/`idx_movers` return HTTP 429 (Yahoo rate-limit). It is *not* 100% dead — the original report's "silent dead feed" claim was wrong. **Harden the parser** to special-case `_error` (see `_meta/validate-pulse.py`) and add IHSG retry/backoff or rotate to Stooq/Binance. Until the equity leg is fixed, the signal agent runs on the live crypto/fx snapshot.
+2. **`04-freelancer-ai-agent` is now scaffolded (CORRECTED).** It is no longer phantom. What's missing is *content*, not the folder: add `qris-settlement-mcp` (**R2**), `logistics-orchestrator-mcp` (**P6**), and `signal-agent/` (Q3). Keep cross-links; they now resolve.
 3. **`scam-detection-tool-2026-07-07.md` (inbox) is fully subsumed** by the `judol-pinjol-cross-detection.md` opportunity one-pager (same thesis, far deeper). Keep as a one-line pointer, not a standalone idea. (Not yet 30 days stale, so not moved to graveyard — but stop treating it as separate.)
 4. **Overlapped "legal-tech mikro" cluster.** `07/inbox/2026-07-09-slik-pungli-koperasi-tools.md` bundles 3 separate plays (SLIK cleanup, koperasi claims, PKL pungli) into one. Split into 3 one-liners or promote the strongest (SLIK cleanup, Rp 99–299k WTP) and drop the rest to keep the inbox signal-dense.
 5. **Stale pulse files.** `05-market-cron/data/pulse-20260706-*.json` (4 files) predate the current dead-feed regime and add noise. Archive anything older than 7 days once the feed is healthy.

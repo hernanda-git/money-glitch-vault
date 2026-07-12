@@ -79,10 +79,10 @@ a human re-prompting each week:
 ---
 
 ## Done (this structuring pass)
-
 - ✅ Root `README.md` (vault map + pipeline overview + stale-report warning)
 - ✅ `PIPELINE.md` (7-stage manual, gates, cadence, template refs)
 - ✅ `_meta/` (VAULT-MAP, this BACKLOG, CONVENTIONS, validate-pulse.py, gen-map.sh)
 - ✅ `_templates/` (7 canonical templates)
 - ✅ Relocated 4 orphaned root recaps → `08-research-archive/`
 - ✅ `.gitignore` (secrets/scratch)
+- ✅ **R1 — Regenerated the synthesis cleanly:** corrected `weekly-gap-report-2026-07-12.md` (false "phantom" claims about `04`/`02`, and "100% dead feed" → actually crypto/fx live, equity 429) and `*-weekly-gap-synthesis.md` (stale 50→82 pain count), added in-place correction notes, and fixed README's overclaim.

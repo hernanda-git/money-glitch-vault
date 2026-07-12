@@ -14,15 +14,20 @@ holds the living backlog and conventions.
 
 ## ⚠️ Read this before you trust the reports
 
-The two synthesis reports in `07-gaps-and-opportunities/` (`weekly-gap-report-*.md`,
+The synthesis reports in `07-gaps-and-opportunities/` (`weekly-gap-report-*.md`,
 `*-weekly-gap-synthesis.md`) are **cron-generated snapshots** and go **stale**:
 
-- They were written when `04-freelancer-ai-agent/` and `02-trading-bot/strategies/` did
-  **not exist**. Both folders now exist. The reports calling them "phantom" are **wrong**
-  and should be regenerated, not quoted as ground truth.
+- The **`weekly-gap-report-2026-07-12.md`** was written when `04-freelancer-ai-agent/` and
+  `02-trading-bot/strategies/` did **not exist**. It called both "phantom/missing" — **both
+  now exist**. That report has been **corrected in place** (see its "Corrected 2026-07-12 (R1)"
+  note) but you should still treat its rankings as a historical snapshot, not current truth.
+- The `*-weekly-gap-synthesis.md` was more accurate (it already cited `04`'s MCP spec and
+  the ORB strategy) but its pain counts are stale (it says "50+", real is **82** — see its
+  correction note).
 - The `05-market-cron` feed degrades often (rate-limits / 429s / dead endpoints). Reports
   run on an empty feed will confidently analyze nothing. Always check a feed's `latest.json`
-  health before acting on a synthesis claim.
+  health (run `python _meta/validate-pulse.py 05-market-cron/data/latest.json`) before
+  acting on a synthesis claim.
 
 Treat reports as **leads to verify**, not conclusions. The single source of truth for
 "what should I build next" is **[`_meta/BACKLOG.md`](_meta/BACKLOG.md)**, which is curated
