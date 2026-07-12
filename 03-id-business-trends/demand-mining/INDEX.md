@@ -46,7 +46,7 @@
 - [2026-07-11] Krisis Air Bersih: PDAM Keruh, Sering Mati, dan Warga Antre — strength 4/5 — other
 - [2026-07-11] Opsen PKB Mencekik, Pajak Kendaraan Naik Drastis, Gerakan Setop Bayar — strength 4/5 — other
 - [2026-07-12] Warung dan Merchant Kecil Bingung Soal Biaya Admin QRIS, Berujung Ricuh dengan Konsumen — strength 4/5 — seller
-- [2026-07-12] Pekerja Swasta Terancam Gaji Dipotong Iuran Tapera 2027, Merasa Terbebani — strength 4/5 — employee
+- [2026-07-12] Jukir Liar Palak Pengendara di Minimarket dan Jalanan, Warga Resah — strength 4/5 — other
 - [2026-07-12] Keluarga Korban Judi Online Terlilit Utang, Butuh Pemulihan Finansial dan Psikologis — strength 5/5 — other
 - [2026-07-12] Iuran Tapera Potong Gaji Pekerja 3 Persen Tiap Bulan — strength 5/5 — employee
 - [2026-07-12] Bantuan Subsidi Upah (BSU) Rp600.000 Tidak Cair di 2026, Pekerja Bingung — strength 4/5 — employee
