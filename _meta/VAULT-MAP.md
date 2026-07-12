@@ -120,7 +120,7 @@
 ## 05-market-cron
 
 - `05-market-cron/cron-configs/ihsg-daily-fetch.md` (815 lines)
-- _data files (json/csv): 18
+- _data files (json/csv): 19
 
 ## 06-harga-pangan-papan
 

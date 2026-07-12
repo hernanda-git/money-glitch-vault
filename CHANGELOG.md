@@ -58,3 +58,12 @@
 - _meta/report_to_backlog.py: implements AUTO-ENRICH §6 (synthesis "New gaps" -> draft backlog,
   table+bullet parse, dedup). Verified: skipped 6 done items, surfaced 1 real new gap.
 - BACKLOG + AUTO-ENRICH updated to mark R3 + parser done. idx_movers 429 still open.
+
+## 2026-07-12 — D1b + alert transport: market feed fully live, watchdog wired
+- idx-movers-fetch.py (v8 chart, LQ45+flagship basket) heals the last dead leg; merged into
+  merge-equity-into-latest.py (renamed from IHSG-only). Verified: live sources crypto/fx/ihsg/
+  idx_movers/trending_coins = HEALTHY.
+- pulse-health-watchdog.py: validate-pulse + deliver DEGRADED/DEAD via PULSE_ALERT_* env
+  (Telegram/Discord/webhook). Creds env-only, never committed. Verified healthy->silent,
+  degraded->alert.
+- BACKLOG marked fully executed; AUTO-ENRICH cron table + honest-gaps updated.

@@ -99,6 +99,11 @@ a human re-prompting each week:
 - ✅ **AUTO-ENRICH** — `_meta/AUTO-ENRICH.md` self-driving pipeline (cron cadence, guard contracts, report→BACKLOG wiring, human gates, honest gaps).
 - ✅ **R3** — `anchor-of-trust-registry.md` (cross-cutting `lookup_trust(entity)` registry for judol/scam/desil/dormant/MBG; reference interface + 5 anchor sources).
 - ✅ **report→BACKLOG parser** — `_meta/report_to_backlog.py` (dry-run + `--apply`; table/bullet extraction; dedup against existing BACKLOG; verified: skipped 6 done items, surfaced the 1 real new gap).
+- ✅ **D1b equity legs fully healed** — `idx-movers-fetch.py` (v8 chart, LQ45+flagship basket) + `merge-equity-into-latest.py` (renamed from IHSG-only). Verified live: `live sources: crypto, fx, ihsg, idx_movers, trending_coins` — feed once "100% dead" is now HEALTHY.
+- ✅ **Alert transport wired** — `_meta/pulse-health-watchdog.py` runs `validate-pulse.py`, delivers DEGRADED/DEAD via `PULSE_ALERT_*` env (Telegram/Discord/webhook), env-only creds. Verified healthy→silent, degraded→alert.
 
-## Still open
-- `idx_movers` still 429 (needs a v8-based movers fetcher); alert transport not wired to a gateway channel.
+## Status: backlog fully executed ✅
+Every original R/P/D item is done. The vault is structured (README/PIPELINE/VAULT-MAP),
+self-enriching (AUTO-ENRICH + report→BACKLOG parser), guarded (validate/secret/dedup/archive),
+and its market feed is live end-to-end. New work should now enter via `07/inbox` →
+`07/opportunities` → BACKLOG `proposed`, as described in PIPELINE.md.

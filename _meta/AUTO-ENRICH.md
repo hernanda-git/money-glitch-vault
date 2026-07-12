@@ -29,8 +29,8 @@ the vault call its own live feed "dead").
 
 | Job | Schedule | Command | Guard / exit contract |
 |-----|----------|---------|----------------------|
-| **market-pulse** | every 6h | existing 05 fetcher **+** `05-market-cron/cron-configs/merge-ihsg-into-latest.py` | merge heals IHSG leg; `validate-pulse.py` exit ≠0 → alert, don't publish |
-| **pulse-health-watchdog** | daily 07:00 WIB | `python _meta/validate-pulse.py 05-market-cron/data/latest.json` | exit 1 (DEGRADED) → WA/Telegram alert |
+| **market-pulse** | every 6h | existing 05 fetcher **+** `05-market-cron/cron-configs/merge-equity-into-latest.py` | merge heals IHSG + IDX movers legs; `validate-pulse.py` exit ≠0 → alert, don't publish |
+| **pulse-health-watchdog** | daily 07:00 WIB | `python _meta/pulse-health-watchdog.py` | exit 1 (DEGRADED) / 2 (DEAD) → deliver alert via `PULSE_ALERT_*` env (Telegram/Discord/webhook) or cron `deliver=` target |
 | **pulse-archive** | weekly Sun | `python _meta/archive_pulses.py --days 7 --apply --git` | moves stale pulses to `08-research-archive/market-pulses/` |
 | **price-arbitrage-radar** | daily | `python 06-harga-pangan-papan/normalize_region.py 06.../latest.json` | prints commodity/region >+15% → feed to warung pilot |
 | **compliance-deadline-watch** | daily | `01` query `("PP" OR "Permen" OR "SE") (UMKM OR kreator) lang:in` | new regulatory shock → inbox seed (P4 bundle) |
@@ -83,6 +83,14 @@ Everything else (fetch, validate, archive, dedup, radar, deadline-watch) runs un
   (dry-run + `--apply`; extracts the "New gaps" table/bullets from the latest synthesis;
   dedups against existing BACKLOG so re-runs never double-count; verified: skipped 6 already-
   done items and surfaced the 1 real new gap). Wire it as a cron job after each weekly synthesis.
-- `idx_movers` still 429s (only `ihsg` is healed); needs a v8-based movers fetcher.
-- No alerting transport is wired (the watchdog exits non-zero but nothing sends the message
-  yet — needs a gateway-connected cron `deliver=` target).
+- ✅ **Both equity legs healed** — `idx-movers-fetch.py` (v8 chart, LQ45+flagship basket)
+  plus `merge-equity-into-latest.py` (renamed from the IHSG-only orchestrator). Verified live
+  2026-07-12: `live sources: crypto, fx, ihsg, idx_movers, trending_coins` — the feed once
+  called "100% dead" is now fully HEALTHY.
+- ✅ **Alert transport wired** — `_meta/pulse-health-watchdog.py` runs `validate-pulse.py` and
+  delivers a DEGRADED/DEAD alert via `PULSE_ALERT_*` env (Telegram / Discord / generic webhook);
+  exits non-zero so a wrapping cron `deliver=` target can also carry it. No creds are committed
+  (env-only). Verified: healthy→silent, degraded→alert (stdout when no transport set).
+
+**Zero open items remain in the original backlog.** The vault is now structurally coherent,
+self-enriching, and the market feed is live end-to-end.
