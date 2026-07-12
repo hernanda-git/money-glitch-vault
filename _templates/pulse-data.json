@@ -1,0 +1,29 @@
+{
+  "_contract": "05-market-cron pulse schema. Each source key is EITHER a data object OR an error object. Consumers MUST special-case `_error`.",
+  "generated_at": "YYYY-MM-DD HH:MM WIB",
+  "generated_iso": "YYYY-MM-DDTHH:MM:SS.ffffff+00:00",
+  "sources": {
+    "crypto": {
+      "<coin_id>": {
+        "usd": 0.0,
+        "usd_market_cap": 0.0,
+        "usd_24h_change": 0.0,
+        "idr": 0.0,
+        "idr_market_cap": 0.0,
+        "idr_24h_change": 0.0
+      }
+    },
+    "fx": {
+      "usd": { "idr": 0.0 }
+    },
+    "ihsg": {
+      "_error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "_source": "yahoo_jkse"
+    },
+    "idx_movers": {
+      "_error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "_source": "yahoo_movers"
+    },
+    "trending_coins": { "coins": [] }
+  }
+}

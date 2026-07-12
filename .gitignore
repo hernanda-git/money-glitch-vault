@@ -1,0 +1,28 @@
+# Secrets & credentials (NEVER commit)
+config.json
+.env
+*.token
+*.secret
+*.env.*
+credentials*
+secrets.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+package-lock.json
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+
+# Local-only scratch (agent working files, not pipeline content)
+*.local.md
+scratch/

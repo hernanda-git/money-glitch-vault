@@ -1,0 +1,148 @@
+# VAULT-MAP.md — generated map of pipeline content
+
+> Auto-generated snapshot of every content file in the vault. Infrastructure (_meta, _templates, .git) is excluded. Regenerate with: `bash _meta/gen-map.sh`
+
+## 01-crawler-scrapper
+
+- `01-crawler-scrapper/x/search-operators-playbook.md` (864 lines)
+
+## 02-trading-bot
+
+- `02-trading-bot/brokers-apis/binance-spot-futures.md` (622 lines)
+- `02-trading-bot/strategies/idx-opening-range-breakout.md` (809 lines)
+
+## 03-id-business-trends
+
+- `03-id-business-trends/bottlenecks/cod-settlement-infrastructure.md` (1465 lines)
+- `03-id-business-trends/bottlenecks/konstruksi-escrow-upah-tukang.md` (280 lines)
+- `03-id-business-trends/bottlenecks/ojol-logistics-inefficiency.md` (1116 lines)
+- `03-id-business-trends/bottlenecks/qris-settlement-speed-arbitrage.md` (797 lines)
+- `03-id-business-trends/bottlenecks/same-day-economy-delivery.md` (381 lines)
+- `03-id-business-trends/bottlenecks/umkm-npwp-registration-gap.md` (967 lines)
+- `03-id-business-trends/bottlenecks/warung-micro-fulfillment.md` (805 lines)
+- `03-id-business-trends/competitors/fastwork-sribu-freelance-gaps.md` (1177 lines)
+- `03-id-business-trends/competitors/lalamove-ankeraja-logistics-gaps.md` (847 lines)
+- `03-id-business-trends/demand-mining/biaya-marketplace-meroket-press-umkm.md` (50 lines)
+- `03-id-business-trends/demand-mining/biaya-remitansi-pekerja-migran-tinggi.md` (45 lines)
+- `03-id-business-trends/demand-mining/biaya-sekolah-mahal-orangtua-menjerit.md` (57 lines)
+- `03-id-business-trends/demand-mining/bpjs-pbpu-beban-keluarga-informal.md` (55 lines)
+- `03-id-business-trends/demand-mining/buruh-pabrik-outsourcing-prekariat.md` (46 lines)
+- `03-id-business-trends/demand-mining/coretax-sering-error-wajib-pajak-gagal-lapor.md` (47 lines)
+- `03-id-business-trends/demand-mining/desa-terisolasi-pasar-jalan-rusak.md` (45 lines)
+- `03-id-business-trends/demand-mining/digital-nomad-gentrifikasi-bali.md` (43 lines)
+- `03-id-business-trends/demand-mining/dosen-non-asn-gaji-rendah.md` (49 lines)
+- `03-id-business-trends/demand-mining/elpiji-3-kg-langka-harga-melonjak.md` (44 lines)
+- `03-id-business-trends/demand-mining/freelancer-indonesia-gaji-rendah.md` (45 lines)
+- `03-id-business-trends/demand-mining/freelancer-pajak-bayaran-luar-negeri.md` (44 lines)
+- `03-id-business-trends/demand-mining/fresh-graduate-ghosting-hospitality.md` (47 lines)
+- `03-id-business-trends/demand-mining/gen-z-mahasiswa-terjerat-paylater-penalti.md` (57 lines)
+- `03-id-business-trends/demand-mining/gen-z-sulit-cari-kerja-orangtua-bantu.md` (49 lines)
+- `03-id-business-trends/demand-mining/guru-honorer-belum-digaji-berbulan-bulan.md` (48 lines)
+- `03-id-business-trends/demand-mining/guru-honorer-nasib-tak-jelas.md` (49 lines)
+- `03-id-business-trends/demand-mining/harga-beras-di-atas-het-ibu-rt.md` (48 lines)
+- `03-id-business-trends/demand-mining/harga-gabah-anjlok-petani-rugi.md` (46 lines)
+- `03-id-business-trends/demand-mining/harga-gas-industri-mahal-memukul-manufaktur.md` (44 lines)
+- `03-id-business-trends/demand-mining/harga-tiket-pesawat-naik-ppn-berakhir.md` (48 lines)
+- `03-id-business-trends/demand-mining/ibu-pekerja-susah-cari-daycare.md` (48 lines)
+- `03-id-business-trends/demand-mining/INDEX.md` (47 lines)
+- `03-id-business-trends/demand-mining/inflasi-harga-pangan-2026.md` (53 lines)
+- `03-id-business-trends/demand-mining/investor-dapur-mbg-merugi-dana-tak-cair.md` (52 lines)
+- `03-id-business-trends/demand-mining/investor-pemula-rugi-investasi-bodong-kripto.md` (46 lines)
+- `03-id-business-trends/demand-mining/iuran-bpjs-naik-2026-peserta-mandiri.md` (45 lines)
+- `03-id-business-trends/demand-mining/karyawan-ter-phk-efisiensi-ai-butuh-reskilling.md` (48 lines)
+- `03-id-business-trends/demand-mining/karyawan-thr-tidak-dibayar-modus-phk.md` (44 lines)
+- `03-id-business-trends/demand-mining/korban-gagal-bayar-koperasi-simpan-pinjam.md` (52 lines)
+- `03-id-business-trends/demand-mining/kreator-konten-bingung-bayar-pajak.md` (50 lines)
+- `03-id-business-trends/demand-mining/krisis-air-pdam-keruh-mati.md` (46 lines)
+- `03-id-business-trends/demand-mining/magang-kampus-merdeka-gratis-tapi-berbiaya-tak-dibayar.md` (55 lines)
+- `03-id-business-trends/demand-mining/nakes-gaji-rendah-resign-massa.md` (49 lines)
+- `03-id-business-trends/demand-mining/nelayan-kesulitan-solar-subsidi.md` (47 lines)
+- `03-id-business-trends/demand-mining/ojol-komisi-potongan-aplikator.md` (53 lines)
+- `03-id-business-trends/demand-mining/opsen-pkb-mencekik-setop-bayar.md` (45 lines)
+- `03-id-business-trends/demand-mining/pajak-jht-berganda-buruh.md` (54 lines)
+- `03-id-business-trends/demand-mining/pbb-naik-tiba-tiba-warga-kaget-tagihan.md` (43 lines)
+- `03-id-business-trends/demand-mining/pedagang-pasar-sepi-harga-turun.md` (49 lines)
+- `03-id-business-trends/demand-mining/pedagang-pasar-tradisional-kehilangan-pelanggan.md` (46 lines)
+- `03-id-business-trends/demand-mining/pedagang-thrifting-baju-bekas-dilarang-impor.md` (52 lines)
+- `03-id-business-trends/demand-mining/pekerja-gig-economy-tanpa-jaminan.md` (49 lines)
+- `03-id-business-trends/demand-mining/pekerja-informal-skill-gap.md` (43 lines)
+- `03-id-business-trends/demand-mining/pencari-kerja-berpengalaman-gagal-tembus-seleksi-cv.md` (45 lines)
+- `03-id-business-trends/demand-mining/pengangguran-muda-indonesia.md` (52 lines)
+- `03-id-business-trends/demand-mining/pertalite-subsidi-langka-warga-beli-eceran.md` (49 lines)
+- `03-id-business-trends/demand-mining/pesangon-phk-tidak-dibayar.md` (50 lines)
+- `03-id-business-trends/demand-mining/petani-kehilangan-asuransi-autp-kuota-dipangkas.md` (55 lines)
+- `03-id-business-trends/demand-mining/petani-sawit-harga-tbs-tertekan.md` (53 lines)
+- `03-id-business-trends/demand-mining/peternak-ayam-telur-rugi-harga-anjlok-pakan-naik.md` (50 lines)
+- `03-id-business-trends/demand-mining/pinjol-ilegal-masih-marak.md` (54 lines)
+- `03-id-business-trends/demand-mining/pinjol-legal-bunga-tinggi.md` (43 lines)
+- `03-id-business-trends/demand-mining/pkl-dipalak-preman-berkedok-ormas.md` (54 lines)
+- `03-id-business-trends/demand-mining/pkl-ditertibkan-satpol-pp-kehilangan-tempat.md` (44 lines)
+- `03-id-business-trends/demand-mining/ppdb-zonasi-2026-ortu-protes.md` (46 lines)
+- `03-id-business-trends/demand-mining/pupuk-bersubsidi-langka-harga-naik.md` (48 lines)
+- `03-id-business-trends/demand-mining/rakyat-kecil-gagal-kpr-slik-ojk.md` (54 lines)
+- `03-id-business-trends/demand-mining/rasio-pajak-ri-tertinggal-asia-pasifik.md` (50 lines)
+- `03-id-business-trends/demand-mining/regenerasi-petani-pemuda-enggan-ke-sawah.md` (47 lines)
+- `03-id-business-trends/demand-mining/rekening-dormant-dibekukan-ppatk-tanpa-pemberitahuan.md` (48 lines)
+- `03-id-business-trends/demand-mining/ritel-elektronik-hp-sepi-pembeli-omzet-anjlok.md` (44 lines)
+- `03-id-business-trends/demand-mining/rupiah-melemah-umkm-pengimpor-terpukul.md` (55 lines)
+- `03-id-business-trends/demand-mining/saldo-penjual-shopee-dibekukan.md` (46 lines)
+- `03-id-business-trends/demand-mining/scam-digital-ai-kerugian-triliunan.md` (55 lines)
+- `03-id-business-trends/demand-mining/seller-marketplace-komisi-ongkir-meroket.md` (57 lines)
+- `03-id-business-trends/demand-mining/tagihan-listrik-pln-melonjak-3x.md` (46 lines)
+- `03-id-business-trends/demand-mining/tiktok-shop-seller-nib-komisi-menjerit.md` (46 lines)
+- `03-id-business-trends/demand-mining/tukang-bangunan-tidak-dibayar-upah-proyek.md` (52 lines)
+- `03-id-business-trends/demand-mining/uang-pangkal-ptn-mahal-calon-mahasiswa-mundur.md` (43 lines)
+- `03-id-business-trends/demand-mining/umkm-akses-modal-sulit.md` (48 lines)
+- `03-id-business-trends/demand-mining/umkm-biaya-produksi-meroket-bahan-baku-rupiah.md` (43 lines)
+- `03-id-business-trends/demand-mining/umkm-kedelai-tempe-bahan-baku-naik.md` (49 lines)
+- `03-id-business-trends/demand-mining/umkm-kontribusi-ekspor-rendah.md` (46 lines)
+- `03-id-business-trends/demand-mining/umkm-kredit-bottleneck.md` (43 lines)
+- `03-id-business-trends/demand-mining/umkm-pajak-digital-ribet.md` (49 lines)
+- `03-id-business-trends/demand-mining/umkm-produk-impor-e-commerce-cross-border.md` (46 lines)
+- `03-id-business-trends/demand-mining/umkm-sanksi-halal-oktober-2026.md` (50 lines)
+- `03-id-business-trends/demand-mining/umkm-sulit-digitalisasi.md` (45 lines)
+- `03-id-business-trends/demand-mining/umkm-sulit-urus-izin-bpom-pirt.md` (49 lines)
+- `03-id-business-trends/demand-mining/warga-miskin-terblokir-layanan-gratis-status-desil.md` (48 lines)
+- `03-id-business-trends/demand-mining/warung-kelontong-kalah-minimarket.md` (46 lines)
+
+## 04-freelancer-ai-agent
+
+- `04-freelancer-ai-agent/mcp-servers/fastwork-mcp-spec.md` (902 lines)
+
+## 05-market-cron
+
+- `05-market-cron/cron-configs/ihsg-daily-fetch.md` (815 lines)
+- _data files (json/csv): 17
+
+## 06-harga-pangan-papan
+
+- `06-harga-pangan-papan/data/INDEX.md` (5 lines)
+- _data files (json/csv): 4
+
+## 07-gaps-and-opportunities
+
+- `07-gaps-and-opportunities/2026-07-12-weekly-gap-synthesis.md` (183 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-03-umkm-financial-inclusion.md` (9 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-04-sawit-pintar-platform.md` (9 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-06-pupuk-digital-platform.md` (6 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-06-umkm-halal-cert-automation.md` (7 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-07-gas-group-buying-umkm.md` (6 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-09-ats-cv-optimizer.md` (11 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-09-slik-pungli-koperasi-tools.md` (9 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-10-escrow-upah-tukang-bangunan.md` (6 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-10-warung-collective-buying.md` (10 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-11-desil-dormant-checker-saas.md` (3 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-11-marketplace-net-margin-calc.md` (8 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-11-sppg-mbg-compliance-saas.md` (6 lines)
+- `07-gaps-and-opportunities/inbox/2026-07-11-unified-household-bills-tracker.md` (6 lines)
+- `07-gaps-and-opportunities/inbox/scam-detection-tool-2026-07-07.md` (3 lines)
+- `07-gaps-and-opportunities/opportunities/bpr-digital-transformation-saas.md` (776 lines)
+- `07-gaps-and-opportunities/opportunities/halalready-certification-platform.md` (927 lines)
+- `07-gaps-and-opportunities/opportunities/judol-pinjol-cross-detection.md` (805 lines)
+- `07-gaps-and-opportunities/opportunities/sawitpintar-platform.md` (1048 lines)
+- `07-gaps-and-opportunities/opportunities/warung-collective-buying-loyalty-toolkit.md` (809 lines)
+- `07-gaps-and-opportunities/weekly-gap-report-2026-07-12.md` (109 lines)
+
+## 08-research-archive
+
+
