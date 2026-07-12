@@ -51,3 +51,6 @@
 - [2026-07-12] Bantuan Subsidi Upah (BSU) Rp600.000 Tidak Cair di 2026, Pekerja Bingung — strength 4/5 — employee
 - [2026-07-12] PPN 12 Persen Bikin Harga Barang dan Jasa Melonjak, Konsumen dan Seller Menjerit — strength 4/5 — other
 - [2026-07-12] Buruh Demo Tuntut UMK 2026 Naik, Tapi Kenaikan Dipotong Aturan Pemerintah — strength 4/5 — employee
+- [2026-07-13] Merchant Food Delivery Kepekik Potongan Komisi Platform — strength 5/5 — seller
+- [2026-07-13] Pekerja Jakarta Tercekik Sewa Kos Naik, Gaji Kalah Cepat — strength 4/5 — employee
+- [2026-07-13] Akses Kartu Prakerja 2026 Ruwet, Peserta dan Penerima PHK Bingung — strength 4/5 — employee
