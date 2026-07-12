@@ -51,3 +51,10 @@
   D3 dedup_pains.py (81 canonical, 0 dupes); D4 check_secrets.py (clean); D5 archive_pulses.py.
 - AUTO-ENRICH.md self-driving pipeline (cron cadence, guards, report->BACKLOG wiring).
 - Only R3 (anchor-of-trust-registry) remains open by design.
+
+## 2026-07-12 — R3 anchor-of-trust-registry + report->BACKLOG parser
+- R3 anchor-of-trust-registry.md (cross-cutting lookup_trust registry; 5 anchor sources;
+  reference interface; consumed by judol/scam/desil/mbg products). Only remaining READY item closed.
+- _meta/report_to_backlog.py: implements AUTO-ENRICH §6 (synthesis "New gaps" -> draft backlog,
+  table+bullet parse, dedup). Verified: skipped 6 done items, surfaced 1 real new gap.
+- BACKLOG + AUTO-ENRICH updated to mark R3 + parser done. idx_movers 429 still open.

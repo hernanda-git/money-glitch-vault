@@ -24,7 +24,7 @@
 |---|------|------|---------------|--------|--------|
 | R1 | **Regenerate the weekly synthesis cleanly** | process | `07` + this file | ✅ **done** | S |
 | R2 | **`qris-settlement-mcp` spec** | build spec | `04-freelancer-ai-agent/mcp-servers/` | ✅ **done** | S |
-| R3 | **`anchor-of-trust-registry`** | research | `03-id-business-trends/bottlenecks/` | ⬜ still open (only READY item left) | M |
+| R3 | **`anchor-of-trust-registry`** | research | `03-id-business-trends/bottlenecks/` | ✅ **done** (cross-cutting `lookup_trust` registry) | M |
 | R4 | **Scaffold `02/risk-management/` + `02/signals/`** | build | `02-trading-bot/` | ✅ **done** (Kelly sizing + sentiment scoring) | M |
 
 ---
@@ -97,8 +97,8 @@ a human re-prompting each week:
 - ✅ **P7** — promoted 4 inbox seeds → `07/opportunities/` (MBG compliance, marketplace net-margin, household bills tracker, desil/dormant checker).
 - ✅ **D1–D5** — runnable + verified tooling: `merge-ihsg-into-latest.py` (heals IHSG leg, verified close 5924.36), `normalize_region.py`, `dedup_pains.py` (81 canonical), `check_secrets.py` (clean), `archive_pulses.py`.
 - ✅ **AUTO-ENRICH** — `_meta/AUTO-ENRICH.md` self-driving pipeline (cron cadence, guard contracts, report→BACKLOG wiring, human gates, honest gaps).
+- ✅ **R3** — `anchor-of-trust-registry.md` (cross-cutting `lookup_trust(entity)` registry for judol/scam/desil/dormant/MBG; reference interface + 5 anchor sources).
+- ✅ **report→BACKLOG parser** — `_meta/report_to_backlog.py` (dry-run + `--apply`; table/bullet extraction; dedup against existing BACKLOG; verified: skipped 6 done items, surfaced the 1 real new gap).
 
 ## Still open
-- **R3** — `anchor-of-trust-registry` (the only remaining READY item; cross-cutting registry for judol/scam/desil/dormant/MBG). Deliberately left for a dedicated design pass.
-- Report→BACKLOG auto-draft **parser** (specced in AUTO-ENRICH §6, not yet implemented).
 - `idx_movers` still 429 (needs a v8-based movers fetcher); alert transport not wired to a gateway channel.

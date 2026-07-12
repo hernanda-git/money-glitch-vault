@@ -79,8 +79,10 @@ Everything else (fetch, validate, archive, dedup, radar, deadline-watch) runs un
 
 ## 6. What's NOT automated yet (honest gaps)
 
-- The report→BACKLOG parser is specced here but not implemented (needs a small script that
-  reads the latest `07/weekly-gap-report-*.md`, extracts "New gaps", and appends drafts).
+- ✅ **Report→BACKLOG parser IS NOW IMPLEMENTED** — `_meta/report_to_backlog.py`
+  (dry-run + `--apply`; extracts the "New gaps" table/bullets from the latest synthesis;
+  dedups against existing BACKLOG so re-runs never double-count; verified: skipped 6 already-
+  done items and surfaced the 1 real new gap). Wire it as a cron job after each weekly synthesis.
 - `idx_movers` still 429s (only `ihsg` is healed); needs a v8-based movers fetcher.
 - No alerting transport is wired (the watchdog exits non-zero but nothing sends the message
   yet — needs a gateway-connected cron `deliver=` target).

@@ -15,6 +15,7 @@
 
 ## 03-id-business-trends
 
+- `03-id-business-trends/bottlenecks/anchor-of-trust-registry.md` (185 lines)
 - `03-id-business-trends/bottlenecks/cod-settlement-infrastructure.md` (1465 lines)
 - `03-id-business-trends/bottlenecks/konstruksi-escrow-upah-tukang.md` (280 lines)
 - `03-id-business-trends/bottlenecks/ojol-logistics-inefficiency.md` (1116 lines)
@@ -26,7 +27,6 @@
 - `03-id-business-trends/bottlenecks/warung-region-aware-stock.md` (82 lines)
 - `03-id-business-trends/competitors/fastwork-sribu-freelance-gaps.md` (1177 lines)
 - `03-id-business-trends/competitors/lalamove-ankeraja-logistics-gaps.md` (847 lines)
-- `03-id-business-trends/demand-mining/INDEX.md` (47 lines)
 - `03-id-business-trends/demand-mining/biaya-marketplace-meroket-press-umkm.md` (50 lines)
 - `03-id-business-trends/demand-mining/biaya-remitansi-pekerja-migran-tinggi.md` (45 lines)
 - `03-id-business-trends/demand-mining/biaya-sekolah-mahal-orangtua-menjerit.md` (57 lines)
@@ -49,6 +49,7 @@
 - `03-id-business-trends/demand-mining/harga-gas-industri-mahal-memukul-manufaktur.md` (44 lines)
 - `03-id-business-trends/demand-mining/harga-tiket-pesawat-naik-ppn-berakhir.md` (48 lines)
 - `03-id-business-trends/demand-mining/ibu-pekerja-susah-cari-daycare.md` (48 lines)
+- `03-id-business-trends/demand-mining/INDEX.md` (47 lines)
 - `03-id-business-trends/demand-mining/inflasi-harga-pangan-2026.md` (53 lines)
 - `03-id-business-trends/demand-mining/investor-dapur-mbg-merugi-dana-tak-cair.md` (52 lines)
 - `03-id-business-trends/demand-mining/investor-pemula-rugi-investasi-bodong-kripto.md` (46 lines)
