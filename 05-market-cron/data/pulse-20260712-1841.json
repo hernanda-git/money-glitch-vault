@@ -58,100 +58,12 @@
       }
     },
     "ihsg": {
-      "source": "yahoo_finance_chart",
-      "symbol": "^JKSE",
-      "name": "IDX COMPOSITE",
-      "latest": {
-        "date_wib": "2026-07-10",
-        "close": 5924.35986328125,
-        "open": 5936.037109375,
-        "high": 5949.9912109375,
-        "low": 5887.8349609375,
-        "volume": 142216700,
-        "adj_close": 5924.35986328125,
-        "change": 11.92,
-        "change_pct": 0.2016
-      },
-      "fifty_two_week": {
-        "high": 9174.474,
-        "low": 5317.908
-      },
-      "fetched_utc": "2026-07-12T13:11:03Z",
-      "_healed_by": "merge-equity-into-latest.py",
-      "_healed_at": "2026-07-12T13:11:03Z"
+      "_error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "_source": "yahoo_jkse"
     },
     "idx_movers": {
-      "source": "yahoo_finance_chart",
-      "market": "IDX",
-      "fetched_utc": "2026-07-12T13:11:06Z",
-      "count_scanned": 20,
-      "count_priced": 20,
-      "top_gainers": [
-        {
-          "symbol": "PGAS.JK",
-          "name": "Perusahaan Gas Negara",
-          "price": 1465.0,
-          "change_pct": 4.64
-        },
-        {
-          "symbol": "ADRO.JK",
-          "name": "Adaro Energy",
-          "price": 2390.0,
-          "change_pct": 4.37
-        },
-        {
-          "symbol": "INDF.JK",
-          "name": "Indofood Sukses Makmur",
-          "price": 6775.0,
-          "change_pct": 2.26
-        },
-        {
-          "symbol": "UNTR.JK",
-          "name": "United Tractors",
-          "price": 24500.0,
-          "change_pct": 1.87
-        },
-        {
-          "symbol": "ANTM.JK",
-          "name": "Aneka Tambang",
-          "price": 2900.0,
-          "change_pct": 1.75
-        }
-      ],
-      "top_losers": [
-        {
-          "symbol": "ASII.JK",
-          "name": "Astra International",
-          "price": 4810.0,
-          "change_pct": -1.43
-        },
-        {
-          "symbol": "TLKM.JK",
-          "name": "Telkom Indonesia",
-          "price": 2480.0,
-          "change_pct": -1.2
-        },
-        {
-          "symbol": "TPIA.JK",
-          "name": "Chandra Asri Pacific",
-          "price": 1805.0,
-          "change_pct": -1.1
-        },
-        {
-          "symbol": "BBCA.JK",
-          "name": "Bank Central Asia",
-          "price": 6175.0,
-          "change_pct": -0.4
-        },
-        {
-          "symbol": "ICBP.JK",
-          "name": "Indofood CBP",
-          "price": 6650.0,
-          "change_pct": -0.37
-        }
-      ],
-      "_healed_by": "merge-equity-into-latest.py",
-      "_healed_at": "2026-07-12T13:11:06Z"
+      "_error": "HTTPError: HTTP Error 429: Too Many Requests",
+      "_source": "yahoo_movers"
     },
     "trending_coins": {
       "coins": [

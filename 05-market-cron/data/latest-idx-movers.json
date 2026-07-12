@@ -1,8 +1,8 @@
 {
   "source": "yahoo_finance_chart",
   "market": "IDX",
-  "fetched_utc": "2026-07-12T07:10:34Z",
-  "fetched_wib": "2026-07-12 14:10 WIB",
+  "fetched_utc": "2026-07-12T13:11:06Z",
+  "fetched_wib": "2026-07-12 20:11 WIB",
   "count_scanned": 20,
   "count_priced": 20,
   "top_gainers": [

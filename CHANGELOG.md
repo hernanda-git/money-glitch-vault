@@ -75,3 +75,5 @@
   to real job names (mgv-pulse-heal/watch/archive/backlog/secret-scan, each -win).
 - pulse-health-watchdog.py gained --quiet-ok (silent when healthy) for clean watchdog delivery.
 ## 2026-07-12 — enrich(01): cookies-tokens-storage-safety — safe at-rest encryption (Fernet+MultiFernet), KEK sourcing (keyring/PBKDF2/Secrets Manager), rotation loop, and pre-commit secret-scan guardrails for scraper credentials
+
+## 2026-07-12 — enrich(07): qris-mdr-transparency-layer — "Kasir QRIS Jujur" literacy/transparency layer: net-received MDR calculator, fee-free alert, printable BI-rule poster for micro-merchants
