@@ -147,10 +147,16 @@ def main():
         with open(path, encoding="utf-8") as f:
             existing = json.load(f)
 
-    def norm(p):
-        return json.dumps(p, sort_keys=True, ensure_ascii=False)
+    def price_key(r):
+        # Order-insensitive price identity: (name, region, prev, cur, chg, unit)
+        return (r.get("commodity_name"), r.get("region"), r.get("previous_price"),
+                r.get("current_price"), r.get("change_percent"), r.get("unit"))
 
-    changed = (existing is None) or (norm(existing) != norm(payload))
+    def row_fingerprint(p):
+        rows = sorted(price_key(r) for r in p.get("rows", []))
+        return (p.get("data_date"), p.get("previous_date"), tuple(rows))
+
+    changed = (existing is None) or (row_fingerprint(existing) != row_fingerprint(payload))
 
     if not changed:
         print(json.dumps({
