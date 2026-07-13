@@ -702,6 +702,50 @@ Tiga poin utama:
 - Wedge-nya mikro, bukan makro: koperasi komunitas dengan tabungan otomatis, kredit servis, dana darurat.
 - Syarat mutlak: ledger transparan dan batas loan-to-savings agar tidak berakhir seperti KSP Indosurya atau Delta Pratama.
 
+## Worked Example: Underwriting Satu Driver
+
+Misalkan driver Budi, anggota 6 bulan:
+
+- Tabungan: Rp 3.000.000 (akumulasi potongan Rp 1.000 x ~3.000 order).
+- Odometer: 18.000 km, servis terakhir di 16.200 km (1.800 km sejak servis).
+- Riwayat angsuran: lancar (0 telat).
+- Risk score: 0,2 (baik).
+
+Budi ajukan kredit servis Rp 2.000.000 untuk ganti ban + kampas (karena 1.800 km sejak servis, eligible). Batas maksimal = 3x tabungan = Rp 9.000.000, jadi Rp 2 juta lolos. Bunga 2%/bulan flat, tenor 3 bulan:
+
+- Angsuran pokok: Rp 666.667/bulan.
+- Bunga: Rp 40.000/bulan (2% x Rp 2 juta).
+- Total angsuran: Rp 706.667/bulan x 3 = Rp 2.120.000.
+- Total bunga koperasi: Rp 120.000 (margin sehat, NPL rendah karena social collateral).
+
+Jika Budi sakit 2 minggu, bot auto-pause angsuran (karena riwayat order drop terdeteksi), lalu sambung di belakang tanpa penalti. Di fintech umum, ini langsung jadi tune-up penalty.
+
+## Checklist Kesiapan sebelum Launch
+
+- [ ] Akta + SK koperasi dari Kemenkop (OSS RBA).
+- [ ] Rekening koperasi di bank/BSI/BPR.
+- [ ] Bot WA deploy + test end-to-end.
+- [ ] 3 bengkel mitra tanda tangan harga paket.
+- [ ] 50 founding driver verifikasi identitas + BPJS (jika ada).
+- [ ] Template RAT + statement bulanan siap.
+- [ ] Konsultan hukum review struktur (OJK, UU PDP, pajak).
+- [ ] Cadangan 15% di-lock di rekening terpisah.
+- [ ] Hash-ledger verifier siap (cek integritas tiap malam).
+
+## Glosarium
+
+- Ojol: Ojek online (Gojek, Grab, Maxim, dll).
+- KOPDI: Koperasi Pengemudi Berdaya Indonesia, koperasi nasional untuk driver (Kemenkop).
+- Kopdes: Koperasi Desa, termasuk program Merah Putih (80.000 desa).
+- KSP: Koperasi Simpan Pinjam, sering bermasalah jika tidak diawasi.
+- NPL: Non-Performing Loan, kredit macet.
+- Social collateral: jaminan berbasis reputasi komunitas, bukan aset.
+- Loan-to-savings: rasio maksimal kredit terhadap saldo simpanan anggota.
+- Odometer: alat ukur jarak tempuh kendaraan, dipakai untuk prediksi servis.
+- RAT: Rapat Anggota Tahunan, forum pertanggungjawaban pengurus koperasi.
+- BPJS Ketenagakerjaan: jaminan sosial untuk pekerja, termasuk driver (baru 12,3% terdaftar).
+- QRIS: QR code standar Indonesia untuk pembayaran, MDR rendah.
+
 ## Lampiran: Estimasi Model Operasional per 1.000 Driver (Tabel)
 
 | Item | Asumsi | Bulanan | Tahunan |
@@ -745,3 +789,13 @@ Tabel ini ilustratif. Varifikasi lapangan diperlukan sebelum eksekusi nyata.
 26. Berita Koperasi, 2024-06-12, "KSP Lombok Sejati NTB Tumbuh Tangguh Bersama LPDB-KUMKM" - https://news.google.com/search?q=KSP%20LOMBOK%20SEJATI%20NTB%20TUMBUH%20TANGGUH%20BERSAMA%20LPDB-KUMKM
 27. Pemerintah Kota Surabaya, 2025-07-01, "Pemkot Surabaya Beri Bantuan BPJS Ketenagakerjaan kepada 15.350 Pengemudi Ojol" - https://news.google.com/search?q=Pemkot%20Surabaya%20Beri%20Bantuan%20BPJS%20Ketenagakerjaan%20kepada%2015.350%20Pengemudi%20Ojol
 28. Tempo.co, 2026-05-01, "Asosiasi Ojol Girang Potongan Aplikasi Jadi 8 Persen" - https://news.google.com/search?q=Asosiasi%20Ojol%20Girang%20Potongan%20Aplikasi%20Jadi%208%20Persen
+
+## Catatan Editor
+
+Dokumen ini disusun sebagai research note, bukan business plan. Tujuannya memetakan celah (bottleneck) dan validasi bahwa celah itu nyata lewat kebijakan pemerintah dan rasa sakit pengguna. Angka proyeksi bersifat ilustratif dan perlu diverifikasi di lapangan sebelum eksekusi. Semua URL sumber adalah query Google News yang bisa di-resolve ke artikel asli (outlet + tanggal tercantum). Jika di kemudian hari artikel dihapus atau paywalled, catatan sumber tetap valid sebagai jejak waktu penelitian.
+
+Peneliti berikutnya yang mengambil topik ini disarankan menambang: (a) data resmi jumlah driver per aplikator, (b) tarif servis bengkel resmi vs pinggir jalan per kota, (c) prevalensi rentenir di komunitas driver, dan (d) posisi OJK terhadap koperasi simpan pinjam berbasis komunitas. Keempatnya akan menaikkan kedalaman dari ilustrasi ke angka operasional.
+
+## Penutup Singkat
+
+Celah koperasi simpan pinjam driver ojol adalah contoh sempurna dari "bottleneck yang divalidasi oleh kebijakan pemerintah tapi belum terisi oleh eksekusi komunitas". Pemerintah sudah dorong KOPDI dan Kopdes Merah Putih, tapi sentuhannya belum turun ke driver harian. Siapa pun yang membangun koperasi mikro berbasis pool dengan ledger transparan dan tiga produk di atas punya izin untuk melayani 7-13 juta orang yang selama ini cuma jadi mitra tanpa jaminan.
