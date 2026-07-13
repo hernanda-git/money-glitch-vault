@@ -6,36 +6,26 @@
   "currency": "IDR",
   "exchange": "Jakarta",
   "timezone": "WIB",
-  "fetched_utc": "2026-07-12T13:11:03Z",
-  "fetched_wib": "2026-07-12 20:11 WIB",
+  "fetched_utc": "2026-07-13T02:35:18Z",
+  "fetched_wib": "2026-07-13 09:35 WIB",
   "latest": {
-    "date_wib": "2026-07-10",
-    "close": 5924.35986328125,
-    "open": 5936.037109375,
-    "high": 5949.9912109375,
-    "low": 5887.8349609375,
-    "volume": 142216700,
-    "adj_close": 5924.35986328125,
-    "change": 11.92,
-    "change_pct": 0.2016
+    "date_wib": "2026-07-13",
+    "close": 5943.52099609375,
+    "open": 5934.71923828125,
+    "high": 5943.52099609375,
+    "low": 5898.14697265625,
+    "volume": 0,
+    "adj_close": 5943.52099609375,
+    "change": 19.16,
+    "change_pct": 0.3234
   },
   "fifty_two_week": {
     "high": 9174.474,
     "low": 5317.908
   },
-  "regular_market_price": 5924.36,
-  "previous_close": 5916.07,
+  "regular_market_price": 5943.521,
+  "previous_close": 5986.497,
   "history": [
-    {
-      "ts_utc": 1783303200,
-      "date_wib": "2026-07-06",
-      "open": 5893.28076171875,
-      "high": 5935.68310546875,
-      "low": 5857.35009765625,
-      "close": 5916.06982421875,
-      "volume": 176040400,
-      "adj_close": 5916.06982421875
-    },
     {
       "ts_utc": 1783389600,
       "date_wib": "2026-07-07",
@@ -75,6 +65,16 @@
       "close": 5924.35986328125,
       "volume": 142216700,
       "adj_close": 5924.35986328125
+    },
+    {
+      "ts_utc": 1783908000,
+      "date_wib": "2026-07-13",
+      "open": 5934.71923828125,
+      "high": 5943.52099609375,
+      "low": 5898.14697265625,
+      "close": 5943.52099609375,
+      "volume": 0,
+      "adj_close": 5943.52099609375
     }
   ],
   "stale": false
