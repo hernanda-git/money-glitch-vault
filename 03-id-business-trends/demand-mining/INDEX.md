@@ -60,3 +60,6 @@
 - [2026-07-13] Pekerja Koperasi Desa Merah Putih Gelisah Gaji dan Kontrak Tak Jelas — strength 4/5 — employee
 - [2026-07-13] Nelayan Kecil Kehilangan Ruang Tangkap Akibat Proyek Strategis Nasional — strength 4/5 — farmer
 - [2026-07-13] Truk dan Bus Angkutan Barang Sulit Dapat Solar Bersubsidi, Logistik Terganggu — strength 4/5 — other
+- [2026-07-13] Klaim JKP Ditolak Gara-gara Berkas Tak Valid, Pekerja PHK Makin Tercekik — strength 5/5 — employee
+- [2026-07-13] Perpanjang SIM Online Gagal, Uang Tidak Kembali Utuh, Pengguna Bingung — strength 4/5 — other
+- [2026-07-13] Internet Rumah IndiHome dan MyRepublic Sering Gangguan, CS Tak Peduli — strength 4/5 — other
