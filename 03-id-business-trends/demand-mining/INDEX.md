@@ -57,3 +57,6 @@
 - [2026-07-13] MBR Gagal Dapat KPR Subsidi karena Skor SLIK OJK Rendah — strength 4/5 — other
 - [2026-07-13] Pedagang UMKM Omzet Anjlok Saat Car Free Day Ditiadakan — strength 4/5 — seller
 - [2026-07-13] Ancaman PHK Massal 9.000 Buruh Padat Karya Akibat Perang Timur Tengah — strength 4/5 — employee
+- [2026-07-13] Pekerja Koperasi Desa Merah Putih Gelisah Gaji dan Kontrak Tak Jelas — strength 4/5 — employee
+- [2026-07-13] Nelayan Kecil Kehilangan Ruang Tangkap Akibat Proyek Strategis Nasional — strength 4/5 — farmer
+- [2026-07-13] Truk dan Bus Angkutan Barang Sulit Dapat Solar Bersubsidi, Logistik Terganggu — strength 4/5 — other
