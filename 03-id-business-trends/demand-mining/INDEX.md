@@ -69,3 +69,6 @@
 - [2026-07-14] Saldo E-Wallet GoPay, OVO, DANA Mendadak Dibekukan atau Tak Masuk — strength 4/5 — other
 - [2026-07-14] Seller Marketplace Rugi Akibat Retur Fiktif dan Beban Biaya Retur COD — strength 5/5 — seller
 - [2026-07-14] Pasien BPJS Kesehatan Ditolak atau Dipulangkan RS karena Klaim Tertunda — strength 5/5 — other
+- [2026-07-15] Penipuan Lowongan Kerja Online Kian Makan Korban, Tabungan Pencari Kerja Melayang — strength 5/5 — employee
+- [2026-07-15] 40 Juta UMKM Belum Kantongi NIB, Urus Izin Lewat OSS Masih Jadi Hambatan — strength 4/5 — umkm
+- [2026-07-15] Pendatang Antar-Daerah Tak Bisa Urus e-KTP dan Surat Pindah Domisili Online — strength 4/5 — employee

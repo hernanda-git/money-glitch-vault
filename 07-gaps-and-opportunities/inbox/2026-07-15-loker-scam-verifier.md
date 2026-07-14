@@ -1,0 +1,3 @@
+# 2026-07-15 loker-scam-verifier
+
+A fresh pain (strength 5/5) shows 178 job-seekers scammed in one Mimika WhatsApp group, plus repeated BUMN/ABK/Papua cases in Jun 2026. There is no fast, free, pre-payment checker that cross-references a company/WA number/posting against public NIB/AHU, official BUMN/Kemnaker recruitment lists, and reported scam rekening/numbers. Wedge: a WhatsApp/Telegram bot that returns a green/yellow/red trust verdict in 10 seconds before the victim transfers "administration fees". This extends the existing scam-detection gap (scam-detection-tool-2026-07-07.md) into the highest-intent moment: right before someone pays. Pairs naturally with the fresh-graduate CV/ATS opportunity and the desil/dormant checker SaaS line.
