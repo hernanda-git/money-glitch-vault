@@ -63,3 +63,6 @@
 - [2026-07-13] Klaim JKP Ditolak Gara-gara Berkas Tak Valid, Pekerja PHK Makin Tercekik — strength 5/5 — employee
 - [2026-07-13] Perpanjang SIM Online Gagal, Uang Tidak Kembali Utuh, Pengguna Bingung — strength 4/5 — other
 - [2026-07-13] Internet Rumah IndiHome dan MyRepublic Sering Gangguan, CS Tak Peduli — strength 4/5 — other
+- [2026-07-14] PPDB Zonasi Bikin Anak Gagal Padahal Rumah Dekat Sekolah — strength 5/5 — parent
+- [2026-07-14] Akun TikTok Shop Mendadak Dibekukan, Saldo Jutaan Rupiah Tertahan — strength 5/5 — seller
+- [2026-07-14] PMI Gaji Tak Dibayar Majikan, Berbulan-bulan Menunggu Hak Pulang — strength 4/5 — other
