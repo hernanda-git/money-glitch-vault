@@ -66,3 +66,6 @@
 - [2026-07-14] PPDB Zonasi Bikin Anak Gagal Padahal Rumah Dekat Sekolah — strength 5/5 — parent
 - [2026-07-14] Akun TikTok Shop Mendadak Dibekukan, Saldo Jutaan Rupiah Tertahan — strength 5/5 — seller
 - [2026-07-14] PMI Gaji Tak Dibayar Majikan, Berbulan-bulan Menunggu Hak Pulang — strength 4/5 — other
+- [2026-07-14] Saldo E-Wallet GoPay, OVO, DANA Mendadak Dibekukan atau Tak Masuk — strength 4/5 — other
+- [2026-07-14] Seller Marketplace Rugi Akibat Retur Fiktif dan Beban Biaya Retur COD — strength 5/5 — seller
+- [2026-07-14] Pasien BPJS Kesehatan Ditolak atau Dipulangkan RS karena Klaim Tertunda — strength 5/5 — other
