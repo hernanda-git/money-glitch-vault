@@ -72,3 +72,6 @@
 - [2026-07-15] Penipuan Lowongan Kerja Online Kian Makan Korban, Tabungan Pencari Kerja Melayang — strength 5/5 — employee
 - [2026-07-15] 40 Juta UMKM Belum Kantongi NIB, Urus Izin Lewat OSS Masih Jadi Hambatan — strength 4/5 — umkm
 - [2026-07-15] Pendatang Antar-Daerah Tak Bisa Urus e-KTP dan Surat Pindah Domisili Online — strength 4/5 — employee
+- [2026-07-15] Cicilan KPR Bengkak Akibat Naiknya BI Rate, Kelas Menengah Tercekik — strength 5/5 — employee
+- [2026-07-15] KTP Dipakai Orang Lain untuk Pinjol, Korban Terima Tagihan dan Teror — strength 5/5 — other
+- [2026-07-15] Klaim Asuransi Swasta Ditolak, Nasabah Kecewa dan Merugi — strength 4/5 — other
