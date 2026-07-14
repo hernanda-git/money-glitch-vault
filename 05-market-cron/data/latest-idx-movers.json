@@ -1,72 +1,72 @@
 {
   "source": "yahoo_finance_chart",
   "market": "IDX",
-  "fetched_utc": "2026-07-13T02:35:24Z",
-  "fetched_wib": "2026-07-13 09:35 WIB",
+  "fetched_utc": "2026-07-14T13:13:47Z",
+  "fetched_wib": "2026-07-14 20:13 WIB",
   "count_scanned": 20,
   "count_priced": 20,
   "top_gainers": [
     {
       "symbol": "UNTR.JK",
       "name": "United Tractors",
-      "price": 24850.0,
-      "change_pct": 1.43
+      "price": 27500.0,
+      "change_pct": 6.18
     },
     {
-      "symbol": "TPIA.JK",
-      "name": "Chandra Asri Pacific",
-      "price": 1830.0,
-      "change_pct": 1.39
+      "symbol": "ERAA.JK",
+      "name": "Erajaya Swasembada",
+      "price": 360.0,
+      "change_pct": 2.86
     },
     {
-      "symbol": "PGAS.JK",
-      "name": "Perusahaan Gas Negara",
-      "price": 1480.0,
-      "change_pct": 1.02
-    },
-    {
-      "symbol": "AKRA.JK",
-      "name": "AKR Corporindo",
-      "price": 1330.0,
-      "change_pct": 0.76
-    },
-    {
-      "symbol": "BBRI.JK",
-      "name": "Bank Rakyat Indonesia",
-      "price": 2810.0,
-      "change_pct": 0.72
-    }
-  ],
-  "top_losers": [
-    {
-      "symbol": "UNVR.JK",
-      "name": "Unilever Indonesia",
-      "price": 1700.0,
-      "change_pct": -1.73
-    },
-    {
-      "symbol": "ANTM.JK",
-      "name": "Aneka Tambang",
-      "price": 2850.0,
-      "change_pct": -1.72
+      "symbol": "TLKM.JK",
+      "name": "Telkom Indonesia",
+      "price": 2560.0,
+      "change_pct": 1.99
     },
     {
       "symbol": "ADRO.JK",
       "name": "Adaro Energy",
-      "price": 2360.0,
-      "change_pct": -1.26
+      "price": 2480.0,
+      "change_pct": 1.22
     },
     {
-      "symbol": "ASII.JK",
-      "name": "Astra International",
-      "price": 4770.0,
-      "change_pct": -0.83
+      "symbol": "AKRA.JK",
+      "name": "AKR Corporindo",
+      "price": 1340.0,
+      "change_pct": 1.13
+    }
+  ],
+  "top_losers": [
+    {
+      "symbol": "PGAS.JK",
+      "name": "Perusahaan Gas Negara",
+      "price": 1490.0,
+      "change_pct": -2.61
+    },
+    {
+      "symbol": "BBRI.JK",
+      "name": "Bank Rakyat Indonesia",
+      "price": 2800.0,
+      "change_pct": -2.44
+    },
+    {
+      "symbol": "BMRI.JK",
+      "name": "Bank Mandiri",
+      "price": 4160.0,
+      "change_pct": -2.12
+    },
+    {
+      "symbol": "BBNI.JK",
+      "name": "Bank Negara Indonesia",
+      "price": 3470.0,
+      "change_pct": -1.7
     },
     {
       "symbol": "BBCA.JK",
       "name": "Bank Central Asia",
       "price": 6125.0,
-      "change_pct": -0.81
+      "change_pct": -1.61
     }
   ]
 }
