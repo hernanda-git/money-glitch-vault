@@ -75,3 +75,6 @@
 - [2026-07-15] Cicilan KPR Bengkak Akibat Naiknya BI Rate, Kelas Menengah Tercekik — strength 5/5 — employee
 - [2026-07-15] KTP Dipakai Orang Lain untuk Pinjol, Korban Terima Tagihan dan Teror — strength 5/5 — other
 - [2026-07-15] Klaim Asuransi Swasta Ditolak, Nasabah Kecewa dan Merugi — strength 4/5 — other
+- [2026-07-15] Pajak Penarikan JHT BPJS Ketenagakerjaan Bikin Buruh Murka — strength 5/5 — employee
+- [2026-07-15] Aturan Baru Kontrol BPJS Kesehatan Bikin Pasien dan Lansia Bingung — strength 4/5 — other
+- [2026-07-15] KRL Commuter Line Sering Terganggu, Penumpang Menumpuk dan Tertahan — strength 4/5 — employee
