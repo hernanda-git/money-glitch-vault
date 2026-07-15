@@ -1,6 +1,6 @@
 {
   "source": "api-sp2kp.kemendag.go.id (REST: report/api/average-price/generate-perbandingan-harga)",
-  "fetched_at_utc": "2026-07-15T01:02:25Z",
+  "fetched_at_utc": "2026-07-15T01:23:45.349837+00:00",
   "data_date": "2026-07-14",
   "previous_date": "2026-07-13",
   "commodity_count": 17,
@@ -38,19 +38,10 @@
       "date": "2026-07-14",
       "commodity_name": "Beras Medium",
       "unit": "kg",
-      "region": "Region A",
-      "previous_price": 13938,
-      "current_price": 13938,
-      "change_percent": 0
-    },
-    {
-      "date": "2026-07-14",
-      "commodity_name": "Beras Medium",
-      "unit": "kg",
       "region": "Region B",
       "previous_price": 14679,
       "current_price": 14679,
-      "change_percent": 0
+      "change_percent": 0.0
     },
     {
       "date": "2026-07-14",
@@ -59,7 +50,16 @@
       "region": "Region C",
       "previous_price": 17031,
       "current_price": 17031,
-      "change_percent": 0
+      "change_percent": 0.0
+    },
+    {
+      "date": "2026-07-14",
+      "commodity_name": "Beras Medium",
+      "unit": "kg",
+      "region": "Region A",
+      "previous_price": 13938,
+      "current_price": 13938,
+      "change_percent": 0.0
     },
     {
       "date": "2026-07-14",
@@ -95,7 +95,7 @@
       "region": "Region C",
       "previous_price": 19254,
       "current_price": 19254,
-      "change_percent": 0
+      "change_percent": 0.0
     },
     {
       "date": "2026-07-14",
@@ -113,7 +113,7 @@
       "region": "Region A",
       "previous_price": 12158,
       "current_price": 12158,
-      "change_percent": 0
+      "change_percent": 0.0
     },
     {
       "date": "2026-07-14",
@@ -122,7 +122,7 @@
       "region": "Region B",
       "previous_price": 12671,
       "current_price": 12671,
-      "change_percent": 0
+      "change_percent": 0.0
     },
     {
       "date": "2026-07-14",
@@ -131,7 +131,7 @@
       "region": "Region C",
       "previous_price": 13321,
       "current_price": 13321,
-      "change_percent": 0
+      "change_percent": 0.0
     },
     {
       "date": "2026-07-14",
