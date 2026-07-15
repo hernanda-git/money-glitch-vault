@@ -81,3 +81,6 @@
 - [2026-07-15] Bansos PKH dan BPNT Salah Sasaran, Warga Miskin Justru Tak Kebagian — strength 5/5 — other
 - [2026-07-15] Mahasiswa Miskin Gagal Dapat KIP Kuliah 2026 karena Desil Bergeser — strength 4/5 — student
 - [2026-07-15] Pengguna Jalan Tol Tercekik Tarif Naik, tapi Jalan Berlubang — strength 4/5 — other
+- [2026-07-16] PPh Final UMKM 0,5% Cuma Bisa Dipakai PT Perorangan dan Koperasi — strength 4/5 — umkm
+- [2026-07-16] Aturan Baru E-Commerce 1 Juli 2026: Seller Kena PPh, Wajib NIB, Biaya Harus Transparan — strength 5/5 — seller
+- [2026-07-16] UMKM Terkendala Adopsi AI: Skill Digital Rendah dan Biaya Jadi Penghalang — strength 4/5 — umkm
