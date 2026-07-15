@@ -78,3 +78,6 @@
 - [2026-07-15] Pajak Penarikan JHT BPJS Ketenagakerjaan Bikin Buruh Murka — strength 5/5 — employee
 - [2026-07-15] Aturan Baru Kontrol BPJS Kesehatan Bikin Pasien dan Lansia Bingung — strength 4/5 — other
 - [2026-07-15] KRL Commuter Line Sering Terganggu, Penumpang Menumpuk dan Tertahan — strength 4/5 — employee
+- [2026-07-15] Bansos PKH dan BPNT Salah Sasaran, Warga Miskin Justru Tak Kebagian — strength 5/5 — other
+- [2026-07-15] Mahasiswa Miskin Gagal Dapat KIP Kuliah 2026 karena Desil Bergeser — strength 4/5 — student
+- [2026-07-15] Pengguna Jalan Tol Tercekik Tarif Naik, tapi Jalan Berlubang — strength 4/5 — other
