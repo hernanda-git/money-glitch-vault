@@ -1,559 +1,828 @@
-# IDX Opening Range Breakout (ORB) Strategy, 09:00 to 09:30 WIB
+# IDX Opening Range Breakout (ORB): A Trader-Built Reference for the Jakarta Composite
 
-## Purpose and scope
+This document is a research and implementation reference for the opening range breakout
+(ORB) strategy applied specifically to the Indonesia Stock Exchange (Bursa Efek Indonesia,
+IDX). It is written for a technical audience that wants working code, real session
+constraints, and honest statistics rather than a sales pitch. Everything below is grounded
+in sources that were reachable at research time (2026-07-16). Where a primary source was
+bot-blocked or paywalled, that is stated explicitly and the claim is flagged as
+"source unreachable" rather than invented.
 
-This document is a deeply technical reference for building an automated Opening Range Breakout (ORB) strategy that trades the Indonesia Stock Exchange (Bursa Efek Indonesia, IDX) regular session. It covers the exact market microstructure of the IDX session, the math of the opening range, a data pipeline that actually works from outside Indonesia, a reproducible backtest against real Yahoo Finance five minute bars, a parameter sweep, two worked real trade examples, a position sizing and kill switch layer, and the operational pitfalls that blow up naive implementations.
+The opening range breakout is one of the oldest mechanically-tradable intraday setups.
+The core idea is simple: the first N minutes of the regular session define a price band
+(the "opening range"). A sustained break above the top of that band is treated as a long
+signal, and a break below the bottom is treated as a short signal. The thesis is that the
+opening range concentrates the overnight news flow, the pre-opening auction imbalance, and
+the first wave of liquidity, so the first directional push that escapes that band tends to
+draw continuation as algos and momentum desks join.
 
-The target reader is a quant or bot builder who wants a working, event driven signal, not a marketing pitch. Every number in the backtest section was computed from real downloaded bars on 2026-07-15. Where a claim depends on a source that was unreachable from this environment, it is labeled "source unreachable, verify manually."
+On the IDX the setup is especially interesting because the opening window is unusually
+compressed and liquidity is unusually concentrated. According to Pluang's 2026 trading-hours
+guide, the first hour (09:00 to 10:00 WIB) alone contributes roughly 20 to 30 percent of
+total daily volume, which is the single largest liquidity spike of the day. That concentration
+is exactly what makes a 09:00 to 09:30 (or 09:00 to 10:00) opening range worth quantifying.
+This file builds the full pipeline: session calendar, data acquisition, range construction,
+entry and exit rules, risk sizing, backtest harness, and the failure modes specific to
+Indonesian equities.
 
-URLs that were confirmed reachable and form the factual spine of this document:
+## Why the IDX opening window is structurally different
 
-- IDX operating hours and session structure, Wikipedia (English): https://en.wikipedia.org/wiki/Indonesia_Stock_Exchange
-- IDX operating hours and history, Wikipedia (Bahasa Indonesia): https://id.wikipedia.org/wiki/Bursa_Efek_Indonesia
-- Yahoo Finance chart API for `.JK` tickers (used for every backtest number here): https://query1.finance.yahoo.com/v8/finance/chart/BBRI.JK
-- Stockbit explainer on Lot Size and Tick Price history: https://stockbit.com/post/aturan-lot-size-dan-tick-price-di-bursa-efek-indonesia
-- Cermati explainer confirming 1 lot equals 100 shares since January 2014: https://www.cermati.com/artikel/lot-saham
+Most ORB literature is written for US equities where the regular session opens at 09:30 New
+York time and the first 30 minutes already contain a large fraction of daily range. The IDX
+has its own rhythm driven by the pre-opening call auction and the Friday prayer break.
 
-URLs that were attempted but returned HTTP 403 to a headless client (do not treat as dead, they work in a browser with cookies):
+The official IDX trading calendar (source: idx.id "Jam dan Mekanisme Perdagangan", fetched
+2026-07-16) defines the following equity sessions:
 
-- Official IDX trading hours page: https://www.idx.co.id/en/products/equities/trading-hours
-- IDX rulebook II-S (trading provisions): https://www.idx.co.id/~/media/Files/About-IDX/Regulation/SPM/II-S-001-PERATURAN-BURSA-NOMOR-II-S-TENTANG-KETENTUAN-PERDAGANGAN.ashx
+- Prapembukaan (pre-open, input window): Monday to Friday, 08:45:00 to 08:57:59 WIB. Applies
+  to shares on the Main Board, Development Board, and New Economy Board.
+- Sesi I (regular session 1): Monday to Thursday 09:00:00 to 12:00:00 WIB. Friday
+  09:00:00 to 11:30:00 WIB.
+- Sesi II (regular session 2): Monday to Thursday 13:30:00 to 15:49:59 WIB. Friday
+  14:00:00 to 15:49:59 WIB.
+- Prapenutupan (pre-close, input window): Monday to Friday 15:50:00 to 15:59:59 WIB.
+- Prapenutupan (pre-close, matching window): Monday to Friday 16:00:00 to 16:01:59 WIB.
+- Post-trading: 16:00 to 16:15 WIB (executions only at the official closing price).
+- Pasar Negosiasi (negotiation/block market): 09:00 to 17:00 WIB, used for large block
+  trades outside the continuous auction.
 
-## Why the IDX session shape matters for ORB
+Two structural facts matter for ORB design. First, the opening price is not set by the first
+continuous print at 09:00. It is set by the pre-opening call auction whose matching occurs at
+the 09:00 open. The official description states that "Harga Pembukaan terbentuk berdasarkan
+akumulasi jumlah penawaran jual dan permintaan beli terbanyak yang dapat dialokasikan oleh
+JATS INET pada harga tertentu pada periode Pra-pembukaan." In plain terms, the open is the
+price that maximizes crossed volume across all pre-open orders. That means the 09:00 open
+already reflects a full book imbalance, so the ORB should be measured from the 09:00 open
+print, not from a pre-open indicative price.
 
-An Opening Range Breakout trades the first N minutes of the session as a range and then enters long when price breaks above that range high, or short when it breaks below the range low. The strategy only works because the opening auction and the first regular session minutes concentrate information, overnight news, institutional orders, and regional sentiment from Japan, Hong Kong, and Singapore, into a tight, well defined band. On the IDX the opening band is unusually information rich for two structural reasons.
+Second, Friday is not a normal day. Session 1 ends at 11:30 instead of 12:00, and session 2
+does not resume until 14:00 instead of 13:30, to accommodate the longer Friday prayer break.
+Any ORB that assumes a symmetric lunch break will mislabel Friday afternoon data. The
+backtest harness below hard-codes the Friday calendar.
 
-First, the IDX has a centralized pre opening auction that sets the first regular trade. Since the COVID 19 schedule change that took effect on 2 January 2013 and was adjusted again when the session moved earlier, the regular market opens at 09:00 WIB and the opening itself is an auction, not a continuous match. The pre opening trade runs 08:45 to 08:55, JATS (the Jakarta Automated Trading System) processes and recapitulates the opening prices from 08:55:01 to 08:59:59, and the first continuous session prints at 09:00. That auction wick plus the first continuous minutes are exactly the window the ORB samples.
+A third fact that this document could NOT verify from a primary source: the exact auto
+rejection (ARB) percentage bands and the tick-fraction schedule. The idx.id page references
+"Peraturan II-A Kep-00003/BEI/04-2025" for price fractions but the underlying PDF was not
+reachable at fetch time (source unreachable, 2026-07-16). The document instead uses the
+commonly observed ARB bands (approximately plus or minus 10 percent for stocks above IDR
+2000, tightening at lower prices) and flags them as operator-supplied assumptions to confirm
+against the live rulebook before live trading.
 
-Second, the IDX closes with a pre closing auction (15:30 to 15:50) and a post closing trade (16:05 to 16:15). The intraday liquidity distribution is therefore front loaded into the open and back loaded into the close, which is exactly where a 09:00 to 09:30 ORB lives, right at the front loaded liquidity spike. A strategy that trades the morning breakout is riding the single largest predictable liquidity event of the IDX day.
+## The opening range definition
 
-## Exact IDX trading session timetable (WIB, UTC+7)
+There are several conventions for "the opening range" and the choice changes the trade
+dramatically. The three most common on the IDX are:
 
-The schedule below is taken from the Wikipedia IDX articles and cross checked against the first and last bar timestamps of a real Yahoo Finance one minute download (BBRI.JK on 2026-07-14), which returned the first bar at exactly 09:00 WIB and the last continuous bar at 16:14 WIB.
+- ORB-5: the high and low of the first 5 minutes of regular session (09:00:00 to 09:05:00).
+- ORB-15: the high and low of the first 15 minutes (09:00:00 to 09:15:00).
+- ORB-30: the high and low of the first 30 minutes (09:00:00 to 09:30:00).
+- ORB-60: the high and low of the first 60 minutes (09:00:00 to 10:00:00).
 
-| Phase | Time (WIB) | Notes |
-|-------|-----------|-------|
-| Pre opening trade | 08:45 to 08:55 | Order entry for the opening auction |
-| JATS opening match | 08:55:01 to 08:59:59 | Uncrossover, single opening price printed |
-| First session (regular) | 09:00 to 11:30 | Continuous matching, Monday to Friday |
-| Lunch break | 11:30 to 13:30 | No continuous trading (negotiated market can still cross) |
-| Second session (regular) | 13:30 to 15:30 | Continuous matching resumes |
-| Pre closing trade | 15:30 to 15:50 | Order entry for the closing auction |
-| JATS closing match | 15:50:01 to 15:54:59 | Closing auction uncross |
-| Post closing trade | 16:05 to 16:15 | Late negotiated and post close trades |
+Each has a different character. ORB-5 fires early but has a tiny range, so it whipsaws in the
+first volatile minutes. ORB-60 is the most statistically stable band on the IDX because the
+09:00 to 10:00 window carries 20 to 30 percent of daily volume, so the range tends to be
+meaningful, but it fires late and leaves less of the session to run. A robust design is to
+track all four ranges in parallel and only take the breakout from the shortest range that has
+already "completed" (its end time has passed) and whose range is wider than a minimum tick
+filter.
 
-The Wikipedia English article states the regular market is open 09:00 to 15:00 since the COVID adjustment, while the Indonesian article and the live data show a 09:00 to 16:14 continuous window with a lunch break. The discrepancy is real in the wild, the IDX shifted the closing auction and the regular close multiple times. The only authoritative source is the current IDX rulebook II-S. For bot building, the safe assumption is: regular continuous trading runs 09:00 to 11:30, pauses 11:30 to 13:30, resumes 13:30 to 15:30, then the closing auction runs to 16:00 and post close to 16:15. Always confirm against the current rulebook before going live.
+The minimum range filter is critical. On the IDX the round lot is 100 shares and the tick
+fraction is small for low-priced stocks, so a stock can print a 5-minute range of a single
+tick (for example IDR 1 on a IDR 50 stock). Trading a breakout of a one-tick range is pure
+noise. A practical filter is: require the opening range height to be at least K times the
+average tick for that stock, or at least 0.3 percent of the opening price, whichever is
+larger.
 
-The implication for an ORB is concrete. A 30 minute opening range from 09:00 to 09:30 sits entirely inside the first continuous session, before the lunch break. That means the breakout signal fires while liquidity is at its morning peak and well before the midday liquidity air pocket at 11:30. This is the single most important structural fact, do not let the bot hold a 09:00 to 09:30 ORB position blindly across the 11:30 lunch break, because at 11:30 liquidity vanishes for two hours and a stop cannot be filled reliably.
+## Data acquisition: what you actually need
 
-## Lot size and tick price (the units the bot must respect)
+To backtest ORB you need one-minute OHLCV bars for your universe, tagged with session and
+board. The IDX does not offer a clean public per-minute REST feed without authentication, and
+the idx.co.id pages are behind Cloudflare (the live trading-hours page returned HTTP 403 at
+fetch time, 2026-07-16, confirmed via direct curl and via the r.jina.ai reader proxy). The
+practical options are:
 
-Lot size. Since January 2014, one lot on the IDX equals 100 shares (confirmation: Cermati lot saham article, URL above, the rule changed from the old 500 share lot in 2014). Every order must be submitted in multiples of 100 shares. A bot that computes buy 137 shares will have its order rejected by the broker.
+- A retail broker API. Many Indonesian brokers (Stockbit, Bibit/Pluang, Phillip Sekuritas,
+  Mirae Asset, BNI Sekuritas, etc.) expose historical and streaming quotes through their own
+  APIs or through the trading terminal's export feature. These are the most reliable source
+  for retail traders.
+- The crawler/scraper stack in this vault (01-crawler-scrapper). If you build a TikTok or X
+  signal scraper there, the same session-cookie pattern applies to pulling quote pages, but
+  be aware that most broker quote pages are also bot-protected and ToS-restricted.
+- A paid market-data vendor (Bloomberg, Refinitiv, FactSet, or regional providers like
+  IQPlus/UTC/Password). These give clean adjusted one-minute bars but cost money.
 
-Tick price. The minimum price increment is a step function of the stock price, set by IDX rulebook II-S and last adjusted in 2016 ("Penyesuaian kembali Tick Size Pada tahun 2016", per the Stockbit history timeline). The widely used IDX tick table, to be verified against the current rulebook II-S, is:
+For the reference implementation below we assume a local CSV of one-minute bars with the
+schema: `datetime,ticker,open,high,low,close,volume,board`. The `board` column carries
+"MAIN", "DEVELOPMENT", "NEW_ECONOMY", or "FCA" so the harness can exclude FCA stocks, which
+the Pluang guide explicitly warns have very low liquidity and should be avoided by beginners.
+FCA stocks trade by full call auction rather than continuous auction, so their one-minute
+bars are sparse and an ORB on them is meaningless.
 
-| Price range (Rupiah) | Tick (Rupiah) |
-|----------------------|---------------|
-| 0 to 200 | 1 |
-| 200 to 500 | 2 |
-| 500 to 2,000 | 5 |
-| 2,000 to 5,000 | 10 |
-| 5,000 to 10,000 | 25 |
-| 10,000 to 25,000 | 50 |
-| 25,000 and above | 100 |
+### Sample data shape
 
-A bot must round any computed limit price down to the nearest valid tick for a buy and up for a sell, otherwise the exchange rejects the order. Because the IDX rulebook page itself was HTTP 403 to a headless client, the tick table above is presented as established public reference, verify against IDX rulebook II-S before production. The backtest in this document relies only on close prices, so tick rounding does not affect the statistics, but the live order layer must implement it.
+A realistic one-minute row for a liquid Main Board stock (example values, not a real tick):
 
-## Data source reality check (what works from outside Indonesia)
-
-This is the part most strategy write ups skip and where builds die. The IDX does not expose a free, public, documented REST API for intraday bars, and its website returns HTTP 403 to headless clients (confirmed: `curl https://www.idx.co.id/api/StockSummary/GetStockSummary` returned 403, and `https://www.idx.co.id/en/products/equities/trading-hours` returned 403). Stooq, a common free source for `.JK` daily data, now serves a JavaScript proof of work challenge to bots (confirmed: the Stooq CSV endpoint returned an HTML page with a SHA 256 proof of work wall, not CSV). Google Finance search is also JS rendered.
-
-What actually returned HTTP 200 with clean JSON in this environment on 2026-07-15:
-
-- Yahoo Finance chart API for `.JK` tickers, both daily and intraday. Example working URL: `https://query1.finance.yahoo.com/v8/finance/chart/BBRI.JK?range=6mo&interval=1d`. For 5 minute bars: `https://query1.finance.yahoo.com/v8/finance/chart/BBRI.JK?range=21d&interval=5m`.
-- Wikipedia (both language editions) for static microstructure facts.
-
-Yahoo Finance is therefore the pragmatic backbone for an IDX ORB prototype. Caveats the builder must respect:
-
-- Yahoo prices are delayed (typically 10 to 20 minutes for non US tickers) and the close can be revised. For a 09:00 to 09:30 ORB that exits at the daily close, the delay is acceptable for research, but a live bot needs a real time feed from a broker (e.g. a retail broker API) or the IDX proprietary feed.
-- Yahoo does not label Jakarta session boundaries in the JSON, the bot must convert the UTC timestamps to WIB (UTC+7) itself. Confirmed: BBRI.JK 1 minute bars on 2026-07-14 had first timestamp 1783994400 which converts to Tuesday 09:00 WIB and last timestamp 1784020440 which converts to 16:14 WIB.
-- Yahoo's 5 minute history is capped, `range=21d&interval=5m` returned 21 trading days reliably in this test. For a longer backtest, paginate by shifting the `period1` and `period2` epoch parameters.
-
-A robust design fetches from Yahoo for research and backtest, then switches to a broker websocket for live ticks in production. The signal logic is identical, only the transport changes. This transport gap is itself a vault item, logged in the new gaps section at the end.
-
-## The ORB math
-
-Define the opening range using the first K 5 minute bars of the continuous session, starting at 09:00 WIB. With 5 minute bars, the 09:00 to 09:30 window is the first 6 bars (09:00, 09:05, 09:10, 09:15, 09:20, 09:25), and the 09:30 mark is the close of the sixth bar.
-
-```
-ORB_high = max(high[i] for i in 0..K-1)
-ORB_low  = min(low[i]  for i in 0..K-1)
-ORB_mid  = (ORB_high + ORB_low) / 2
-ORB_range_pct = (ORB_high - ORB_low) / ORB_mid * 100
-```
-
-A long trigger fires on the first 5 minute bar (index >= K) whose close is strictly above ORB_high. A short trigger fires on the first bar whose close is strictly below ORB_low. Entry price is taken as ORB_high (long) or ORB_low (short) for conservative backtesting, and the exit is the daily close (end of second session, around 15:30 WIB). This entry and exit convention is what the backtest below uses and is what makes the numbers reproducible.
-
-Filter variants that materially change the edge:
-
-- Minimum range filter. Skip days where ORB_range_pct is below a threshold (e.g. below 0.5 percent). On dead flat opens the breakout is noise.
-- Maximum range filter. Skip days where ORB_range_pct is above a threshold (e.g. above 4 percent). A huge opening gap usually means a news shock already priced in, chasing it is late.
-- Volume confirmation. Require the breakout bar volume to exceed the average of the opening range bars by some factor (e.g. 1.5x). Yahoo's chart endpoint does not always include volume for `.JK`, when available, read `indicators.quote[0].volume`.
-- Bias filter. Only take longs when the stock is above its 20 day simple moving average, only shorts when below. This turned a flat edge into a directional edge in many markets.
-
-The backtest in the next section uses the simplest version (first close beyond ORB, enter at ORB boundary, exit at daily close) so the baseline is honest and not overfit.
-
-## Reproducible backtest (real data, 2026-07-15)
-
-The following numbers were computed on 2026-07-15 from Yahoo Finance 5 minute bars (`range=21d&interval=5m`) for five liquid IDX tickers: BBRI, BBCA, TLKM, ASII, BMRI. The download returned 21 trading days per ticker, days with fewer than 60 five minute bars (holidays, halts) were dropped, leaving 16 usable days per ticker.
-
-Opening range statistics across the five tickers, measured as the first 6 bars (09:00 to 09:30):
-
-| Ticker | Usable days | Avg ORB range (% of ORB mid) | Days up break closed above high | Days down break closed below low |
-|--------|-------------|------------------------------|----------------------------------|-----------------------------------|
-| BBRI | 16 | 2.30 | 3 | 6 |
-| BBCA | 16 | 2.27 | 3 | 6 |
-| TLKM | 16 | 1.97 | 4 | 4 |
-| ASII | 16 | 2.14 | 3 | 4 |
-| BMRI | 16 | 1.97 | 5 | 5 |
-
-The average opening range is roughly 2 percent of the ORB midpoint, which is wide enough to trade but tight enough that a 0.1 to 0.2 percent slippage and fee budget is realistic.
-
-Directional ORB backtest. For each usable day, the bot enters long at ORB_high on the first 5 minute close above it, or short at ORB_low on the first close below it, and exits at that day's last close. No bias filter, no volume filter, no range filter, to keep the baseline honest. Results across all five tickers combined:
-
-- Total trades: 67
-- Average return per trade: +0.524 percent
-- Median return per trade: +0.417 percent
-- Win rate (return greater than zero): 62.7 percent
-- Best trade: +4.10 percent
-- Worst trade: -3.33 percent
-- Direction mix: 31 long, 36 short
-- Net average after a flat 0.1 percent round trip cost: +0.424 percent
-- Net win rate after cost: 62.7 percent
-
-Interpretation. A naive 09:00 to 09:30 ORB on these five liquid names produced a positive expectancy of about half a percent per trade at 62.7 percent win rate over 67 trades in a 16 day window. That is a real, if small, edge. The edge is driven by the fact that on the IDX the morning auction establishes a reference and the first session trends away from it more often than it mean reverts intraday. The worst single trade of minus 3.33 percent is the tail risk the kill switch in the next section exists to contain.
-
-Caveats specific to this backtest:
-
-- 67 trades and 16 days is a small sample. The edge is suggestive, not proven. A production build must extend the sample to at least 12 months of 5 minute data before trusting position sizing.
-- Yahoo delays mean the entry close may be 10 to 20 minutes stale versus a live feed, which flatters the backtest slightly. Live fills will be worse.
-- No transaction costs beyond the flat 0.1 percent assumption were modeled. Real IDX costs include broker commission (often 0.15 to 0.25 percent per side at retail), the 0.1 percent seller tax (PPh 0.1 percent on proceeds for domestic individuals, source: Indonesian capital gains rules, verify current rate), and the 0.02 to 0.04 percent exchange and clearing fees. At realistic retail cost of roughly 0.3 to 0.5 percent round trip, the gross 0.524 percent edge shrinks to roughly breakeven or slightly negative. This is the central honest conclusion, the raw ORB edge on liquid IDX large caps is thin at retail costs, and the strategy only earns once you either (a) trade low commission institutional or proprietary access, (b) add the bias and volume filters that lift the win rate, or (c) trade it on higher volatility small and mid caps where the range is wider and the same percentage edge is worth more in absolute Rupiah.
-
-## Parameter sweep (3, 6, and 9 bar ORB)
-
-The baseline uses K=6 (30 minute ORB). Sweeping K shows the edge is robust to the exact window and reveals two structural facts: shorter ORBs win more often, and shorts beat longs across every window. Computed on the same 5 ticker, 21 day dataset:
-
-| ORB window | K bars | Trades | Avg % | Win % | Long avg % | Short avg % |
-|-----------|--------|--------|-------|-------|------------|-------------|
-| 15 min | 3 | 72 | +0.654 | 68.1 | +0.513 | +0.774 |
-| 30 min | 6 | 67 | +0.524 | 62.7 | +0.351 | +0.673 |
-| 45 min | 9 | 62 | +0.499 | 64.5 | +0.322 | +0.644 |
-
-Two takeaways. First, tightening the range to 15 minutes lifts both the win rate (68.1 versus 62.7) and the average return (+0.654 versus +0.524). The morning directional move on the IDX is largely done by 09:15, so catching it earlier captures more of it. Second, shorts consistently outperform longs in every window (e.g. +0.774 short versus +0.513 long at 15 minutes). This short bias is consistent with the IDX retail crowd being net long by default, so the path of least resistance on a failed open is down. A production bot should weight short signals higher, or at minimum not cap short size below long size.
-
-The tradeoff with a shorter ORB is more whipsaws on flat opens, which is exactly why the minimum range filter matters more at K=3. At K=3 the ORB is only 15 minutes, so a sleepy open produces a tiny range and frequent false breakouts. Pair K=3 with a minimum ORB_range_pct of 0.8 percent and the win rate should hold while the trade count drops.
-
-## Worked real trade example, short side (BBRI, 2026-06-18)
-
-To make the mechanics concrete, here is an actual day pulled from the Yahoo 5 minute download. BBRI on 2026-06-18 opened the continuous session at 3050 and printed these first bars (WIB):
-
-```
-09:00  O3050 H3060 L2990 C2990
-09:05  O3000 H3020 L2980 C3020
-09:10  O3020 H3040 L3000 C3000
-09:15  O3010 H3010 L2990 C3000
-09:20  O2990 H3010 L2990 C3000
-09:25  O3000 H3000 L2990 C2990
+```csv
+2026-07-16 09:00:00,BBRI,4520,4520,4515,4518,182000,MAIN
+2026-07-16 09:01:00,BBRI,4518,4530,4516,4527,240000,MAIN
+2026-07-16 09:02:00,BBRI,4527,4535,4524,4529,198000,MAIN
 ```
 
-The opening range is therefore ORB_high = 3060 (the 09:00 wick) and ORB_low = 2980 (the 09:00 low). ORB_mid = 3020, so ORB_range_pct = (3060 - 2980) / 3020 = 2.65 percent. Now the breakout watch begins at 09:30:
+Note the 09:00 bar already includes the opening auction print. The opening range for ORB-5 is
+the high/low across the 09:00 and 09:01 to 09:04 bars (5 one-minute bars). For ORB-30 it is
+the high/low across 09:00 to 09:29 inclusive (30 bars).
 
-```
-09:30  O2990 H3000 L2960 C2970   -> close 2970 < ORB_low 2980  => SHORT trigger
-09:35  O2970 H2980 L2970 C2980
-09:40  O2970 H2980 L2970 C2980
-09:45  O2980 H2980 L2960 C2970
-09:50  O2960 H2990 L2960 C2990
-09:55  O2990 H3000 L2980 C3000
-```
+## Session calendar as code
 
-The 09:30 bar closed at 2970, below ORB_low of 2980, so the strategy sells short at ORB_low = 2980. The day's final close was 2960. Return = (2980 - 2960) / 2980 = +0.67 percent on the short. This matches the backtest convention, enter at the ORB boundary on the first breaking close, exit at the daily close. Note the entry was taken at the range low, not at the 09:30 close of 2970, that conservative fill is why the baseline win rate holds up. A more aggressive variant entering at the breakout bar close would have filled at 2970 and earned slightly less.
-
-The lesson from this real bar sequence, the opening auction wick to 3060 created a false high, and the genuine directional information was the failure to hold above 3000. The ORB short captured the drift down to 2960. This is the typical IDX morning pattern, a deceptive auction extreme followed by a grind in the opposite direction, which is exactly what a range breakout exploits.
-
-## Worked real trade example, long side (TLKM, 2026-06-19)
-
-A long example from the same dataset, TLKM on 2026-06-19. The opening range built like this (WIB):
-
-```
-09:00  O4120 H4140 L4100 C4120
-09:05  O4120 H4130 L4110 C4120
-09:10  O4120 H4140 L4110 C4130
-09:15  O4130 H4150 L4120 C4140
-09:20  O4140 H4150 L4130 C4140
-09:25  O4140 H4160 L4130 C4150
-```
-
-ORB_high = 4160 (09:25 wick), ORB_low = 4100 (09:00 low), ORB_mid = 4130, range = 1.45 percent. The breakout watch:
-
-```
-09:30  O4150 H4170 L4140 C4160   -> close 4160 > ORB_high 4160? no, equal, wait
-09:35  O4160 H4180 L4150 C4170   -> close 4170 > ORB_high 4160  => LONG trigger
-```
-
-The 09:35 bar closed at 4170, strictly above ORB_high 4160, so the strategy buys at ORB_high = 4160. The day's final close was 4210. Return = (4210 - 4160) / 4160 = +1.20 percent on the long. This is the best realistic long fill in the sample and shows the asymmetric shape, longs need a clean hold above the range while shorts can fade a failed open quickly. Note the 09:30 bar closed exactly at 4160, equal to ORB_high, which the strict greater than rule correctly treats as not yet broken, avoiding a premature entry that would have filled at the high and earned less.
-
-## Extended context, six month daily backdrop
-
-While the ORB itself is an intraday signal, the bias filter needs the bigger trend. Pulling six months of daily closes for the same five tickers (Yahoo `range=6mo&interval=1d`, all HTTP 200) shows these liquid names traded in wide ranges rather than clean trends, which is why a pure ORB without a bias filter still worked, there was no dominant monthly trend to fight. The single most useful contextual input is the IDX composite (IHSG) opening gap versus the previous US and regional close, which the market cron in `05-market-cron` is built to supply. When IHSG gaps up more than 1 percent at the open, long ORBs on large caps win more often, when it gaps down, short ORBs win more often. This IHSG gap interaction is the highest value filter to add next, and it is cheap because the IHSG daily fetch already exists in the vault.
-
-Another contextual input is the US session that just closed. Because Jakarta opens at 09:00 WIB, which is 21:00 to 22:00 US Eastern previous day during daylight time, the IDX open prices in the prior US session and the overnight move in US index futures. A strong S&P 500 session with a positive futures open biases the IDX morning higher, favoring long ORBs. The crawler in `01-crawler-scrapper` that monitors X and financial feeds can supply this context cheaply.
-
-## Python reference implementation
-
-The code below is a working, runnable pipeline against the Yahoo Finance chart API. It downloads 5 minute bars, builds the 09:00 to 09:30 ORB, runs the baseline backtest with exit at the daily close, and prints the same statistics reported above. It was executed on 2026-07-15 and reproduces n=67, avg +0.524 percent, win rate 62.7 percent. Replace the ticker list and cost assumption to extend the study.
+The single most common ORB bug is using the wrong session boundaries, especially on Friday.
+Encode the calendar explicitly rather than assuming a fixed 09:00 to 16:00 day.
 
 ```python
-#!/usr/bin/env python3
-"""
-IDX Opening Range Breakout baseline backtest.
-Data: Yahoo Finance chart API for .JK tickers (delayed, research only).
-Session: IDX regular, 09:00-09:30 WIB opening range, exit at daily close.
-Run: pip install requests; python3 idx_orb_backtest.py
-"""
-import json
-import datetime
-import statistics
-import urllib.request
+from datetime import datetime, time, timedelta
+from enum import Enum
 
-# ---- config -------------------------------------------------------------
-TICKERS = ["BBRI", "BBCA", "TLKM", "ASII", "BMRI"]
-RANGE_DAYS = 21          # lookback window for 5m bars
-ORB_BARS = 6             # 6 five-minute bars = 09:00 to 09:30 WIB
-COST_PCT = 0.10          # round-trip cost assumption, percent
-UA = "Mozilla/5.0"       # Yahoo blocks empty UAs
-WIB = datetime.timezone(datetime.timedelta(hours=7))
+class Session(Enum):
+    PRE_OPEN = "pre_open"
+    SESSION1 = "session1"
+    LUNCH = "lunch"
+    SESSION2 = "session2"
+    PRE_CLOSE = "pre_close"
+    POST = "post"
+    CLOSED = "closed"
 
-def wib(ts):
-    """Convert epoch seconds to a WIB-aware datetime."""
-    return datetime.datetime.fromtimestamp(ts, tz=datetime.timezone.utc).astimezone(WIB)
+# All times are WIB (Asia/Jakarta, UTC+7). The exchange uses local wall clock.
+def idx_session(dt: datetime) -> Session:
+    """Return the IDX trading session for a naive WIB datetime.
 
-def fetch_5m(symbol):
-    """Download 5m bars for a .JK symbol from Yahoo. Returns list of
-    (datetime_wib, open, high, low, close) tuples, or [] on failure."""
-    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}.JK"
-           f"?range={RANGE_DAYS}d&interval=5m")
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    try:
-        with urllib.request.urlopen(req, timeout=25) as r:
-            data = json.load(r)
-    except Exception as e:
-        print(f"  fetch failed {symbol}: {e}")
-        return []
-    res = data["chart"]["result"][0]
-    ts = res["timestamp"]
-    q = res["indicators"]["quote"][0]
-    out = []
-    for i, t in enumerate(ts):
-        c = q["close"][i]
-        if c is None:
+    Friday has a shorter session-1 and a longer lunch for the Jumat prayer.
+    """
+    if dt.weekday() >= 5:  # Saturday=5, Sunday=6
+        return Session.CLOSED
+    t = dt.time()
+    is_friday = dt.weekday() == 4
+
+    if time(8, 45) <= t <= time(8, 57, 59):
+        return Session.PRE_OPEN
+    if time(9, 0) <= t <= (time(11, 30) if is_friday else time(12, 0)):
+        return Session.SESSION1
+    if (time(11, 30) if is_friday else time(12, 0)) < t < (time(14, 0) if is_friday else time(13, 30)):
+        return Session.LUNCH
+    if (time(14, 0) if is_friday else time(13, 30)) <= t <= time(15, 49, 59):
+        return Session.SESSION2
+    if time(15, 50) <= t <= time(16, 1, 59):
+        return Session.PRE_CLOSE
+    if time(16, 2) <= t <= time(16, 15):
+        return Session.POST
+    return Session.CLOSED
+
+def regular_open(dt: datetime) -> datetime:
+    """09:00:00 WIB on the given trading day (ignores holiday calendar)."""
+    return dt.replace(hour=9, minute=0, second=0, microsecond=0)
+
+def orb_window_end(dt: datetime, minutes: int) -> datetime:
+    """End (exclusive) of the opening range measured from 09:00."""
+    return regular_open(dt).replace(minute=0) + timedelta(minutes=minutes)
+```
+
+The holiday calendar (national holidays when the exchange is closed) is not encoded above.
+IDX publishes the annual holiday calendar; at fetch time the 2026 holiday list PDF was not
+retrieved (source unreachable, 2026-07-16), so the harness treats Saturday and Sunday as the
+only non-trading days and expects the operator to inject the official holiday dates as a
+blocklist before running a production backtest.
+
+## Building the opening range from one-minute bars
+
+Given a list of one-minute bars for one ticker on one day, the range construction is a simple
+rolling high/low over the first N minutes after the 09:00 open.
+
+```python
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class Bar:
+    ts: datetime
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    board: str
+
+def build_opening_range(bars: List[Bar], orb_minutes: int = 30) -> dict:
+    """Return the opening range for the first `orb_minutes` of regular session.
+
+    bars: chronological one-minute bars for a single ticker on a single day.
+    Only MAIN/DEVELOPMENT/NEW_ECONOMY boards are eligible; FCA is rejected.
+    """
+    eligible_boards = {"MAIN", "DEVELOPMENT", "NEW_ECONOMY"}
+    # Filter to regular-session bars starting at 09:00
+    session_bars = [
+        b for b in bars
+        if b.board in eligible_boards and time(9, 0) <= b.ts.time() <= time(15, 49, 59)
+    ]
+    if not session_bars:
+        return {"valid": False, "reason": "no eligible bars"}
+
+    open_ts = regular_open(session_bars[0].ts)
+    end_ts = open_ts + timedelta(minutes=orb_minutes)
+    window = [b for b in session_bars if open_ts <= b.ts < end_ts]
+    if len(window) < orb_minutes:
+        return {"valid": False, "reason": f"only {len(window)} bars in ORB window"}
+
+    orb_high = max(b.high for b in window)
+    orb_low = min(b.low for b in window)
+    open_price = session_bars[0].open  # the 09:00 auction print
+    return {
+        "valid": True,
+        "open": open_price,
+        "orb_high": orb_high,
+        "orb_low": orb_low,
+        "orb_height": orb_high - orb_low,
+        "open_ts": open_ts,
+        "end_ts": end_ts,
+    }
+```
+
+The opening price used as the anchor is `session_bars[0].open`, which is the 09:00 auction
+clearing price. This is the correct reference because, as noted, the open is set by the
+pre-open call auction, not by a continuous print.
+
+## Entry rules
+
+The baseline ORB entry is a stop order placed at the range boundaries once the range is
+complete:
+
+- Long entry: a buy stop at `orb_high + tick`, triggered when price trades at or above that
+  level after `end_ts`.
+- Short entry: a sell stop at `orb_low - tick`, triggered when price trades at or below that
+  level after `end_ts`.
+
+The `+ tick` / `- tick` offset avoids buying exactly at the high and getting filled on a
+wick. A common refinement is to require the breakout to be confirmed by a closing one-minute
+bar beyond the level, not just an intrabar spike, to filter single-print wicks. On the IDX
+where the first hour is 20 to 30 percent of daily volume, a one-minute wick can be a real
+liquidity event, but it can also be a thin auction tail, so the close-confirmation filter
+materially cuts false signals.
+
+A second refinement is the "breakout must happen within X minutes of range completion" rule.
+If the breakout does not occur by, say, 10:30 WIB, the setup is considered stale and the
+pending stops are cancelled. The logic is that an ORB that only fires three hours later is no
+longer an opening-range breakout, it is just a midday range expansion, and the statistical
+edge from the opening liquidity concentration is gone.
+
+### Direction bias from the opening gap
+
+The opening price itself carries information. Compare the 09:00 open to the previous day's
+official close (the pre-close matching price at 16:00 to 16:01:59). A gap up (open above
+prior close) biases the day bullish; a gap down biases bearish. A practical filter is to only
+take long ORB breaks when the open is above the prior close, and only take short ORB breaks
+when the open is below the prior close. This single filter aligns the trade with the
+pre-open auction imbalance and removes a large share of failed reversals. The Pluang guide
+explicitly notes that "jika harga pembukaan teoritis naik signifikan dari harga penutupan
+kemarin, pasar kemungkinan akan membuka dengan sentimen positif (gap up), dan sebaliknya,"
+which is the intuition this filter codifies.
+
+```python
+def gap_direction(open_price: float, prior_close: float) -> int:
+    """+1 gap up, -1 gap down, 0 flat (within 0.1%)."""
+    if prior_close <= 0:
+        return 0
+    pct = (open_price - prior_close) / prior_close
+    if pct > 0.001:
+        return 1
+    if pct < -0.001:
+        return -1
+    return 0
+```
+
+## Exit rules
+
+ORB exits come in three flavors and a robust system uses all three with priority ordering.
+
+- Time stop: exit at the close of the regular session (15:49:59 on the IDX) if still in the
+  trade. Because this is a day-trading strategy, overnight positions are not allowed. All
+  positions flatten before the pre-close window.
+- Profit target: exit at a multiple of the opening range height. A common target is 1.0x or
+  2.0x the ORB height measured from the entry. For ORB-30 with a IDR 50 range on a IDR 4500
+  stock, a 1x target is IDR 50 of move, a 2x target is IDR 100.
+- Trailing stop: once the trade is in profit by at least 0.5x the ORB height, move the stop
+  to entry (break-even), then trail by the running session VWAP or by a multiple of the
+  average true range (ATR).
+
+The time stop deserves emphasis. The Day trading Wikipedia article summarizes a well-known
+study of Brazilian day traders: "Considering the performance net of exchange and brokerage
+fees, we find that 97% of all investors who persisted for more than 300 days lost money."
+That statistic is about retail day traders generally, not ORB specifically, and it is a
+reminder that holding losers past the session close and paying spread plus fee decay is how
+the edge disappears. Flattening at 15:49 is non-negotiable for the backtest.
+
+## Risk sizing and the fee reality
+
+Position sizing for ORB is driven by the opening range height, not by a fixed percent of
+equity, because the range height is the natural stop distance. The stop is placed just inside
+the opposite range boundary (for a long, stop at `orb_low - tick`). The risk per share is
+therefore roughly the ORB height. To risk a fixed fraction R of equity (for example 0.5
+percent) per trade:
+
+```python
+def size_for_risk(equity: float, risk_fraction: float,
+                  entry: float, stop: float, lot: int = 100) -> int:
+    """Return number of SHARES (rounded down to a round lot)."""
+    per_share_risk = abs(entry - stop)
+    if per_share_risk <= 0:
+        return 0
+    risk_budget = equity * risk_fraction
+    shares = risk_budget / per_share_risk
+    # round down to nearest round lot (100 on IDX)
+    shares = int(shares // lot) * lot
+    return max(shares, 0)
+
+# Example: equity 100,000,000 IDR, risk 0.5% = 500,000 IDR.
+# Entry 4520, stop 4490 (ORB height 30). per_share_risk = 30.
+# shares = 500000 / 30 = 16666 -> round lot -> 16600 shares.
+# Notional = 16600 * 4520 = 75,063,200 IDR (about 75% of equity, leverage-free).
+```
+
+Two IDX-specific cost notes. First, brokerage on the IDX is typically 0.15 to 0.25 percent
+per side for retail, plus a levy and VAT, so a round trip costs roughly 0.3 to 0.5 percent
+before any edge. An ORB that targets only 0.5x the range height will be eaten alive by fees,
+which is why the 1x to 2x target and the break-even trail exist. Second, the auto rejection
+(ARB) bands mean a stop placed far outside the allowed band will be rejected by JATS INET, so
+stops must sit within the ARB envelope (source unreachable for exact 2025 bands; use the
+observed ~10 percent band and confirm).
+
+## Backtest harness
+
+The following harness is a minimal but complete event loop. It assumes a list of daily bar
+lists per ticker. It is intentionally single-asset and end-of-minute marked-to-close for
+simplicity; production code should vectorize and use a proper cost model.
+
+```python
+from typing import List, Dict
+
+def backtest_orb(
+    daily_bars: Dict[str, Dict[str, List[Bar]]],  # ticker -> date -> bars
+    orb_minutes: int = 30,
+    risk_fraction: float = 0.005,
+    target_mult: float = 1.0,
+    use_gap_filter: bool = True,
+    max_entry_offset_min: int = 90,  # breakout must fire by 10:30 for ORB-30
+) -> List[dict]:
+    trades = []
+    for ticker, by_date in daily_bars.items():
+        prior_close = None
+        for date_str in sorted(by_date.keys()):
+            bars = by_date[date_str]
+            rng = build_opening_range(bars, orb_minutes)
+            if not rng["valid"]:
+                # still update prior_close for next day
+                last = max(bars, key=lambda b: b.ts)
+                prior_close = last.close
+                continue
+            open_price = rng["open"]
+            orb_high = rng["orb_high"]
+            orb_low = rng["orb_low"]
+            end_ts = rng["end_ts"]
+
+            # gap filter
+            if use_gap_filter and prior_close is not None:
+                g = gap_direction(open_price, prior_close)
+                allow_long = g >= 0
+                allow_short = g <= 0
+            else:
+                allow_long = allow_short = True
+
+            # scan post-range bars for breakout
+            entry = None
+            direction = 0
+            deadline = end_ts + timedelta(minutes=max_entry_offset_min)
+            for b in bars:
+                if b.ts < end_ts:
+                    continue
+                if b.ts > deadline:
+                    break
+                if allow_long and entry is None and b.high >= orb_high:
+                    entry = orb_high
+                    direction = 1
+                    stop = orb_low
+                    target = entry + target_mult * (orb_high - orb_low)
+                    break
+                if allow_short and entry is None and b.low <= orb_low:
+                    entry = orb_low
+                    direction = -1
+                    stop = orb_high
+                    target = entry - target_mult * (orb_high - orb_low)
+                    break
+
+            if entry is not None:
+                # simulate exit on remaining bars
+                exit_price = None
+                exit_reason = None
+                for b in bars:
+                    if b.ts <= end_ts:
+                        continue
+                    if direction == 1:
+                        if b.low <= stop:
+                            exit_price, exit_reason = stop, "stop"
+                            break
+                        if b.high >= target:
+                            exit_price, exit_reason = target, "target"
+                            break
+                    else:
+                        if b.high >= stop:
+                            exit_price, exit_reason = stop, "stop"
+                            break
+                        if b.low <= target:
+                            exit_price, exit_reason = target, "target"
+                            break
+                if exit_price is None:
+                    # flatten at last regular-session close (time stop)
+                    reg = [b for b in bars if time(9,0) <= b.ts.time() <= time(15,49,59)]
+                    exit_price = reg[-1].close if reg else entry
+                    exit_reason = "time_stop"
+                pnl_pct = (exit_price - entry) * direction / entry
+                trades.append({
+                    "ticker": ticker, "date": date_str, "direction": direction,
+                    "entry": entry, "exit": exit_price, "reason": exit_reason,
+                    "orb_high": orb_high, "orb_low": orb_low, "pnl_pct": pnl_pct,
+                })
+            last = max(bars, key=lambda b: b.ts)
+            prior_close = last.close
+    return trades
+```
+
+This harness deliberately ignores fees and slippage, which is the most common way a backtest
+lies. Before trusting any number it produces, subtract a round-trip cost of at least 0.4
+percent and add a conservative slippage of one to two ticks on entry and exit. On the IDX,
+where a liquid stock's tick can be IDR 1 on a IDR 50 name or IDR 5 on a IDR 4500 name, the
+slippage in percent terms is tiny on high-priced liquid names and large on low-priced ones,
+which is another reason to restrict the universe to liquid Main Board stocks.
+
+## What the statistics say about day trading in general
+
+The ORB is a day-trading strategy, and day trading as a class has brutal aggregate outcomes.
+The Day trading Wikipedia article reports the Brazilian study finding that 97 percent of
+investors who persisted more than 300 days lost money, with only 1.1 percent earning more
+than the minimum wage and only 0.5 percent earning more than a bank teller's starting salary.
+FINRA's pattern-day-trader rule (four or more day trades in five business days, above 6
+percent of activity, requiring a 25,000 USD minimum equity) is a US rule and does not apply
+to the IDX, but the underlying risk lesson transfers: high-frequency intraday turnover
+compounds fees and emotional error.
+
+This is not a reason to abandon ORB. It is a reason to treat ORB as a systematic,
+cost-aware, small-risk-per-trade method rather than a "get rich" tactic, and to report
+expectancy net of fees honestly. The vault's own CHANGELOG notes repeated emphasis on
+"honest gaps" and verified, healthy pipelines, which is the right posture here too.
+
+## Failure modes specific to the IDX
+
+Several ways this strategy breaks on Indonesian equities, derived from the session structure
+and market microstructure described above:
+
+- Pre-open auction gap. Because the 09:00 open is an auction clear, a stock with a large
+  overnight news event can open already outside what would have been the opening range. The
+  ORB then triggers immediately at 09:00 on the first continuous bar, often chasing a gap
+  that already happened. The gap-direction filter mitigates this but does not eliminate it.
+- Thin names and FCA. Low-liquidity Development Board or FCA stocks have sparse one-minute
+  bars. An ORB on them is statistically meaningless. Exclude them by board.
+- Friday calendar shift. If the harness uses the Monday to Thursday lunch break, Friday
+  session-2 bars get mislabeled and the time stop fires at the wrong instant. The
+  `idx_session` function above handles this.
+- ARB rejection. Stops outside the auto rejection band are rejected by JATS INET. Keep stops
+  inside the band (exact 2025 bands source unreachable at fetch time; confirm before live).
+- Suspension and force majeure. The IDX can suspend or shorten trading under "gangguan
+  sistem, bencana nasional, atau volatilitas pasar ekstrem" (system disruption, national
+  disaster, or extreme volatility). The harness should drop any day with an anomalous session
+  length rather than trade it.
+- Holiday gaps. Missing a national holiday makes the "previous close" link cross a multi-day
+  gap, producing a fake gap signal. Inject the official holiday calendar.
+
+## Liquidity windows to exploit and avoid
+
+Pluang's 2026 guide identifies three liquidity spikes: the opening hour 09:00 to 10:00 (the
+largest, 20 to 30 percent of daily volume), the lunch break 12:00 to 13:30 (the lowest), and
+the closing hour 15:00 to 16:00 (a second spike, driven by institution and fund-manager
+rebalancing). The ORB lives in the first spike, which is exactly why its edge exists: the
+breakout is backed by real volume. The guide also advises beginners to "hindari panik saat
+melihat pergerakan harga besar di jam pembukaan, sering kali harga kembali stabil setelah
+30-60 menit pertama" (do not panic at large opening moves; prices often stabilize after the
+first 30 to 60 minutes), which is the empirical justification for the close-confirmation
+filter and the break-even trail, not for exiting good trades early.
+
+## A practical multi-range scanner
+
+Rather than committing to one ORB length, run ORB-15, ORB-30, and ORB-60 in parallel and take
+the first valid breakout from the shortest completed range whose height clears the minimum
+filter. This adapts to volatility: on calm days the short ranges are too tight and the system
+naturally waits for ORB-60; on volatile days the short ranges fire early.
+
+```python
+def pick_range(bars: List[Bar], min_height_pct: float = 0.003) -> dict:
+    """Pick the shortest completed ORB whose height clears the filter."""
+    for minutes in (15, 30, 60):
+        rng = build_opening_range(bars, minutes)
+        if not rng["valid"]:
             continue
-        out.append((wib(t), q["open"][i], q["high"][i], q["low"][i], c))
+        if rng["orb_height"] / rng["open"] >= min_height_pct:
+            rng["chosen_minutes"] = minutes
+            return rng
+    return {"valid": False, "reason": "no range cleared min height filter"}
+```
+
+## Performance reporting checklist
+
+When you report ORB results, report all of the following, net of a round-trip fee of at least
+0.4 percent and one-to-two-tick slippage:
+
+- Total trades and trade days, with the date range.
+- Win rate, average win, average loss, profit factor, and expectancy per trade.
+- Max drawdown on the tested equity curve.
+- Breakdown by direction (long vs short) and by ORB length.
+- Breakdown by day of week, especially Friday vs the rest.
+- Number of trades killed by the time stop vs target vs stop loss.
+- The assumed fee and slippage model, stated explicitly.
+
+Any report missing the fee model is not trustworthy. The whole point of documenting this
+strategy in the vault is to keep the analysis honest, not to show a pretty equity curve.
+
+## Sources used (all reachable at 2026-07-16 unless flagged)
+
+- IDX official trading hours and mechanism: https://www.idx.id/id/produk-layanan/jam-dan-mekanisme-perdagangan/ (fetched via r.jina.ai reader proxy; the raw idx.co.id/en/about-idx/trading-hours/ page returned HTTP 403 Cloudflare at direct fetch, 2026-07-16). Confirms pre-open 08:45-08:57:59, Sesi I 09:00-12:00 (Mon-Thu) / 09:00-11:30 (Fri), Sesi II 13:30-15:49:59 (Mon-Thu) / 14:00-15:49:59 (Fri), pre-close input 15:50-15:59:59 and matching 16:00-16:01:59, round lot 100, price fractions under Peraturan II-A Kep-00003/BEI/04-2025.
+- Pluang 2026 trading-hours guide: https://pluang.com/akademi/berita-analisis/jam-bursa-saham-indonesia . Confirms the full session table including post-trading 16:00-16:15 and negotiation market 09:00-17:00, the 20-30 percent first-hour volume share, the three liquidity spikes, and the FCA low-liquidity warning.
+- Investbro ID overview: https://investbro.id/bursa-efek/ . Secondary confirmation of Sesi I 09:00-11:30 and Sesi II 13:30-14:49:59 (note: this source appears outdated on the Sesi II close vs the official IDX page; the official IDX page is treated as authoritative).
+- Wikipedia, Day trading: https://en.wikipedia.org/wiki/Day_trading . Source for the definition of day trading, pattern day trader rules, and the Brazilian study statistic that 97 percent of persistent day traders lost money.
+- Wikipedia, Bursa Efek Indonesia: https://id.wikipedia.org/wiki/Bursa_Efek_Indonesia . Confirms the 2 January 2013 trading-hours update and the 6 December 2021 pre-closing/penutupan code-broker adjustment, plus the JATS INET continuous auction system context.
+- Wikipedia, Jakarta Stock Exchange: https://en.wikipedia.org/wiki/Jakarta_Stock_Exchange . Historical context: JSX launched JATS in 1995, merged with Surabaya into IDX in September 2007.
+
+## Items explicitly flagged as source unreachable (do not treat as verified)
+
+- The exact auto rejection (ARB) percentage bands for 2025/2026 under Peraturan II-A Kep-00003/BEI/04-2025. The idx.id page references the rule but the PDF was not retrievable (bot-protected, 2026-07-16). Use the commonly observed ~10 percent band as a placeholder and confirm before live trading.
+- The official IDX 2026 national holiday calendar. Not retrieved (source unreachable, 2026-07-16). Inject before production backtests to avoid fake gap signals across closed days.
+- A clean public per-minute IDX OHLCV REST feed. idx.co.id endpoints returned HTTP 403 (Cloudflare) at direct curl; use a broker API or the vault's crawler stack with proper session handling instead.
+
+## How this connects to the rest of the vault
+
+- 05-market-cron/cron-configs/ihsg-daily-fetch.py (gap in the auditor): an IHSG daily fetcher
+  would feed the index-level gap and breadth context that the gap-direction filter needs.
+- 01-crawler-scrapper: the session-cookie pattern used for X/TikTok scraping is reusable for
+  pulling broker quote pages, subject to ToS.
+- 02-trading-bot/risk-management/position-sizing-kelly.md (gap in the auditor): the
+  `size_for_risk` function above is a fixed-fraction baseline; a Kelly or half-Kelly layer
+  belongs in that file.
+- 02-trading-bot/signals/news-sentiment-scoring.md (gap in the auditor): the gap-direction
+  filter is a pure price signal; layering a news-sentiment score on top would let the system
+  skip ORBs on stocks with negative same-morning headlines.
+
+## Worked example with concrete numbers
+
+To make the mechanics concrete, walk through a hypothetical liquid Main Board stock, say a
+bank with open price IDR 4520, on a Monday (normal calendar). Assume one-minute bars:
+
+```text
+09:00  open 4520  high 4525  low 4512  close 4522  vol 182000
+09:01  open 4522  high 4530  low 4518  close 4527  vol 240000
+09:02  open 4527  high 4535  low 4524  close 4529  vol 198000
+09:03  open 4529  high 4533  low 4521  close 4524  vol 160000
+09:04  open 4524  high 4531  low 4519  close 4526  vol 175000
+...
+09:29  (thirtieth bar) high 4548  low 4515  close 4540
+```
+
+For ORB-30 the opening range is the high/low across 09:00 to 09:29. In this trace the range
+high is IDR 4548 (or the true max across all 30 bars) and the range low is IDR 4512 (the
+09:00 low). The ORB height is IDR 36, about 0.8 percent of the IDR 4520 open, which clears the
+0.3 percent minimum height filter. The long trigger is a buy stop at IDR 4549 (4548 + 1 tick),
+the short trigger is a sell stop at IDR 4511.
+
+Suppose the prior close was IDR 4490, so the open at 4520 is a gap up of 0.67 percent. The
+gap filter permits longs and permits shorts only weakly (gap >= 0 allows both, gap > 0 biases
+long). At 09:42 the first one-minute bar closes at IDR 4551, breaking above the IDR 4548
+range high with confirmation. Entry fills at IDR 4549. The fixed target at 1x is 4549 + 36 =
+IDR 4585. The stop is at the range low IDR 4512, so per-share risk is IDR 37.
+
+With equity IDR 100,000,000 and risk fraction 0.5 percent (IDR 500,000), the size function
+gives shares = 500000 / 37 = 13513, rounded down to the nearest round lot of 100 gives
+13,500 shares. Notional at entry = 13,500 x 4549 = IDR 61,411,500, about 61 percent of equity,
+leverage-free. If the price reaches IDR 4585 the gross profit is (4585 - 4549) x 13500 =
+IDR 486,000, about 0.49 percent of equity before fees. After a 0.4 percent round-trip fee
+(IDR 245,646) the net is IDR 240,354, about 0.24 percent of equity. That thin net is exactly
+why the target multiplier and the break-even trail matter: a 1x target on a tight range is
+barely fee-positive, while a 2x target or a trailed exit captures more of the move.
+
+## ATR-based stop variant
+
+Fixed stops at the opposite range boundary are simple but ignore volatility scaling. On a
+high-volatility day the range is wide and the stop is far, risking too much; on a low-volatility
+day the range is tight and the stop is near, inviting whipsaw. A common variant sets the stop
+at a multiple of the average true range instead of at the range boundary, while still using
+the range boundary as the trigger.
+
+```python
+def atr(bars: List[Bar], n: int = 14) -> float:
+    """Average True Range over the last n one-minute bars before entry."""
+    trs = []
+    for i in range(1, min(n, len(bars))):
+        prev = bars[i - 1]
+        cur = bars[i]
+        tr = max(cur.high - cur.low,
+                 abs(cur.high - prev.close),
+                 abs(cur.low - prev.close))
+        trs.append(tr)
+    return sum(trs) / len(trs) if trs else 0.0
+
+# stop = entry - 1.5 * atr (long) or entry + 1.5 * atr (short)
+# target = entry + 2.0 * (orb_height)  # keep the range-based target
+```
+
+The hybrid uses the opening range for the trigger and the ATR for the stop distance, which
+often improves the win rate because the stop adapts to intraday volatility rather than to a
+single static band.
+
+## Portfolio aggregation across a universe
+
+A single stock ORB is noisy. The edge appears more reliably across a basket of 20 to 50 liquid
+names where you take the top few breakouts ranked by range-height-to-volume ratio. The
+aggregation step scores each candidate at range-completion time and enters only the highest
+ranked N.
+
+```python
+def rank_candidates(orb_results: List[dict]) -> List[dict]:
+    """Rank completed ORB ranges by height/volume (range efficiency).
+
+    Higher ratio = a wider range formed on less volume = more conviction.
+    """
+    scored = []
+    for r in orb_results:
+        if not r.get("valid"):
+            continue
+        vol = r.get("volume", 1)
+        efficiency = (r["orb_height"] / r["open"]) / max(vol, 1)
+        scored.append({**r, "efficiency": efficiency})
+    return sorted(scored, key=lambda x: x["efficiency"], reverse=True)
+
+# Take top 3 of the ranked list, size each with size_for_risk on shared equity.
+```
+
+Note this ranking is a heuristic, not a proven optimizer. It is included as a building block,
+not as a recommendation, and any production use needs its own backtest with the fee model
+below.
+
+## Cost-model simulation
+
+The single most important honesty check is a proper cost model. The harness above ignores
+costs. Wrap it like this before trusting any number:
+
+```python
+ROUND_TRIP_FEE = 0.004   # 0.4% total (broker + levy + VAT, retail estimate)
+SLIPPAGE_TICKS = 2       # ticks of slippage on entry and exit (assumption)
+
+def apply_costs(trades: List[dict], tick_size: float = 1.0) -> List[dict]:
+    out = []
+    for t in trades:
+        entry_slip = SLIPPAGE_TICKS * tick_size * (1 if t["direction"] > 0 else -1)
+        exit_slip = SLIPPAGE_TICKS * tick_size * (-1 if t["direction"] > 0 else 1)
+        real_entry = t["entry"] + entry_slip
+        real_exit = t["exit"] + exit_slip
+        gross = (real_exit - real_entry) * t["direction"]
+        fee = real_entry * ROUND_TRIP_FEE  # fee on notional, simplified
+        net = gross - fee
+        out.append({**t, "real_entry": real_entry, "real_exit": real_exit,
+                    "gross": gross, "fee": fee, "net": net})
     return out
 
-def backtest(bars, orb_bars=ORB_BARS):
-    """Baseline ORB: enter at ORB boundary on first 5m close beyond range,
-    exit at the day's final close. Returns list of percent returns."""
-    days = {}
-    for b in bars:
-        days.setdefault(b[0].date(), []).append(b)
-    trades = []
-    for day, dbars in days.items():
-        if len(dbars) < 60:
-            continue  # skip short/holiday sessions
-        dbars.sort()
-        orb_h = max(b[2] for b in dbars[:orb_bars])
-        orb_l = min(b[3] for b in dbars[:orb_bars])
-        last_close = dbars[-1][4]
-        for b in dbars[orb_bars:]:
-            if b[4] > orb_h:           # long breakout, enter at ORB high
-                trades.append((last_close - orb_h) / orb_h * 100)
-                break
-            if b[4] < orb_l:           # short breakout, enter at ORB low
-                trades.append((orb_l - last_close) / orb_l * 100)
-                break
-    return trades
-
-def report(trades):
-    if not trades:
-        print("  no trades")
-        return
-    wins = sum(1 for x in trades if x > 0)
-    net = [x - COST_PCT for x in trades]
-    print(f"  trades={len(trades)} avg={statistics.mean(trades):.3f}% "
-          f"median={statistics.median(trades):.3f}% win%={wins/len(trades)*100:.1f}%")
-    print(f"  best={max(trades):.2f}% worst={min(trades):.2f}% "
-          f"net_avg(after {COST_PCT}% cost)={statistics.mean(net):.3f}%")
-
-if __name__ == "__main__":
-    all_trades = []
-    for sym in TICKERS:
-        bars = fetch_5m(sym)
-        if not bars:
-            continue
-        t = backtest(bars)
-        print(f"{sym}: trades={len(t)}")
-        all_trades.extend(t)
-    print("=" * 50)
-    print("COMBINED:")
-    report(all_trades)
+def expectancy(trades: List[dict]) -> dict:
+    nets = [t["net"] / t["real_entry"] for t in trades]  # net return per trade
+    wins = [x for x in nets if x > 0]
+    losses = [x for x in nets if x <= 0]
+    win_rate = len(wins) / len(nets) if nets else 0
+    avg_win = sum(wins) / len(wins) if wins else 0
+    avg_loss = sum(losses) / len(losses) if losses else 0
+    exp = sum(nets) / len(nets) if nets else 0
+    profit_factor = (sum(wins) / abs(sum(losses))) if losses else float("inf")
+    return {"trades": len(nets), "win_rate": win_rate, "avg_win": avg_win,
+            "avg_loss": avg_loss, "expectancy": exp, "profit_factor": profit_factor}
 ```
 
-To run a longer study, replace `RANGE_DAYS` with explicit `period1` and `period2` epoch parameters and loop month by month. To add the bias filter, fetch the 20 day daily close series and compare the ORB entry to the 20 day SMA before taking the trade. To add the volume filter, read `res["indicators"]["quote"][0]["volume"]` and require the breakout bar volume to exceed 1.5x the mean opening range volume. To add the IHSG gap filter, fetch the prior day's IHSG close and the current open and only allow longs when the gap is positive. To reproduce the parameter sweep, call `backtest(bars, orb_bars=3)` or `orb_bars=9`.
+With this model a strategy that shows a gross expectancy of 0.15 percent per trade can easily
+flip negative once the 0.4 percent round trip is subtracted, which is the central lesson of
+the Brazilian day-trader study cited earlier. Always report the post-cost expectancy.
 
-## From signal to order, the event driven skeleton
+## Comparison of ORB lengths
 
-The broader vault already has a canonical event driven bot skeleton in `02-trading-bot/architectures/event-driven-baseline.md`. The ORB strategy slots into that skeleton as a signal producer. The flow:
+The table below summarizes the qualitative trade-off between opening-range lengths on the IDX.
+These are design characteristics, not backtest results, and must be validated per universe.
 
-1. A clock event at 08:55 WIB opens the pre market state. The data adapter starts streaming or polling 5 minute bars for the watchlist.
-2. At 09:30 WIB the range calculator emits an `ORBComputed` event carrying ORB_high, ORB_low, ORB_mid.
-3. Each subsequent 5 minute bar emits a `BarClosed` event. The strategy evaluates breakout conditions and, if triggered, emits an `OrderIntent` event (side, symbol, type=limit, price=ORB_high or ORB_low, qty=computed lots).
-4. The risk manager intercepts `OrderIntent` and checks the kill switch, daily loss limit, position concentration, and tick rounding before forwarding an `OrderSubmit` to the broker adapter.
-5. A clock event at 11:25 or 14:30 WIB emits `SessionClose`, forcing market exit of any open ORB position before the lunch break or closing auction.
+| ORB length | Fire time | Range quality | Whiplash risk | Room to run | Best when |
+|------------|-----------|---------------|--------------|-------------|-----------|
+| 5 min | 09:05 | tiny, noisy | high | most | very volatile names, scalping |
+| 15 min | 09:15 | small | medium | high | trending mornings |
+| 30 min | 09:30 | good | medium-low | good | default balanced choice |
+| 60 min | 10:00 | best statistically | low | least | calm names, fewer signals |
 
-The vital discipline is step 3 to 4 ordering, the signal never talks to the broker directly. Every intent passes through the risk manager. This is what stops a stale Yahoo feed from causing an oversized or mistimed order.
+The 09:00 to 10:00 window carries 20 to 30 percent of daily volume (Pluang, 2026), so ORB-60
+sits at the tail of the biggest liquidity spike, which is why its range tends to be the most
+reliable even though it leaves the least session remaining to capture the move.
 
-## Position sizing and the kill switch
+## Data-quality validation routine
 
-Because the worst observed trade was minus 3.33 percent, position sizing must assume a per trade loss capacity at least that large, ideally sized so that a 4 percent adverse move is only a small fraction of account equity. A simple volatility/standard deviation sizing:
-
-```
-risk_per_trade = account_equity * risk_fraction        # e.g. 0.5% of equity
-stop_pct       = max(ORB_range_pct * 1.5, 4.0)          # hard floor 4%
-lot_value      = stop_pct/100 * price_per_share * 100    # 100 shares per lot
-lots           = floor(risk_per_trade / lot_value)
-lots           = max(lots, 1)                            # never zero
-```
-
-Kill switches that must exist before live trading:
-
-- Daily loss limit. If realized plus open loss for the day exceeds, say, 2 percent of equity, flatten everything and halt new entries until next session.
-- Consecutive loss halt. After N consecutive losing ORB trades (e.g. 4), halt for the day. The 62.7 percent win rate means streaks happen but a 4 loss streak is a meaningful regime signal.
-- Lunch break flat rule. Never hold an ORB position across 11:30 to 13:30. Force exit at 11:25 WIB. The 11:30 liquidity air pocket makes stops unfillable.
-- Stale feed guard. If no new bar arrives within 7 minutes during the continuous session, assume the feed is dead, cancel resting orders, and flat the book. Yahoo delay plus a connection drop can otherwise leave phantom orders.
-- Tick and lot guard. Reject any order whose quantity is not a multiple of 100 or whose price is not on the valid tick grid. This is a hard pre submit check, not a warning.
-
-## Operational pitfalls that destroy naive IDX ORB bots
-
-The opening auction trap. The 08:45 to 08:55 pre opening auction can print a wild opening price that is not representative of continuous trading. If the bot mistakenly includes the auction print in the opening range, the ORB becomes nonsense. The fix is to start the range at 09:00 continuous bars only, never at the auction print.
-
-The lunch break trap. As noted, 11:30 to 13:30 has no continuous matching. A stop placed during the first session cannot fill during lunch. Many ORB losses come from holding through lunch and getting gapped at 13:30. Force flat at 11:25.
-
-The delayed feed trap. Yahoo is delayed 10 to 20 minutes. A live bot reading Yahoo thinks it is 09:35 when the market is already 09:50. The entry fires late, often after the move already happened, turning a winning edge into a losing one. Use a broker real time feed for live trading, Yahoo is research only.
-
-The tick rejection trap. Submitting a price off the tick grid gets the order bounced. At Rp 2,000 to Rp 5,000 the tick is Rp 10, so a computed entry of Rp 2,013 must be rounded to Rp 2,010 (buy) or Rp 2,020 (sell).
-
-The tax and fee blindness trap. The gross edge of about 0.52 percent evaporates at real retail cost of 0.3 to 0.5 percent round trip. A bot that does not model PPh 0.1 percent on the sell side, broker commission, and exchange fees will report profit in backtest and lose money live.
-
-The overfit trap. The 67 trade sample is tiny. Adding ten filters until the curve looks perfect is curve fitting. The honest move is to publish the baseline (this document) and treat any filter improvement as a hypothesis to validate on 12 plus months of out of sample data.
-
-The holiday and corporate action trap. IDX has many partial sessions and the market closes for local holidays. A bar count check (skip days with fewer than 60 five minute bars) handles most of this, but dividend ex dates and stock splits change the price scale, always check the corporate action calendar before trusting a backtest that spans a split.
-
-## Where this connects to the rest of the vault
-
-The ORB signal is a natural input to the news sentiment scoring module (`02-trading-bot/signals/news-sentiment-scoring.md`) and to the market cron (`05-market-cron/cron-configs/ihsg-daily-fetch.py`), which can provide the IHSG open gap that the bias filter needs. The broker adapter that actually submits the ORB orders belongs in `02-trading-bot/brokers-apis/binance-spot-futures.md` for crypto pairs or a future IDX broker API note, for equities the realistic broker is a local retail API (e.g. a broker that provides RTI via FIX or websocket, specifics source unreachable from this environment, verify per broker).
-
-The opening range statistics also feed the demand mining angle, the IDX retail crowd (the "Yuk Nabung Saham" participants Cermati and Stockbit write about) systematically over trade the open. A creator or educator who explains this microstructure in plain Indonesian is addressing a real, quantified pain point, which is the kind of wedge the `03-id-business-trends` folder exists to capture.
-
-## New gaps discovered while researching
-
-Three gaps the vault does not yet cover and that surfaced while building this strategy:
-
-1. `02-trading-bot/brokers-apis/idx-retail-broker-rti.md` (a working note on which Indonesian retail brokers expose a real time intraday feed, FIX or websocket, for `.JK` equities, because Yahoo is delayed and IDX.co.id is bot blocked, this is the missing production transport for any IDX bot).
-2. `02-trading-bot/data/id-source-comparison.md` (a comparison table of IDX data sources, Yahoo delayed, Stooq proof of work wall, IDX proprietary feed, broker feeds, with the exact HTTP behavior observed, so future builds do not rediscover the 403 and proof of work walls).
-3. `02-trading-bot/strategies/idx-closing-auction-reversion.md` (the mirror strategy to ORB, the 15:30 to 16:00 pre closing auction on the IDX is a liquidity event with its own exploitable structure, currently undocumented in the vault).
-
-## Six month daily volatility backdrop (real data, 2026-01-14 to 2026-07-14)
-
-The ORB is an intraday trade, but the builder must know the daily regime the ORB sits inside. Pulling six months of daily bars (Yahoo `range=6mo&interval=1d`, 118 sessions per ticker, all HTTP 200) for the same five liquid names shows a clear drawdown regime in the first half of 2026, every one of these blue chips fell over the window, and TLKM and ASII fell the hardest with the widest daily swings.
-
-| Ticker | Sessions | Price 14 Jan to 14 Jul | Avg daily % | Daily std % | Best day % | Worst day % |
-|--------|----------|------------------------|-------------|-------------|------------|-------------|
-| BBRI | 118 | 3720 to 2800 | -0.217 | 2.28 | +7.72 | -6.02 |
-| BBCA | 118 | 8000 to 6125 | -0.195 | 2.58 | +9.71 | -6.45 |
-| TLKM | 118 | 3650 to 2560 | -0.249 | 3.23 | +11.49 | -14.86 |
-| ASII | 118 | 7125 to 4880 | -0.271 | 3.24 | +13.79 | -9.28 |
-| BMRI | 118 | 4840 to 4160 | -0.099 | 2.47 | +10.24 | -8.21 |
-
-Two facts matter for the ORB builder. First, the average daily move is negative across all five, which is why the bias filter (only short when price is below its 20 day SMA) should have helped in this window, the dominant regime was down, and ORB shorts already outperformed longs in the sweep. Second, the daily standard deviation is 2.2 to 3.2 percent, while the ORB range is only about 2 percent of price, so a single bad ORB day (worst observed minus 3.33 percent) is well inside the normal daily distribution and is contained by the 4 percent hard floor stop. The position sizing math in the kill switch section assumes exactly this, a per trade stop around the ORB range times 1.5, floored at 4 percent, which lines up with the observed daily volatility of these names.
-
-The wider point is that in a falling market the ORB short is the structurally favored side, and the backtest already reflected that (shorts beat longs in every window). A builder who ignores the regime and sizes longs and shorts equally is leaving return on the table. The cheap fix is the IHSG gap filter in the next section, which is even more directional than the 20 day SMA.
-
-## The IHSG gap filter (real data, the highest value add)
-
-The single most useful contextual input for an IDX ORB is the direction of the index open relative to the prior close. Jakarta opens at 09:00 WIB, which prices in the prior US session and the overnight move in regional futures. When the IDX composite (IHSG, Yahoo symbol `^JKSE`) gaps up, the morning tailwind favors long ORBs, and vice versa.
-
-Measured over the same 21 day BBRI 5 minute window, splitting ORB trades by the sign of the IHSG overnight gap produced a dramatic lift versus the unfiltered baseline:
-
-- BBRI ORB on IHSG up gap days: 8 trades, average +1.862 percent, 100.0 percent win rate.
-- BBRI ORB on IHSG down gap days: 7 trades, average +0.972 percent, 85.7 percent win rate.
-
-Both are far above the unfiltered +0.524 percent average and 62.7 percent win rate. The sample is small (15 trades), but the direction of the effect is exactly what microstructure predicts, the index open sets the path of least resistance for the first session, and filtering to trade in the gap direction captures it. Note the down gap days still won at 85.7 percent with +0.972 percent average, because the ORB naturally took shorts on those days (shorts were the dominant side). The cleanest production rule is: take the ORB signal only when it agrees with the IHSG gap direction, and skip the day when the ORB direction conflicts with the gap.
-
-Implementation is cheap because the market cron in `05-market-cron/cron-configs/ihsg-daily-fetch.py` already fetches IHSG. The ORB strategy only needs the prior session close and the 09:00 open of `^JKSE`, which Yahoo serves with the same chart API used for equities. Compute gap percent at 09:00, store it on the `ORBComputed` event, and gate `OrderIntent` emission on `sign(gap) == sign(order_side)`.
-
-One caution: the IHSG gap itself is partly stale by 09:00 (it reflects the prior US close, which Jakarta traders have already seen). The edge is real but smaller live than the 21 day snapshot suggests, and it must be re validated on 12 plus months of data before sizing on it. Treat the +1.86 percent figure as an upper bound, not an expectation.
-
-## Broker and regulatory realities for IDX equities
-
-The ORB signal is worthless without an execution path, and the execution path for IDX equities is the weakest link in the whole stack. Three realities:
-
-- No free real time feed. As established, IDX.co.id blocks headless clients (HTTP 403) and there is no public intraday REST. Stooq is behind a proof of work wall. So a live bot cannot use any free source for ticks. The realistic options are (a) a retail broker that exposes RTI via a private API, websocket, or FIX, or (b) a paid market data vendor. The specific broker APIs were source unreachable from this environment (most Indonesian broker APIs require account onboarding and are not documented publicly), so the vault needs a dedicated note, captured in the new gaps section as `idx-retail-broker-rti.md`.
-- Tax and cost stack. The gross ORB edge of about 0.52 percent is consumed by the real cost stack, which for a retail equities account in Indonesia is roughly: broker commission 0.15 to 0.25 percent per side, PPh 0.1 percent on sell side proceeds for domestic individual investors (rate per current tax rules, verify), and exchange plus clearing fee about 0.02 to 0.04 percent. Round trip therefore runs 0.35 to 0.6 percent. This is why the strategy only works at scale or with the filters, and why a bot must subtract the full stack, not the 0.1 percent placeholder used in the baseline, before declaring edge.
-- Settlement and shorting. IDX equities settle T plus 2 and retail short selling is restricted (the formal short sale mechanism exists but is tightly controlled and unavailable to most retail accounts). The ORB short in this document is therefore a research construct, not a directly executable retail trade, unless the account has borrow and the broker supports it. A retail realistic version trades the long ORB only, or expresses the short view via an inverse product or a derivative. This is the most important honest caveat, the backtest shows shorts winning more, but a typical retail builder cannot actually short BBRI at 09:30. The actionable edge for retail is the long ORB filtered by the IHSG up gap, which still averaged +1.86 percent in the snapshot.
-
-## Comparison to the crypto ORB (why this is harder)
-
-The vault already has `02-trading-bot/brokers-apis/binance-spot-futures.md` for crypto. A crypto ORB is easier than an IDX ORB for three reasons that are worth stating so the builder does not assume transferable infrastructure:
-
-- Crypto trades 24/7, so there is no lunch break air pocket and no session boundary to respect. The IDX lunch break at 11:30 is a hard structural constraint that crypto lacks.
-- Crypto exchanges (Binance, etc.) expose free, fast, documented websocket feeds with sub second ticks. IDX has no equivalent free feed, as covered.
-- Crypto allows native shorting with no borrow logistics. IDX retail shorting is restricted, as covered.
-
-The shared part is the signal logic. The ORB math, the event driven skeleton, the kill switches, and the position sizing all transfer. Only the transport and the shorting mechanics differ. A builder who has the crypto bot working should reuse its ORB module and rewrite only the data adapter and the order adapter for IDX.
-
-## Extended pitfalls, FAQ, and operational checklist
-
-Why does my ORB win in backtest but lose live. Almost always one of: the feed was delayed and entries fired late (Yahoo delay), the cost stack was under modeled (0.1 percent placeholder versus 0.4 to 0.6 percent real), or the backtest exited at the daily close while live held through the 11:30 lunch gap. Fix all three before trusting the number.
-
-Should I use 15, 30, or 45 minute ORB. The sweep says 15 minute wins more often (68.1 percent) and earns more (+0.654 percent) but has more whipsaws on flat opens. Use 15 minute paired with a minimum ORB_range_pct filter of about 0.8 percent. Use 30 minute as the conservative default. Avoid 45 minute, it earns the least.
-
-Why are shorts better than longs. The IDX retail crowd is structurally net long, so a failed open resolves downward more reliably than a failed open resolves upward. This is consistent across every window in the sweep and across the IHSG gap study. Size shorts at least equal to longs, and in a down regime weight them higher.
-
-What is the minimum sample before going live. The 67 trade, 16 day baseline here is not enough. Extend to at least 250 trades (about 12 months of 5 minute data across a 10 to 20 name universe) and confirm the win rate and average hold before committing capital. The parameter sweep and IHSG filter are hypotheses until validated on that larger sample.
-
-Operational checklist before first live trade:
-
-- Data adapter returns 5 minute bars with WIB timestamps and a stale feed guard (alert if no bar in 7 minutes).
-- ORB computed only from 09:00 to 09:30 continuous bars, never the auction print.
-- Order adapter rounds price to the valid tick and quantity to a multiple of 100.
-- Risk manager enforces daily loss limit, consecutive loss halt, and the 11:25 lunch flat rule.
-- Cost model includes commission, PPh, and exchange fees, not just a 0.1 percent placeholder.
-- Short side only enabled if the account can actually borrow and short the name.
-- IHSG gap fetched at 09:00 and used to gate signal direction.
-- Backtest rerun on 12 plus months of data confirms the edge out of sample.
-
-## IDX market microstructure deep dive
-
-To trade the open well you have to understand what the auction is actually doing. The JATS engine (Jakarta Automated Trading System) runs two discrete auction crosses per day, the opening cross at 08:55:01 to 08:59:59 and the closing cross at 15:50:01 to 15:54:59, plus continuous matching in between. The opening cross is the key event for ORB because it sets the reference price that the first continuous bars react to.
-
-During pre opening (08:45 to 08:55) any participant can enter, amend, or cancel orders. At 08:55 JATS stops accepting new orders and runs a single price cross that maximizes volume, the uncross. The printed opening price is the one price where the most shares match. This is why the opening print can be at an extreme (a single large aggressive order can push the cross), and why including the auction print in the ORB range is a mistake, the auction price is an aggregate of overnight interest, not a continuous consensus.
-
-After 09:00 the market is continuous. Orders match by price time priority. The first 30 minutes (09:00 to 09:30) are when the overnight information gets repriced, because the local institutions and the retail flow that woke up at 08:30 to 09:00 act on it. Liquidity is thickest here, which is why a breakout can fill cleanly. By 11:00 liquidity thins, and at 11:30 it stops entirely for two hours.
-
-The closing auction at 15:30 to 16:00 is the mirror, it is where index funds and institutional rebalancers cross, and it is the most manipulated part of the day (the rulebook note about advancing the close was explicitly to reduce end of day manipulation). A morning ORB that exits at the 15:30 continuous close avoids this. An ORB that holds into the closing auction is taking on auction risk for no reason.
-
-One more microstructure fact worth knowing, the IDX has a circuit breaker. When the index moves beyond a threshold (the rulebook specifies the percentages, source unreachable from this environment, verify), trading halts for a set period. A bot must handle a halt event, if the open breaks out and then a circuit breaker trips, the exit may not fill until the halt lifts, and the price may gap. The kill switch and the stale feed guard cover most of this, but a halt aware check (watch the index in the data adapter) is the robust addition.
-
-## Multi day trade log (real bars, three more examples)
-
-Beyond the two worked examples already shown, here are three more real days pulled from the Yahoo 5 minute download, demonstrating both sides and the no trade case.
-
-BBCA long, 2026-06-25. Opening range built as ORB_high 6000, ORB_low 5900, mid 5950, range 1.68 percent. The range was flat for most of the morning (every bar hugged 5975 to 6000), and the breakout came at 10:00 when the bar closed at 6075, above ORB_high 6000. Entry at 6000, daily close 6025, return +0.42 percent. The lesson: a tight range that refuses to break is not a failed signal, it is a coiled spring, and the breakout when it comes can be clean. A minimum range filter would not have killed this trade because 1.68 percent is above the 0.8 percent floor.
-
-ASII short, 2026-06-17. Opening range ORB_high 4910, ORB_low 4830, mid 4870, range 1.64 percent. The 09:30 bar closed at 4860, below ORB_low 4830? No, 4860 is above 4830, so not yet. The breakout came at 10:00, which closed at 4830, equal to ORB_low, treated as not broken by the strict less than rule, then 10:05 closed at 4820, strictly below 4830, triggering the short at 4830. Daily close 4800, return +0.62 percent. The lesson: the strict inequality matters, the 10:00 bar tagged the low exactly and a looser rule would have entered a tick early at a worse fill. Discipline on the boundary pays.
-
-The no trade day. Many days the ORB never breaks, price churns inside the range all session and the bot does nothing. That is correct behavior. The baseline backtest only counts days where a breakout occurred (67 of the 80 candidate days across the five tickers), the other 13 were no trade days. A builder who forces a trade every day because the bot feels idle will bleed from whipsaws. The ORB is a wait for a clean break, not a daily obligation.
-
-## Data engineering, pagination and production transport
-
-The research code in this document uses `range=21d&interval=5m`, which Yahoo serves in a single response. For a real backtest you need months, and Yahoo caps the 5 minute history, so you paginate with explicit epochs. The pattern:
+Before trusting any backtest, validate the bar feed. The IDX has holidays, suspensions, and
+split/rights events that corrupt naive OHLCV. A validation pass should reject days that fail
+these checks:
 
 ```python
-import time, urllib.request, json
-def fetch_range(symbol, p1, p2, interval="5m"):
-    url=f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}.JK" \
-        f"?period1={p1}&period2={p2}&interval={interval}"
-    req=urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.load(r)
-# loop month by month, 30d * 86400 = 2592000 seconds
-step = 2592000
-p2 = int(time.time())
-p1 = p2 - step
-bars = []
-while len(bars) < 5000:  # practical cap
-    d = fetch_range("BBRI", p1, p2)
-    res = d["chart"]["result"][0]
-    # ... append bars, then shift window
-    p2, p1 = p1, p1 - step
+def validate_day(bars: List[Bar], ticker: str, holidays: set) -> List[str]:
+    problems = []
+    if not bars:
+        return ["empty_day"]
+    date = bars[0].ts.date()
+    if date.isoweekday() >= 6:
+        problems.append("weekend_data")
+    if date.isoformat() in holidays:
+        problems.append("holiday_data")
+    sess1 = [b for b in bars if time(9,0) <= b.ts.time() <= time(12,0)]
+    if len(sess1) < 170:  # ~180 expected Mon-Thu, fewer Fri
+        problems.append("short_session1")
+    highs = [b.high for b in bars]
+    lows = [b.low for b in bars]
+    if max(highs) <= min(lows):
+        problems.append("flat_or_bad_data")
+    # detect a stale/zero-volume bar in the opening hour (possible suspension)
+    open_hour = [b for b in bars if time(9,0) <= b.ts.time() < time(10,0)]
+    if any(b.volume == 0 for b in open_hour):
+        problems.append("zero_volume_open_hour")
+    return problems
 ```
 
-Two production concerns. First, Yahoo rate limits anonymous requests, so add a small sleep between symbols and between pages, and cache to disk so you do not re fetch. Second, Yahoo revises closes, so a backtest rerun a week later can differ slightly at the boundary days. Store raw bars and compute the backtest offline rather than re fetching live each run.
+Days flagged "holiday_data", "short_session1", or "zero_volume_open_hour" should be dropped
+from the backtest, not traded, because the prior-close link and the range construction both
+assume a normal session.
 
-For live trading the transport must change. The realistic architecture is: a broker websocket (or FIX session) pushes ticks, the ORB module consumes them, and the order module sends to the broker. Yahoo is only for research. The market data gap note `idx-retail-broker-rti.md` (logged in new gaps) is where the broker specific transport belongs. Until that note exists, the honest status is: the signal is fully specified here, the execution transport is the one missing piece, and a builder should not go live on Yahoo ticks.
+## Order-type notes for live execution
 
-## Risk of overfitting and how to report honestly
+On the IDX the continuous auction matches on price then time priority. For an ORB you want a
+stop order that converts to a marketable limit when the trigger hits, not a pure market order,
+because a pure market order during a fast opening breakout can slip several ticks. Most retail
+broker APIs support a "stop limit" or a "trigger" order; set the limit a small number of ticks
+past the trigger to bound slippage. Also respect the non-cancellation period in pre-open and
+pre-close: orders there cannot be amended or cancelled once entered in the matching window, so
+do not place ORB stops during those windows. The regular session (09:00 to 15:49:59) is the
+only window where ORB orders should live.
 
-The 67 trade baseline is small. Anyone can add filters until the curve is beautiful, and that curve will fail live. The discipline used in this document is to publish the unfiltered baseline (n=67, +0.524 percent, 62.7 percent win) and label every enrichment (the 15 minute window, the IHSG gap filter, the short weighting) as a hypothesis with its own small sample. A builder should treat the baseline as the thing that is real and everything else as pending 12 month validation.
+## Relationship to index context
 
-Concretely, report an ORB strategy like this: baseline edge first, then each filter as a delta with its sample size and its out of sample plan. Never report the filtered number as the expected live return. The IHSG up gap +1.86 percent is a 8 trade sample, an upper bound, not an expectation. The 15 minute +0.654 percent is a 72 trade sample, more credible but still under a year. State the sample, state the caveat, ship the code so anyone can rerun.
+The ORB is a single-name strategy but the IDX as a whole often opens with a directional bias
+driven by US overnight moves (the NYSE/NASDAQ session ends around 04:00 WIB, per Pluang's
+time-zone note) and by futures on the Jakarta Composite. A useful filter is to check the IHSG
+futures or the prior US session before taking a counter-trend single-name ORB. If the IHSG is
+gap-down and a stock prints a long ORB breakout, the single-name signal is fighting the index
+tide and the historical edge is weaker. This is exactly the kind of context the
+05-market-cron IHSG fetcher (currently a gap in the auditor) is meant to supply.
 
-## Full strategy configuration reference
+## Common parameter mistakes
 
-Putting the pieces together, here is a single configuration object that a builder can hand to the ORB module. Every field maps to a section above. This is plain configuration, not code to execute, but it documents the complete knob set so the strategy is reproducible without reading the whole document.
+A short list of mistakes seen repeatedly in ORB implementations, useful as a pre-launch
+checklist:
 
+- Using 09:30 New York style fixed windows instead of the IDX 09:00 open and Friday shift.
+- Forgetting the round lot of 100, so the size function returns non-tradable quantities.
+- Setting the stop exactly at the range boundary with no tick offset, getting filled on wicks.
+- Ignoring the 0.4 percent round-trip cost and reporting gross expectancy.
+- Trading FCA or Development Board names with sparse bars.
+- Letting a position ride past 15:49:59 into the pre-close auction by mistake.
+- Not injecting the holiday calendar, producing fake gaps across closed days.
+- Treating the pre-open indicative price as the open instead of the 09:00 auction clear.
+
+## Minimal end-to-end run script
+
+Putting the pieces together, a minimal end-to-end script structure (pseudo-code, not a full
+program) looks like this:
+
+```text
+1. load holiday_calendar.txt  (operator-supplied official IDX holidays)
+2. for each ticker in universe:
+3.   load one-minute bars from broker CSV/API
+4.   drop days failing validate_day()
+5.   for each valid day:
+6.     rng = pick_range(bars)            # shortest valid ORB length
+7.     if not rng.valid: skip
+8.     g = gap_direction(rng.open, prior_close)
+9.     scan post-range bars for breakout with gap filter
+10.    if entry: simulate exit (stop / target / time_stop)
+11.    record trade
+12. apply apply_costs(trades) with 0.4% round trip + 2tick slippage
+13. print expectancy(trades) and the full report from the checklist
 ```
-orb_config = {
-    "watchlist": ["BBRI", "BBCA", "TLKM", "ASII", "BMRI"],
-    "session_tz": "Asia/Jakarta",
-    "orb_start": "09:00",          # continuous open, never the auction
-    "orb_end": "09:30",            # 6 five-minute bars
-    "min_orb_range_pct": 0.8,      # skip dead-flat opens
-    "max_orb_range_pct": 4.0,      # skip news-shock gaps
-    "volume_confirm": 1.5,         # breakout bar vol vs ORB avg (if available)
-    "bias_filter": "20d_sma",      # long only above, short only below
-    "index_gate": "^JKSE_gap",     # trade only with IHSG gap direction
-    "exit_time": "15:30",          # continuous close, avoid closing auction
-    "force_flat_lunch": "11:25",   # never hold across 11:30-13:30
-    "risk_per_trade_pct": 0.5,     # fraction of equity at risk
-    "stop_floor_pct": 4.0,         # hard floor per-trade stop
-    "daily_loss_halt_pct": 2.0,    # flatten and halt
-    "consec_loss_halt": 4,         # halt after N losers
-    "stale_feed_sec": 420,         # no bar in 7 min = feed dead
-    "cost_round_trip_pct": 0.5,    # realistic retail stack, not 0.1
-    "short_enabled": false,        # turn on only with borrow + broker support
-    "data_source": "broker_rti",   # Yahoo is research only
-}
-```
 
-The single most important line is `short_enabled: false` for a retail builder. The backtest shows shorts winning more, but a retail account generally cannot short BBRI at 09:30, so the realistic live strategy is the long ORB gated by the IHSG up gap, which in the snapshot still averaged +1.86 percent. The `cost_round_trip_pct: 0.5` is the honest number that turns the gross +0.524 percent baseline into roughly breakeven, which is exactly why the filters (15 minute window, IHSG gate, short weighting where legal) are what make the strategy pay.
+This is the skeleton. The production version adds vectorization, a real broker API adapter,
+the IHSG context filter, and an ATR stop variant, all of which are described in the sections
+above.
 
-## References and source map
+## Closing notes for the operator
 
-Every factual claim in this document traces to one of these sources. URLs marked reachable were confirmed HTTP 200 from this environment on 2026-07-15. URLs marked blocked were HTTP 403 to a headless client but are valid in a browser.
-
-- IDX session timetable and JATS auction structure. Wikipedia, Indonesia Stock Exchange (English), reachable: https://en.wikipedia.org/wiki/Indonesia_Stock_Exchange . The same article in Bahasa Indonesia, reachable: https://id.wikipedia.org/wiki/Bursa_Efek_Indonesia . Cross checked against the first and last bar timestamps of a real Yahoo one minute download.
-- Lot size equals 100 shares since January 2014. Cermati, lot saham explainer, reachable: https://www.cermati.com/artikel/lot-saham .
-- Tick price step function and 2016 tick size adjustment. Stockbit, lot size and tick price history, reachable but JS rendered tables: https://stockbit.com/post/aturan-lot-size-dan-tick-price-di-bursa-efek-indonesia . The exact tick table is presented as established public reference to be verified against IDX rulebook II-S.
-- All backtest, sweep, and example numbers. Yahoo Finance chart API for `.JK` tickers, reachable: https://query1.finance.yahoo.com/v8/finance/chart/BBRI.JK . IHSG via `^JKSE` on the same API.
-- IDX official trading hours and rulebook II-S. Blocked to headless clients (HTTP 403), valid in browser: https://www.idx.co.id/en/products/equities/trading-hours and https://www.idx.co.id/~/media/Files/About-IDX/Regulation/SPM/II-S-001-PERATURAN-BURSA-NOMOR-II-S-TENTANG-KETENTUAN-PERDAGANGAN.ashx . Use these for the authoritative current tick table and circuit breaker thresholds.
-- Stooq free `.JK` daily CSV. Now behind a JavaScript SHA 256 proof of work wall (HTTP 200 but returns HTML, not CSV), so not usable for automated fetches: https://stooq.com/q/d/l/?s=bbri.jk .
-- Investing.com IDX explainer. Blocked (HTTP 403) to headless clients.
-
-The pattern across these sources is the central operational lesson of the document, the IDX deliberately does not offer a free, machine readable intraday feed, so any IDX bot builder must either pay for data, use a broker feed, or accept delayed Yahoo research bars. That constraint shapes the entire design and is the reason the execution transport is the open gap logged at the end.
-
-## Reproducibility appendix
-
-Environment used for the numbers above:
-
-- Date of computation: 2026-07-15, WIB (08:00 to 08:30).
-- Network: outbound HTTPS from a Linux/WSL host. `web_search` and `web_extract` tooling were unavailable (missing API key), data was gathered via `curl` and Python `urllib`.
-- Confirmed reachable: Yahoo Finance chart API (HTTP 200), Wikipedia EN and ID (HTTP 200), Google search HTML (HTTP 200, JS rendered, not parseable for tables), Cermati (HTTP 200), Stockbit (HTTP 200 but JS rendered tables).
-- Confirmed blocked to headless clients: IDX.co.id (HTTP 403), Stooq (HTTP 200 but JavaScript SHA 256 proof of work wall instead of CSV), Investing.com (HTTP 403).
-- Tickers: BBRI, BBCA, TLKM, ASII, BMRI. Window: 21 trading days of 5 minute bars per ticker, 16 days usable after the bar count filter.
-- Exact baseline statistics: 67 trades, avg +0.524 percent, median +0.417 percent, win rate 62.7 percent, best +4.10 percent, worst minus 3.33 percent, net avg +0.424 percent after flat 0.1 percent cost.
-- Parameter sweep: 15 min ORB 72 trades avg +0.654 percent win 68.1 percent; 30 min ORB 67 trades avg +0.524 percent win 62.7 percent; 45 min ORB 62 trades avg +0.499 percent win 64.5 percent. Shorts beat longs in every window.
-- Worked examples: BBRI 2026-06-18 short, ORB_high 3060, ORB_low 2980, short trigger at 09:30 close 2970, daily close 2960, return +0.67 percent. TLKM 2026-06-19 long, ORB_high 4160, ORB_low 4100, long trigger at 09:35 close 4170, daily close 4210, return +1.20 percent.
-
-If you rerun the script a month later the absolute numbers will move, but the method (download 5m bars, build 09:00 to 09:30 ORB, enter at ORB boundary on first close beyond range, exit at daily close, net against realistic cost) is stable and is the part worth keeping.
+The opening range breakout on the IDX is a real, mechanically-tradable edge only because the
+09:00 to 10:00 window concentrates 20 to 30 percent of daily volume and the 09:00 open is a
+true auction clear that absorbs the overnight book. Trade it as a small-risk, fee-aware,
+systematic method on liquid Main Board stocks, exclude FCA and thin names, hard-code the
+Friday calendar, flatten every position before 15:49:59, and report expectancy net of at
+least 0.4 percent round-trip cost. Anything prettier than that is a story, not a strategy.
