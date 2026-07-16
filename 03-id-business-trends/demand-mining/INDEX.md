@@ -87,3 +87,6 @@
 - [2026-07-16] BPJS PBI Mendadak Nonaktif, Warga Miskin Kehilangan Jaminan Kesehatan Gratis — strength 5/5 — other
 - [2026-07-16] Aturan Baru E-Commerce 1 Juli 2026: Seller Kena PPh, Wajib NIB, Biaya Harus Transparan — strength 5/5 — seller
 - [2026-07-16] UMKM Terkendala Adopsi AI: Skill Digital Rendah dan Biaya Jadi Penghalang — strength 4/5 — umkm
+- [2026-07-16] Penipuan Umrah Bodong Rugikan Jamaah Hingga Miliaran, Uang dan Keberangkatan Melayang — strength 5/5 — investor
+- [2026-07-16] Gaji Pensiunan PNS Tertahan karena Otentikasi Taspen Andal Gagal — strength 4/5 — employee
+- [2026-07-16] Klaim JKK dan JKM BPJS Ketenagakerjaan Sering Ditolak, Ahli Waris Terlantar — strength 4/5 — employee
