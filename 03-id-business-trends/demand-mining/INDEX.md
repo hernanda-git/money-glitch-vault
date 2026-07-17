@@ -90,3 +90,6 @@
 - [2026-07-16] Penipuan Umrah Bodong Rugikan Jamaah Hingga Miliaran, Uang dan Keberangkatan Melayang — strength 5/5 — investor
 - [2026-07-16] Gaji Pensiunan PNS Tertahan karena Otentikasi Taspen Andal Gagal — strength 4/5 — employee
 - [2026-07-16] Klaim JKK dan JKM BPJS Ketenagakerjaan Sering Ditolak, Ahli Waris Terlantar — strength 4/5 — employee
+- [2026-07-17] Petani dan Buruh Tembakau Terancam Aturan Batas Nikotin dan Tar — strength 4/5 — farmer
+- [2026-07-17] Konsumen Apartemen LRT City Terjebak Kredit, Proyek Mangkrak — strength 5/5 — other
+- [2026-07-17] Produsen dan Distributor Beras Swasta Terdesak Bulog Main di Segmen Premium — strength 4/5 — seller
