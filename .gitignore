@@ -26,3 +26,8 @@ Thumbs.db
 # Local-only scratch (agent working files, not pipeline content)
 *.local.md
 scratch/
+=== append gitignore ===
+
+# local fetcher venv + runtime data (do not commit)
+.venv-mg/
+05-market-cron/data/
