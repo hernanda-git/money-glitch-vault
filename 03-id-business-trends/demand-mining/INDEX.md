@@ -96,3 +96,6 @@
 - [2026-07-18] Seller TikTok Shop Terbebani Biaya Kirim Gagal dan Retur Akibat Kebijakan Baru Juni 2026 — strength 4/5 — seller
 - [2026-07-18] Web e-Faktur Sering Error, PKP Kecil Tak Bisa Cetak Faktur dan Terancam Dinonaktifkan — strength 4/5 — umkm
 - [2026-07-18] Importir Kecil Terjebak Antrean Dokumen Bea Cukai, Kena Demurrage Harian — strength 4/5 — umkm
+- [2026-07-18] Karyawan Ritel Minimarket (Indomaret) Tolak Upah Lembur Diganti Hari Libur — strength 5/5 — employee
+- [2026-07-18] Pedagang Daging Sapi dan Kuliner Tercekik Harga Daging Tembus Rp 130 Ribu/Kg — strength 4/5 — seller
+- [2026-07-18] Eks Honorer Terdepak: Kontrak Tak Diperpanjang dan Talinya Asih Dipotong Pemprov — strength 4/5 — employee
