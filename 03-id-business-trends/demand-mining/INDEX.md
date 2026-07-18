@@ -99,3 +99,6 @@
 - [2026-07-18] Karyawan Ritel Minimarket (Indomaret) Tolak Upah Lembur Diganti Hari Libur — strength 5/5 — employee
 - [2026-07-18] Pedagang Daging Sapi dan Kuliner Tercekik Harga Daging Tembus Rp 130 Ribu/Kg — strength 4/5 — seller
 - [2026-07-18] Eks Honorer Terdepak: Kontrak Tak Diperpanjang dan Talinya Asih Dipotong Pemprov — strength 4/5 — employee
+- [2026-07-18] DJP Kini Awasi Wajib Pajak Lewat Babinsa hingga Web Scraping, Pekerja Bebas dan UMKM Panik — strength 5/5 — umkm
+- [2026-07-18] Antrean BBM di Sumatra dan Panic Buying Pertalite Usai Harga Pertamax Naik — strength 5/5 — other
+- [2026-07-18] 32.389 Buruh Ter-PHK Paruh 2026, Klaim JKP Harus Diajukan Maksimal 6 Bulan atau Hangus — strength 4/5 — employee
