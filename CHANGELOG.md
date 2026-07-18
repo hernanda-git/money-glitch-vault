@@ -102,3 +102,5 @@
 ## 2026-07-13 — enrich(07): prakerja-akses-tracker-saas — "PrakerjaWatch" gelombang tracker + insentif-cair estimator + paid escalation SaaS (corrected a 2020 Kontan article mis-cited as 2026 in the pain file)
 
 ## 2026-07-16 — enrich(02): idx-opening-range-breakout — IDX-specific ORB strategy: session calendar (incl. Friday shift), opening-range construction from the 09:00 auction clear, gap-direction filter, ATR/range stops, fee-aware backtest harness, and honest failure modes
+
+## 2026-07-18 — enrich(03): same-day-economy-delivery — IDR 10-15K flat economy same-day urban delivery gap: carrier teardown (Paxel flat 10K Amplop, GrabExpress, GoSend, SiCepat, Pos, Lion), Bekasi-Jaksel unit economics, warung-PUDO onboarding math, QRIS COD escrow, and live arbitrage router skeleton. Spawned 5 sub-gaps.
