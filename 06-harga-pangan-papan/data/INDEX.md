@@ -7,3 +7,4 @@
 - [2026-07-14] SP2KP — 17 commodities × 4 regions (Nasional + Region A/B/C for 3 rice items)
 - [2026-07-15] SP2KP - 17 commodities x 4 regions
 - [2026-07-16] SP2KP — 17 commodities × 4 regions (Nasional + Region A/B/C for 3 rice items)
+- [2026-07-17] SP2KP - 17 commodities x 4 regions
