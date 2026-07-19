@@ -102,3 +102,6 @@
 - [2026-07-18] DJP Kini Awasi Wajib Pajak Lewat Babinsa hingga Web Scraping, Pekerja Bebas dan UMKM Panik — strength 5/5 — umkm
 - [2026-07-18] Antrean BBM di Sumatra dan Panic Buying Pertalite Usai Harga Pertamax Naik — strength 5/5 — other
 - [2026-07-18] 32.389 Buruh Ter-PHK Paruh 2026, Klaim JKP Harus Diajukan Maksimal 6 Bulan atau Hangus — strength 4/5 — employee
+- [2026-07-19] Kredit UMKM Kian Melemah, Bank Makin Selektif Salurkan Pembiayaan di 2026 , strength 4/5 , umkm
+- [2026-07-19] Tangkapan Nelayan Melimpah tapi Harga Ikan Anjlok, Nelayan Kecil Merugi , strength 4/5 , farmer
+- [2026-07-19] Warga Miskin Gagal Dapat Bansos karena Tak Bisa Akses Aplikasi Perlinsos dan DTKS , strength 4/5 , other
