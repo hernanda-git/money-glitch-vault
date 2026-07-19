@@ -105,3 +105,6 @@
 - [2026-07-19] Kredit UMKM Kian Melemah, Bank Makin Selektif Salurkan Pembiayaan di 2026 , strength 4/5 , umkm
 - [2026-07-19] Tangkapan Nelayan Melimpah tapi Harga Ikan Anjlok, Nelayan Kecil Merugi , strength 4/5 , farmer
 - [2026-07-19] Warga Miskin Gagal Dapat Bansos karena Tak Bisa Akses Aplikasi Perlinsos dan DTKS , strength 4/5 , other
+- [2026-07-19] Relawan Dapur MBG/SPPG Kehilangan Penghasilan Mendadak , strength 4/5 , employee
+- [2026-07-19] Pemasok dan Pihak Ketiga MBG Tidak Dibayar, Utang BGN Tembus Rp 1,6 Triliun , strength 4/5 , umkm
+- [2026-07-19] Gelombang PHK Jatim: Pabrik Otomotif Pindah ke Vietnam, Modal PT Pakerin Terjebak di Bank Prima , strength 4/5 , employee
