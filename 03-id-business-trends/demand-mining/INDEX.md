@@ -108,3 +108,6 @@
 - [2026-07-19] Relawan Dapur MBG/SPPG Kehilangan Penghasilan Mendadak , strength 4/5 , employee
 - [2026-07-19] Pemasok dan Pihak Ketiga MBG Tidak Dibayar, Utang BGN Tembus Rp 1,6 Triliun , strength 4/5 , umkm
 - [2026-07-19] Gelombang PHK Jatim: Pabrik Otomotif Pindah ke Vietnam, Modal PT Pakerin Terjebak di Bank Prima , strength 4/5 , employee
+- [2026-07-20] Investor Kena Tipu Startup Unicorn, Laporan Keuangan Dimanipulasi , strength 5/5 , investor
+- [2026-07-20] Koperasi Desa Merah Putih Simpang Siur Pengadaan, Rakyat Minta Dashboard , strength 4/5 , umkm
+- [2026-07-20] UMKM Ingin Masuk Ritel Modern tapi Terkendala Standar Kemasan dan Kapasitas , strength 4/5 , umkm
