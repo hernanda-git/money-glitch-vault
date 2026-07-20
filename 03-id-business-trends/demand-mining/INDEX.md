@@ -111,3 +111,6 @@
 - [2026-07-20] Investor Kena Tipu Startup Unicorn, Laporan Keuangan Dimanipulasi , strength 5/5 , investor
 - [2026-07-20] Koperasi Desa Merah Putih Simpang Siur Pengadaan, Rakyat Minta Dashboard , strength 4/5 , umkm
 - [2026-07-20] UMKM Ingin Masuk Ritel Modern tapi Terkendala Standar Kemasan dan Kapasitas , strength 4/5 , umkm
+- [2026-07-20] Warga Kesulitan Urus Sertifikat Tanah SHM, Tertahan Berbulan-bulan di BPN , strength 4/5 , other
+- [2026-07-20] Pemilik Mobil Listrik Bekas Rugi Besar, Harga Anjlok hingga 50 Persen , strength 4/5 , other
+- [2026-07-20] Nasabah Asuransi Jiwa Rugi akibat Mis-selling dan Gagal Bayar, Kepercayaan Hancur , strength 5/5 , investor
