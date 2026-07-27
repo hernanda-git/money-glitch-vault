@@ -105,4 +105,6 @@
 
 ## 2026-07-16 — enrich(02): idx-opening-range-breakout — IDX-specific ORB strategy: session calendar (incl. Friday shift), opening-range construction from the 09:00 auction clear, gap-direction filter, ATR/range stops, fee-aware backtest harness, and honest failure modes
 
+## 2026-07-27 — agent: SP2KP harga pangan — Source A REST API still viable. `latest-price-dates` returned 2026-07-24 with `generate-perbandingan-harga` working without auth (contradicts the 2026-07-11 'auth-gated 401' scare). Browser fallback remains broken (about:blank, reCAPTCHA blocked). Found that Source A `latest-price-dates?tipe_komoditas_id=1` and `report/api/average-price/generate-perbandingan-harga` POST endpoints work without Bearer tokens. The previous fix for vault path (`C:/Users/it26/`) and --ours rebase resolution pattern were exercised successfully. 17 commodities captured for 2026-07-24 (Friday), previous date 2026-07-23. No commodities exceeded 5% change. Top movers: Cabai Merah Keriting +0.55%, Bawang Merah -0.50%, Cabai Rawit Merah -0.48%.
+
 ## 2026-07-18 — enrich(03): same-day-economy-delivery — IDR 10-15K flat economy same-day urban delivery gap: carrier teardown (Paxel flat 10K Amplop, GrabExpress, GoSend, SiCepat, Pos, Lion), Bekasi-Jaksel unit economics, warung-PUDO onboarding math, QRIS COD escrow, and live arbitrage router skeleton. Spawned 5 sub-gaps.
