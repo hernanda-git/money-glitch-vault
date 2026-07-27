@@ -4,3 +4,6 @@
 - [2026-07-27] Kuota Internet Hangus: Konsumen Merasa Diperdaya Operator Seluler , strength 4/5 , employee|student
 - [2026-07-27] Krisis Kesehatan Mental Gen Z dan Remaja Indonesia , strength 4/5 , student|employee
 - [2026-07-27] Krisis Sampah Perkotaan: TPA Overload dan Layanan Pengelolaan Ambruk , strength 4/5 , other|parent
+- [2026-07-28] Burnout dan Krisis Kesehatan Mental Pekerja Indonesia Akibat Side Hustle dan Beban Kerja Berlebih , strength 5/5 , employee
+- [2026-07-28] Pendapatan Content Creator Indonesia Anjlok, Algoritma dan Monetisasi YouTube Makin Sulit , strength 4/5 , freelancer
+- [2026-07-28] Gen Z dan Milenial Menolak Promosi Jabatan, Perusahaan Indonesia Krisis Kader Manajer , strength 4/5 , employee
