@@ -1,3 +1,6 @@
 - [2026-07-27] UMKM Kesulitan Akses Modal dan Pembiayaan Akibat Pembukuan Tidak Rapi , strength 5/5 , umkm
 - [2026-07-27] Gaji Tidak Cukup di Tengah Kenaikan Biaya Hidup , strength 5/5 , employee
 - [2026-07-27] Driver Ojol Terjebak Sistem Potongan Tarif dan Ketidakpastian Pendapatan , strength 4/5 , ojol
+- [2026-07-27] Kuota Internet Hangus: Konsumen Merasa Diperdaya Operator Seluler , strength 4/5 , employee|student
+- [2026-07-27] Krisis Kesehatan Mental Gen Z dan Remaja Indonesia , strength 4/5 , student|employee
+- [2026-07-27] Krisis Sampah Perkotaan: TPA Overload dan Layanan Pengelolaan Ambruk , strength 4/5 , other|parent
