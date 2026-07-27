@@ -1,0 +1,10 @@
+[2026-07-27T01:45:44Z] SP2KP page unreachable. Browser navigated to about:blank. Site is a Nuxt.js SPA requiring reCAPTCHA bypass and API authentication. API at api-sp2kp.kemendag.go.id requires Bearer token. Cannot fetch price data programmatically without authentication credentials.
+
+Possible causes:
+- reCAPTCHA bot detection blocked the browser
+- No valid API token available
+- Tableau-based embedding may require additional JS rendering
+
+Resolution needed:
+- Obtain valid SP2KP API credentials
+- Or find alternative data source for Indonesian food prices
