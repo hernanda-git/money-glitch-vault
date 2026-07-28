@@ -1,0 +1,3 @@
+## 2026-07-29: Opportunity — Rental Genset "Uber-style" untuk Daerah Rawan Pemadaman
+
+Pemadaman listrik bergilir meluas di Kalimantan, Sumut, dan Jabar. UMKM frozen food, laundry, dan cold storage paling terdampak. Platform rental genset portabel berbasis lokasi dengan sistem "pay-per-use" bisa menjadi solusi. Modelnya seperti Uber untuk genset — pemilik genset (individu/bisnis) bisa menyewakan gensetnya saat tidak dipakai, platform mencocokkan dengan UMKM yang butuh. Potensi pasar: jutaan UMKM food & beverage di daerah rawan pemadaman. Bisa dikerjakan dalam 2 minggu dengan MVP Telegram bot + Google Sheets.

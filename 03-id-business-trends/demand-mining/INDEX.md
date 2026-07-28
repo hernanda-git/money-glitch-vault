@@ -10,3 +10,6 @@
 - [2026-07-28] Petani Garam Merugi Akibat Anomali Cuaca dan Konflik Lahan , strength 4/5 , petani
 - [2026-07-28] Penipuan Modus Paket Hilang Marak, Warga Indonesia Rugi Rp9 Triliun , strength 5/5 , other
 - [2026-07-28] Biaya Pernikahan Makin Mahal, Pasangan Muda Pilih Nikah Sederhana atau Menunda , strength 4/5 , employee|student
+- [2026-07-29] Mahasiswa Indonesia di Luar Negeri Tercekik Pelemahan Rupiah , strength 4/5 , student
+- [2026-07-29] Harga Obat Melonjak 10-20% Akibat Pelemahan Rupiah, Pasien Penyakit Kronis Terbebani , strength 4/5 , other
+- [2026-07-29] Pemadaman Listrik Bergilir Meluas di Sejumlah Daerah, Warga dan Pelaku UMKM Dirugikan , strength 4/5 , other|umkm
