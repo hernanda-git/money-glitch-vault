@@ -7,3 +7,6 @@
 - [2026-07-28] Burnout dan Krisis Kesehatan Mental Pekerja Indonesia Akibat Side Hustle dan Beban Kerja Berlebih , strength 5/5 , employee
 - [2026-07-28] Pendapatan Content Creator Indonesia Anjlok, Algoritma dan Monetisasi YouTube Makin Sulit , strength 4/5 , freelancer
 - [2026-07-28] Gen Z dan Milenial Menolak Promosi Jabatan, Perusahaan Indonesia Krisis Kader Manajer , strength 4/5 , employee
+- [2026-07-28] Petani Garam Merugi Akibat Anomali Cuaca dan Konflik Lahan , strength 4/5 , petani
+- [2026-07-28] Penipuan Modus Paket Hilang Marak, Warga Indonesia Rugi Rp9 Triliun , strength 5/5 , other
+- [2026-07-28] Biaya Pernikahan Makin Mahal, Pasangan Muda Pilih Nikah Sederhana atau Menunda , strength 4/5 , employee|student
