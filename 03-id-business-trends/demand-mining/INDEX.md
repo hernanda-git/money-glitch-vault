@@ -15,4 +15,8 @@
 - [2026-07-29] Pemadaman Listrik Bergilir Meluas di Sejumlah Daerah, Warga dan Pelaku UMKM Dirugikan , strength 4/5 , other|umkm
 - [2026-07-29] Harga Plastik Naik Drastis, UMKM Terjepit , strength 4/5 , umkm
 - [2026-07-29] Sekolah Swasta Tutup karena Minim Murid , strength 5/5 , other
-- [2026-07-29] Daya Beli Masyarakat Turun, PHK Garmen dan Gelombang Usaha Tutup , strength 5/5 , employee
+18|- [2026-07-29] Daya Beli Masyarakat Turun, PHK Garmen dan Gelombang Usaha Tutup , strength 5/5 , employee
+19|- [2026-07-30] Seller Online Tertekan Pajak Marketplace Efektif 1 Agustus 2026 , strength 5/5 , seller|umkm
+20|- [2026-07-30] Kredit Macet Paylater Melonjak, Masyarakat Makin Tergantung Paylater untuk Belanja Harian , strength 5/5 , employee|student
+21|- [2026-07-30] Banjir Aduan Konsumen Marketplace, Kemendag Panggil Shopee , strength 4/5 , seller|other
+22|
