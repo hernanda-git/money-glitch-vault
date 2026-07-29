@@ -13,3 +13,6 @@
 - [2026-07-29] Mahasiswa Indonesia di Luar Negeri Tercekik Pelemahan Rupiah , strength 4/5 , student
 - [2026-07-29] Harga Obat Melonjak 10-20% Akibat Pelemahan Rupiah, Pasien Penyakit Kronis Terbebani , strength 4/5 , other
 - [2026-07-29] Pemadaman Listrik Bergilir Meluas di Sejumlah Daerah, Warga dan Pelaku UMKM Dirugikan , strength 4/5 , other|umkm
+- [2026-07-29] Harga Plastik Naik Drastis, UMKM Terjepit , strength 4/5 , umkm
+- [2026-07-29] Sekolah Swasta Tutup karena Minim Murid , strength 5/5 , other
+- [2026-07-29] Daya Beli Masyarakat Turun, PHK Garmen dan Gelombang Usaha Tutup , strength 5/5 , employee
