@@ -22,3 +22,6 @@
 - [2026-07-30] UMKM Tercekik Biaya Logistik Mahal, Daya Saing Tergerus , strength 4/5 , umkm
 - [2026-07-30] Lulusan SMK Tidak Siap Kerja, Gap Kompetensi dengan Industri Semakin Melebar , strength 5/5 , student|employee
 - [2026-07-30] Harga Bahan Pokok Melonjak, Usaha Kuliner Kecil dan Warteg Terjepit Daya Beli , strength 4/5 , umkm|other
+- [2026-07-31] Gangguan Mobile Banking Berulang, Jutaan Nasabah Terdampak dan Keluhkan Layanan Digital Bank , strength 5/5 , employee|seller|umkm
+- [2026-07-31] 60 Ribu Calon Mahasiswa PTN Batal Daftar Ulang, Biaya Kuliah UKT dan Uang Pangkal Jadi Kendala , strength 5/5 , student|parent
+- [2026-07-31] Kecemasan Pekerja Indonesia AI Akan Gantikan Pekerjaan, Survei 76% Paling Tinggi di Dunia , strength 5/5 , employee|freelancer|fresh-graduate

@@ -1,0 +1,3 @@
+# 2026-07-31 — bank-status-aggregator
+
+Mobile banking dari 6+ bank besar Indonesia (BSI, BCA, BRI, Permata, CIMB Niaga, BJB Syariah) mengalami gangguan serius dalam sepekan terakhir, mempengaruhi jutaan nasabah. Belum ada platform terpusat yang memonitor status layanan perbankan digital secara real-time di Indonesia. Opportunity: bikin DownDetector versi Indonesia khusus perbankan — agregator status layanan + notifikasi WA/Telegram + data historis keandalan. Monetisasi: subscription individu (Rp 15-25rb/bln), dashboard korporasi (Rp 500k-2jt/bln), API untuk fintech. Cross-reference: masuk ke 01-crawler-scrapper (scraping status), 04-freelancer-ai-agent (notifikasi bot), dan 03-id-business-trends (pain point nasabah).
