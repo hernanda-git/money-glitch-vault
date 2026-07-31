@@ -11,3 +11,4 @@
 - [2026-07-27] SP2KP - 17 commodities x 4 regions
 - [2026-07-28] SP2KP - 17 commodities x 4 regions
 - [2026-07-29] SP2KP - 17 commodities x 4 regions
+- [2026-07-30] SP2KP - 17 commodities x 4 regions
